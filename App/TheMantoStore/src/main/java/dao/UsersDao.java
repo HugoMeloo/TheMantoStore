@@ -1,14 +1,13 @@
-package br.com.themanto.dao;
+package dao;
 
-import br.com.themanto.model.Users;
-import br.com.themanto.config.ConnectionPoolConfig;
+import model.Users;
+import config.ConnectionPoolConfig;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class UsersDao {
@@ -23,9 +22,9 @@ public class UsersDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
             preparedStatement.setString(1, users.getNome());
-            preparedStatement.setString(2, users.getCpf());
-            preparedStatement.setString(3, users.getEmail());
-            preparedStatement.setString(4, users.getSenha());
+            preparedStatement.setString(2, users.getEmail());
+            preparedStatement.setString(3, users.getSenha());
+            preparedStatement.setString(4, users.getCpf());
             preparedStatement.setBoolean(5, users.isStatus());
             preparedStatement.setString(6, users.getGrupo());
 
@@ -69,6 +68,74 @@ public class UsersDao {
         }
 
         return allUsers;
+    }
+
+    public boolean emailExists(String email) {
+        String SQL = "SELECT COUNT(*) FROM USERS WHERE email = ?";
+
+        try (Connection connection = ConnectionPoolConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao verificar email: " + e.getMessage());
+        }
+        return false;
+    }
+    public boolean cpfExists(String cpf) {
+        String SQL = "SELECT COUNT(*) FROM USERS WHERE cpf = ?";
+
+        try (Connection connection = ConnectionPoolConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, cpf);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0; // Retorna true se o CPF já existir
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao verificar CPF: " + e.getMessage());
+        }
+        return false;
+    }
+
+
+    public Users searchUsers(String email, String senhaCriptografada) {
+        String SQL = "SELECT * FROM USERS WHERE email = ? AND senha = ?";
+
+        try (Connection connection = ConnectionPoolConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, senhaCriptografada); // 🔹 Verifica a senha direto no banco
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                System.out.println("✅ Usuário encontrado: " + resultSet.getString("email"));
+                return new Users(
+                        resultSet.getInt("iduser"),
+                        resultSet.getString("nome"),
+                        resultSet.getString("email"),
+                        resultSet.getString("senha"),
+                        resultSet.getString("cpf"),
+                        resultSet.getBoolean("status"),
+                        resultSet.getString("grupo")
+                );
+            } else {
+                System.out.println("❌ Usuário ou senha incorretos.");
+            }
+        } catch (Exception e) {
+            System.out.println("❌ Erro ao consultar usuário: " + e.getMessage());
+        }
+
+        return null; // Retorna null se o usuário não existir ou a senha estiver errada
     }
 
     public boolean updateUser(Users user) {
