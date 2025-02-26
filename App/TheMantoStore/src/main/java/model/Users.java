@@ -1,4 +1,4 @@
-package br.com.themanto.model;
+package model;
 
 public class Users {
 
@@ -12,7 +12,7 @@ public class Users {
         private String grupo;
 
         //metodo construtor vazio para boas praticas
-        public Users() {
+        public Users(String iduser, String name, String email, String senha, String cpf, boolean status, String grupo) {
         }
 
         //metodo construtor pra instancia visando INSERT
