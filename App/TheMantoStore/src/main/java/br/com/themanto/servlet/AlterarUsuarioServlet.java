@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/admin/AlterarUsuario")
+@WebServlet("/admin/alterarUsuario")
 public class AlterarUsuarioServlet extends HttpServlet {
     private final UsersDao usersDao = new UsersDao();
 
@@ -49,7 +49,7 @@ public class AlterarUsuarioServlet extends HttpServlet {
         // Atualizar usuário no banco de dados
         boolean sucesso = usersDao.updateUser(usuarioAtualizado);
         if (sucesso) {
-            response.sendRedirect("admin/ExibirUsuarios?success=usuarioAtualizado");
+            response.sendRedirect("/admin/ExibirUsuarios?success=usuarioAtualizado");
         } else {
             request.setAttribute("errorMessage", "Erro ao atualizar usuário.");
             request.getRequestDispatcher("/admin/ExibirUsuarios").forward(request, response);

@@ -22,7 +22,7 @@ public class CreateUserServlet extends HttpServlet {
         String nome = request.getParameter("name");
         String email = request.getParameter("email");
         String cpf = request.getParameter("cpf");
-        String senha = request.getParameter("senha");
+        String senha = request.getParameter("senhaCadastro");
         String confirmSenha = request.getParameter("confirmarSenha");
 
         request.setAttribute("origin", "cadastro");
@@ -42,6 +42,7 @@ public class CreateUserServlet extends HttpServlet {
             request.setAttribute("email", email);
             request.setAttribute("cpf", cpf);
             request.getRequestDispatcher("login.jsp").forward(request, response);
+            System.out.println("Senha: "+ senha+" Confirmsenha "+confirmSenha);
             return;
         }
 

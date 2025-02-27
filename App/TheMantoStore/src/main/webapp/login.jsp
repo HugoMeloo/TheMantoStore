@@ -21,7 +21,7 @@
 
 <div class="container" id="container">
     <div class="form-container cadastrar">
-        <form action="/create-user" method="post">
+        <form action="/" method="post">
             <h1>Criar conta</h1>
             <input type="text" name="name" id="name" placeholder="Nome" value="${param.nome}" class="form-control" required>
             <input type="email" name="email" id="email" placeholder="Email" value="${param.email}" class="form-control" required>
