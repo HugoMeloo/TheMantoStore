@@ -17,10 +17,11 @@ public class AlterarStatusUsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userId = req.getParameter("id");
-        boolean novoStatus = Boolean.parseBoolean(req.getParameter("status"));
+
 
         Users usuario = usersDao.findUserById(userId);
         if (usuario != null) {
+            boolean novoStatus = !usuario.isStatus();
             boolean sucesso = usersDao.updateUserStatus(usuario.getEmail(), novoStatus);
             if (sucesso) {
                 System.out.println("✅ Status do usuário atualizado com sucesso.");
@@ -31,6 +32,6 @@ public class AlterarStatusUsuarioServlet extends HttpServlet {
             System.out.println("⚠ Usuário não encontrado.");
         }
 
-        resp.sendRedirect("admin/ExibirUsuarios");
+        resp.sendRedirect("/admin/ExibirUsuarios");
     }
 }

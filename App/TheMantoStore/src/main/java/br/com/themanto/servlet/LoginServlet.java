@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("✅ Usuário está ativo.");
 
                 // Verifica se o grupo é "adm" ou "est"
-                if ("adm".equals(usuario.getGrupo()) || "est".equals(usuario.getGrupo())) {
+                if ("admin".equals(usuario.getGrupo()) || "est".equals(usuario.getGrupo())) {
                     System.out.println("✅ Usuário tem permissão de acesso.");
 
                     HttpSession session = req.getSession();

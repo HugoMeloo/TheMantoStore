@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
+<!--
 <head>
     <meta charset="UTF-8">
     <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -159,18 +160,18 @@
 </head>
 <body>
 
-<!-- Navbar -->
+
 <nav class="navbar navbar-expand-lg">
     <div class="container d-flex justify-content-center">
         <a class="navbar-brand" href="find-all-movies">Prime Ticket</a>
     </div>
 </nav>
 
-<!-- Main Content -->
+
 <div class="container mt-5">
     <h1 class="text-center mb-4">Sistema de Gerenciamento</h1>
 
-    <!-- Abas de navegação -->
+
     <ul class="nav nav-pills my-4 justify-content-center" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active me-4" id="pills-movie-tab" data-bs-toggle="pill"
@@ -200,7 +201,7 @@
     </ul>
 
     <div class="tab-content" id="pills-tabContent">
-        <!-- Movie Form -->
+
         <div class="tab-pane fade show active" id="pills-movie" role="tabpanel">
             <form action="/create-movie" method="post" enctype="multipart/form-data">
                 <input type="hidden" id="id" name="id" value="${param.id}">
@@ -240,7 +241,7 @@
             </form>
         </div>
 
-        <!-- User Form -->
+
         <div class="tab-pane fade" id="pills-user" role="tabpanel">
             <form action="/create-user" method="post">
                 <div class="mb-3">
@@ -267,7 +268,7 @@
             </form>
         </div>
 
-        <!-- Session Form -->
+
         <div class="tab-pane fade" id="pills-session" role="tabpanel">
             <form action="/create-session" method="post">
                 <input type="hidden" id="ids" name="id" value="${param.sessaoId}">
@@ -288,7 +289,7 @@
             </form>
         </div>
 
-        <!-- Ticket Form -->
+
         <div class="tab-pane fade" id="pills-ticket" role="tabpanel">
             <form action="/create-ticket" method="post">
                 <div class="mb-3">
@@ -308,9 +309,11 @@
         </div>
     </div>
 
-    <a href="/find-all-movies" class="btn btn-success mt-4 w-100">Ir para Dashboard</a>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+-->
+<a href="/login" class="btn btn-success mt-4 w-100">Ir para Login</a>
 </html>
