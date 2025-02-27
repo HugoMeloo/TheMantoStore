@@ -50,19 +50,16 @@ public class LoginServlet extends HttpServlet {
 
                     HttpSession session = req.getSession();
                     session.setAttribute("usuario", usuario);
-                    resp.sendRedirect("backoffice.jsp");
-                    return;
+                    resp.sendRedirect("/admin/ExibirUsuarios");
                 } else {
                     System.out.println("❌ Acesso negado: Usuário não pertence a 'adm' ou 'est'.");
                     req.setAttribute("errorMessage", "Acesso negado para clientes.");
                     req.getRequestDispatcher("login.jsp").forward(req, resp);
-                    return;
                 }
             } else {
                 System.out.println("❌ Usuário está inativo.");
                 req.setAttribute("errorMessage", "Usuário inativo.");
                 req.getRequestDispatcher("login.jsp").forward(req, resp);
-                return;
             }
         } else {
             System.out.println("❌ Usuário ou senha inválidos.");
