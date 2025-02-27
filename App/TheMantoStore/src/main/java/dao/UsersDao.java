@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UsersDao {
@@ -70,6 +71,23 @@ public class UsersDao {
         return allUsers;
     }
 
+    public boolean updateUserGroup(String idUser, String novoGrupo) {
+        String SQL = "UPDATE USERS SET grupo = ? WHERE idUser = ?";
+
+        try (Connection connection = ConnectionPoolConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, novoGrupo);
+            preparedStatement.setString(2, idUser);
+
+            return preparedStatement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar grupo: " + e.getMessage());
+            return false;
+        }
+    }
+
+
     public boolean emailExists(String email) {
         String SQL = "SELECT COUNT(*) FROM USERS WHERE email = ?";
 
@@ -105,6 +123,31 @@ public class UsersDao {
         return false;
     }
 
+    public Users findUserById(String idUser) {
+        String SQL = "SELECT * FROM USERS WHERE idUser = ?";
+
+        try (Connection connection = ConnectionPoolConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, idUser);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return new Users(
+                        resultSet.getInt("idUser"),
+                        resultSet.getString("nome"),
+                        resultSet.getString("email"),
+                        resultSet.getString("senha"),
+                        resultSet.getString("cpf"),
+                        resultSet.getBoolean("status"),
+                        resultSet.getString("grupo")
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar usuário pelo ID: " + e.getMessage());
+        }
+        return null;
+    }
 
     public Users searchUsers(String email, String senhaCriptografada) {
         String SQL = "SELECT * FROM USERS WHERE email = ? AND senha = ?";
@@ -139,7 +182,7 @@ public class UsersDao {
     }
 
     public boolean updateUser(Users user) {
-        String SQL = "UPDATE USERS SET nome = ?, cpf = ?, senha = ? WHERE email = ?";
+        String SQL = "UPDATE USERS SET nome = ?, cpf = ?, senha = ? WHERE idUser = ?";
 
         try (Connection connection = ConnectionPoolConfig.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
@@ -147,20 +190,11 @@ public class UsersDao {
             preparedStatement.setString(1, user.getNome());
             preparedStatement.setString(2, user.getCpf());
             preparedStatement.setString(3, user.getSenha());
-            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setInt(4, user.getIdUser());
 
-            int linhasAfetadas = preparedStatement.executeUpdate();
-
-            if (linhasAfetadas > 0) {
-                System.out.println("Sucesso ao atualizar usuário");
-                return true;
-            } else {
-                System.out.println("Nenhum usuário encontrado para atualizar");
-                return false;
-            }
+            return preparedStatement.executeUpdate() > 0;
         } catch (Exception e) {
-            System.out.println("Falha ao atualizar usuário");
-            System.out.println("Erro: " + e.getMessage());
+            System.out.println("Erro ao atualizar usuário: " + e.getMessage());
             return false;
         }
     }
