@@ -73,6 +73,6 @@ public class CreateUserServlet extends HttpServlet {
         usersDao.createUsers(novoUsuario);
 
         // 6. Redireciona para login com sucesso
-        response.sendRedirect("login.jsp?success=cadastro");
+        response.sendRedirect("/admin/ExibirUsuarios");
     }
 }
