@@ -1,12 +1,13 @@
-br\com\themanto\servlet\AlterarGrupoUsuarioServlet.class
 br\com\themanto\servlet\LogoutServlet.class
 br\com\themanto\servlet\AlterarUsuarioServlet.class
 br\com\themanto\servlet\CreateUserServlet.class
+br\com\themanto\servlet\LoginServlet.class
+dao\UsersDao.class
+br\com\themanto\servlet\ExibirUsuarios.class
+br\com\themanto\servlet\RedirecionarServlet.class
+br\com\themanto\servlet\AlterarGrupoUsuarioServlet.class
 model\Users.class
 utils\PasswordUtils.class
-br\com\themanto\servlet\LoginServlet.class
 utils\CpfValidator.class
-dao\UsersDao.class
 br\com\themanto\servlet\AlterarStatusUsuarioServlet.class
-br\com\themanto\servlet\ExibirUsuarios.class
 config\ConnectionPoolConfig.class

@@ -20,19 +20,6 @@
 %>
 
 <div class="container" id="container">
-    <!-- Formulário de Cadastro -->
-    <div class="form-container cadastrar">
-        <form action="sem cadastro de cliente no momento" method="post">
-            <h1>Criar Conta</h1>
-            <input type="text" name="name" id="name" placeholder="Nome" value="${param.nome}" class="form-control" required>
-            <input type="email" name="email" id="email" placeholder="Email" value="${param.email}" class="form-control" required>
-            <input type="text" name="cpf" id="cpf" placeholder="CPF" value="${param.cpf}" class="form-control" required>
-            <input type="password" name="senha" id="senhaCadastro" placeholder="Senha" class="form-control" required>
-            <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirmar Senha" class="form-control" required>
-            <button class="btn btn-primary" type="submit">Cadastrar</button>
-        </form>
-    </div>
-
     <!-- Formulário de Login -->
     <div class="form-container login">
         <form action="/login" method="post">
@@ -53,8 +40,6 @@
             </div>
             <div class="toggle-panel toggle-right">
                 <h1>Olá, Amigo!</h1>
-                <p>Cadastre-se agora e aproveite a praticidade de comprar suas camisas com conforto e segurança!</p>
-                <button class="hidden" id="register">Cadastrar</button>
             </div>
         </div>
     </div>
