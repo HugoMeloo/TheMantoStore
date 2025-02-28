@@ -18,9 +18,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         req.getRequestDispatcher("login.jsp").forward(req, resp);
-
     }
 
     @Override
@@ -30,39 +28,33 @@ public class LoginServlet extends HttpServlet {
 
         // Encripta a senha antes de validar
         String senhaHash = PasswordUtils.hashPassword(senha);
-        System.out.println(senhaHash);
         Users usuario = usersDao.searchUsers(email, senhaHash);
 
         // Define a origem para o JSP diferenciar os erros
         req.setAttribute("origin", "login");
 
         if (usuario != null) {
-            System.out.println("✅ Usuário encontrado: " + usuario.getEmail());
-            System.out.println("🔹 Grupo do usuário: " + usuario.getGrupo());
-            System.out.println("🔹 Status do usuário: " + usuario.isStatus());
+            if (usuario.isStatus()) { // Verifica se está ativo
+                HttpSession session = req.getSession();
+                session.setAttribute("usuario", usuario);
+                session.setAttribute("tipoUsuario", usuario.getGrupo());
 
-            if (usuario.isStatus()) {
-                System.out.println("✅ Usuário está ativo.");
-
-                // Verifica se o grupo é "adm" ou "est"
-                if ("admin".equals(usuario.getGrupo()) || "est".equals(usuario.getGrupo())) {
-                    System.out.println("✅ Usuário tem permissão de acesso.");
-
-                    HttpSession session = req.getSession();
-                    session.setAttribute("usuario", usuario);
-                    resp.sendRedirect("/admin/ExibirUsuarios");
+                if ("admin".equals(usuario.getGrupo())) {
+                    // Administrador é redirecionado para a tela de escolha
+                    resp.sendRedirect("escolha.jsp");
+                } else if ("est".equals(usuario.getGrupo())) {
+                    // Estoquista vai direto para a lista de produtos
+                    resp.sendRedirect("escolhaEst.jsp");
                 } else {
-                    System.out.println("❌ Acesso negado: Usuário não pertence a 'adm' ou 'est'.");
-                    req.setAttribute("errorMessage", "Acesso negado para clientes.");
+                    // Qualquer outro tipo de usuário não autorizado
+                    req.setAttribute("errorMessage", "Acesso negado para este perfil.");
                     req.getRequestDispatcher("login.jsp").forward(req, resp);
                 }
             } else {
-                System.out.println("❌ Usuário está inativo.");
                 req.setAttribute("errorMessage", "Usuário inativo.");
                 req.getRequestDispatcher("login.jsp").forward(req, resp);
             }
         } else {
-            System.out.println("❌ Usuário ou senha inválidos.");
             req.setAttribute("errorMessage", "Usuário ou senha inválidos.");
             req.getRequestDispatcher("login.jsp").forward(req, resp);
         }

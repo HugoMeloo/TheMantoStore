@@ -45,6 +45,7 @@
     <table class="table table-striped" id="tabelaUsuarios">
         <thead class="table-dark">
         <tr>
+            <th>ID</th>
             <th>Nome</th>
             <th>Email</th>
             <th>Status</th>
@@ -57,6 +58,7 @@
         <tbody>
         <c:forEach var="usuario" items="${users}">
             <tr>
+                <td>${usuario.idUser}</td>
                 <td>${usuario.nome}</td>
                 <td>${usuario.email}</td>
                 <td>
@@ -66,7 +68,7 @@
                 </td>
                 <td>
                     <c:if test="${usuario.email ne emailLogado}">
-                        <form action="AlterarGrupoUsuario" method="POST">
+                        <form action="/admin/AlterarGrupoUsuario" method="POST">
                             <input type="hidden" name="idUser" value="${usuario.idUser}">
                             <select name="grupo" class="form-select" onchange="this.form.submit()">
                                 <option value="user" ${usuario.grupo eq 'user' ? 'selected' : ''}>Estoquista</option>
