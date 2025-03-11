@@ -76,15 +76,7 @@ public class Users {
             return grupo;
         }
 
-        /* MOVER POSTERIOMENTE PARA SERVLET DE CRIAR USUARIO
-        public void setGrupo(String grupo) {
-            if (grupo.equals("adm") || grupo.equals("est")) {
-                this.grupo = grupo;
-            } else {
-                throw new IllegalArgumentException("Grupo inválido. Deve ser 'adm' ou 'est'.");
-            }
-        }
-        */
+
         @Override
         public String toString() {
             return "User{" +
