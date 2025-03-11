@@ -32,7 +32,7 @@ public class RedirecionarServlet extends HttpServlet {
         // Estoquista só pode listar produtos
         if ("est".equals(tipoUsuario)) {
             if ("1".equals(opcao)) {
-                response.sendRedirect("lista-produto.jsp");
+                response.sendRedirect("produtosBackoffice.jsp");
             } else {
                 response.sendRedirect("escolhaEst.jsp");
             }
@@ -41,7 +41,7 @@ public class RedirecionarServlet extends HttpServlet {
         // Administrador pode escolher entre as opções
         if ("admin".equals(tipoUsuario)) {
             if ("1".equals(opcao)) {
-                response.sendRedirect("lista-produto.jsp");
+                response.sendRedirect("/admin/ExibirProdutos");
             } else if ("2".equals(opcao)) {
                 response.sendRedirect("/admin/ExibirUsuarios");
             } else {

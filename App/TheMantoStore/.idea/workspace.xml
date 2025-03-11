@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3dbfbaa9-9a21-4d60-976a-3172bc613760" name="Changes" comment="criação do direcionamento de usuários e exibição de ID">
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/themanto/servlet/AlterarStatusProdutoServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/themanto/servlet/CadastrarProdutoServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/themanto/servlet/ExibirProdutosServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dao/ProdutosDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Imagem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Produtos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/checkbox.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/produtosBackoffice.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TheMantoStore.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/TheMantoStoreDB.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/TheMantoStoreDB.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/TheMantoStoreDB.trace.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/TheMantoStoreDB.trace.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/themanto/servlet/RedirecionarServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/themanto/servlet/RedirecionarServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Users.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/escolha.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/escolha.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/escolhaEst.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/escolhaEst.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/br/com/themanto/servlet/RedirecionarServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/themanto/servlet/RedirecionarServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Users.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Users.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/backoffice_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/backoffice_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/escolhaEst_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/escolhaEst_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/escolha_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/escolha_jsp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/escolha_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/escolha_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/lista_002dproduto_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/lista_002dproduto_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/login_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/login_jsp.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;HugoMeloo&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/HugoMeloo/TheMantoStore.git&quot;,
+    &quot;accountId&quot;: &quot;4009683d-57bb-41ab-823a-77bde1cc23ee&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2te3mcpcuQgxrc64Uf0YWeTCt9Q" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.TheMantoStore [org.apache.tomcat.maven:tomcat7-maven-plugin:2.2:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.TheMantoStore [tomcat7:run].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hugog/git/App/TheMantoStore&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hugog\git\App\TheMantoStore\src\main\webapp" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="br.com.themanto.servlet" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="TheMantoStore [tomcat7:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="cmdOptions" />
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="tomcat7:run" />
+              </list>
+            </option>
+            <option name="multimoduleDir" />
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="projectsCmdOptionValues">
+              <list />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3dbfbaa9-9a21-4d60-976a-3172bc613760" name="Changes" comment="" />
+      <created>1740698872519</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740698872519</updated>
+    </task>
+    <task id="LOCAL-00001" summary="criação do direcionamento de usuários e exibição de ID">
+      <option name="closed" value="true" />
+      <created>1740703178579</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740703178579</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="criação do direcionamento de usuários e exibição de ID" />
+    <option name="LAST_COMMIT_MESSAGE" value="criação do direcionamento de usuários e exibição de ID" />
+  </component>
+</project>
