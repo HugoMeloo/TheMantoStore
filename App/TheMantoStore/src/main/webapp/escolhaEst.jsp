@@ -11,7 +11,7 @@
     String tipoUsuario = (String) sessao.getAttribute("tipoUsuario");
 
     if (!"est".equals(tipoUsuario)) {
-        response.sendRedirect("lista-produto.jsp");
+        response.sendRedirect("produtosBackoffice.jsp");
         return;
     }
 %>
