@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
 
@@ -34,12 +34,13 @@
 
     <!-- Campo de filtro -->
     <div class="mb-3">
-        <input type="text" id="filtroNome" class="form-control" placeholder="Filtrar por nome..." onkeyup="filtrarUsuarios()">
+        <input type="text" id="filtroNome" class="form-control" placeholder="Filtrar por nome..."
+               onkeyup="filtrarUsuarios()">
     </div>
 
     <!-- Botão para abrir o modal de cadastro -->
-    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">+ Adicionar Usuário</button>
-
+    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">+ Adicionar Usuário
+    </button>
 
 
     <table class="table table-striped" id="tabelaUsuarios">
@@ -68,13 +69,13 @@
                 </td>
                 <td>
                     <c:if test="${usuario.email ne emailLogado}">
-                        <form action="/admin/AlterarGrupoUsuario" method="POST">
-                            <input type="hidden" name="idUser" value="${usuario.idUser}">
-                            <select name="grupo" class="form-select" onchange="this.form.submit()">
-                                <option value="user" ${usuario.grupo eq 'user' ? 'selected' : ''}>Estoquista</option>
-                                <option value="admin" ${usuario.grupo eq 'admin' ? 'selected' : ''}>Administrador</option>
-                            </select>
-                        </form>
+                    <form action="/admin/AlterarGrupoUsuario" method="POST">
+                        <input type="hidden" name="idUser" value="${usuario.idUser}">
+                        <select name="grupo" class="form-select" onchange="this.form.submit()">
+                            <option value="user" ${usuario.grupo eq 'user' ? 'selected' : ''}>Estoquista</option>
+                            <option value="admin" ${usuario.grupo eq 'admin' ? 'selected' : ''}>Administrador</option>
+                        </select>
+                    </form>
 
                 <td>
                     <!-- Botão para abrir o modal -->
@@ -90,10 +91,10 @@
                     </a>
                 </td>
 
-                    </c:if>
-                    <c:if test="${usuario.email eq emailLogado}">
-                        ${usuario.grupo}
-                    </c:if>
+                </c:if>
+                <c:if test="${usuario.email eq emailLogado}">
+                    ${usuario.grupo}
+                </c:if>
                 </td>
                 <% if ("admin".equals(tipoUsuario)) { %>
 
@@ -122,14 +123,34 @@
             <div class="modal-body">
                 <form action="/create-user" method="post">
                     <h1>Criar conta</h1>
-                    <input type="text" name="name" id="name" placeholder="Nome"  class="form-control" required>
-                    <input type="email" name="email" id="email" placeholder="Email"  class="form-control" required>
-                    <input type="text" name="cpf" id="cpf" placeholder="CPF"  class="form-control" required>
-                    <input type="password" name="senhaCadastro" id="senhaCadastro" placeholder="Senha"
-                           class="form-control" required>
-                    <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirmar Senha"
-                           class="form-control" required>
-                    <button class="btn btn-primary" type="submit">Cadastrar</button>
+
+                    <!-- Campo Nome -->
+                    <input type="text" name="name" id="name" placeholder="Nome" class="form-control mb-3" required>
+
+                    <!-- Campo Email -->
+                    <input type="email" name="email" id="email" placeholder="Email" class="form-control mb-3" required>
+
+                    <!-- Campo CPF -->
+                    <input type="text" name="cpf" id="cpf" placeholder="CPF" class="form-control mb-3" required>
+
+                    <!-- Campo Senha -->
+                    <input type="password" name="senhaCadastro" id="senhaCadastro" placeholder="Senha" class="form-control mb-3" required>
+
+                    <!-- Campo Confirmar Senha -->
+                    <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirmar Senha" class="form-control mb-3" required>
+
+                    <!-- Campo Grupo (ADICIONE AQUI) -->
+                    <div class="form-group mb-3">
+                        <label for="grupo">Grupo:</label>
+                        <select class="form-select" id="grupo" name="grupo" required>
+                            <option value="user">Estoquista</option>
+                            <option value="admin">Administrador</option>
+                            <!-- Adicione mais grupos se necessário -->
+                        </select>
+                    </div>
+
+                    <!-- Botão de Cadastro -->
+                    <button class="btn btn-primary w-100" type="submit">Cadastrar</button>
                 </form>
             </div>
         </div>
@@ -190,7 +211,7 @@
     }
 </script>
 
-<script src= "../js/alterar.js"></script>
+<script src="../js/alterar.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
