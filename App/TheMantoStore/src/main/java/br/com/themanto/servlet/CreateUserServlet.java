@@ -2,8 +2,8 @@ package br.com.themanto.servlet;
 
 import dao.UsersDao;
 import model.Users;
-import utils.PasswordUtils;
 import utils.CpfValidator;
+import utils.PasswordUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,7 +42,7 @@ public class CreateUserServlet extends HttpServlet {
             request.setAttribute("email", email);
             request.setAttribute("cpf", cpf);
             request.getRequestDispatcher("login.jsp").forward(request, response);
-            System.out.println("Senha: "+ senha+" Confirmsenha "+confirmSenha);
+            System.out.println("Senha: " + senha + " Confirmsenha " + confirmSenha);
             return;
         }
 

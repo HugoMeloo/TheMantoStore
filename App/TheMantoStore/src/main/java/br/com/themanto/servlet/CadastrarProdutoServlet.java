@@ -73,7 +73,7 @@ public class CadastrarProdutoServlet extends HttpServlet {
                     parameters.put(item.getFieldName(), item.getString());
                 } else if (item.getSize() > 0) {
                     String extensao = item.getName().substring(item.getName().lastIndexOf("."));
-                    String nomeArquivo = UUID.randomUUID().toString() + extensao;
+                    String nomeArquivo = UUID.randomUUID() + extensao;
                     String caminhoArquivo = "img/" + nomeArquivo;
 
                     String pathReal = getServletContext().getRealPath("img") + File.separator + nomeArquivo;
