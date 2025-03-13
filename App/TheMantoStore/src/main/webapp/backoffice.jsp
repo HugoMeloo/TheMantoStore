@@ -143,7 +143,7 @@
                     <div class="form-group mb-3">
                         <label for="grupo">Grupo:</label>
                         <select class="form-select" id="grupo" name="grupo" required>
-                            <option value="user">Estoquista</option>
+                            <option value="est">Estoquista</option>
                             <option value="admin">Administrador</option>
                             <!-- Adicione mais grupos se necessário -->
                         </select>
