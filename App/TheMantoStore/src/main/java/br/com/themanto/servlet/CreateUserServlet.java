@@ -24,6 +24,8 @@ public class CreateUserServlet extends HttpServlet {
         String cpf = request.getParameter("cpf");
         String senha = request.getParameter("senhaCadastro");
         String confirmSenha = request.getParameter("confirmarSenha");
+        String grupo = request.getParameter("grupo");
+
 
         request.setAttribute("origin", "cadastro");
 
@@ -69,7 +71,7 @@ public class CreateUserServlet extends HttpServlet {
         String senhaHash = PasswordUtils.hashPassword(senha);
 
         // 5. Criar usuário
-        Users novoUsuario = new Users(nome, email, senhaHash, cpf, true, "est");
+        Users novoUsuario = new Users(nome, email, senhaHash, cpf, true, grupo);
         usersDao.createUsers(novoUsuario);
 
         // 6. Redireciona para login com sucesso
