@@ -1,6 +1,7 @@
 br\com\themanto\servlet\LogoutServlet.class
 br\com\themanto\servlet\AlterarUsuarioServlet.class
 br\com\themanto\servlet\CreateUserServlet.class
+br\com\themanto\servlet\ExibirProdutosEstoquistaServlet.class
 br\com\themanto\servlet\LoginServlet.class
 br\com\themanto\servlet\ExibirProdutosServlet.class
 dao\UsersDao.class

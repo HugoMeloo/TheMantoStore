@@ -12,7 +12,7 @@
          .btn-ativar { background-color: #198754; color: white; }
          .btn-desativar { background-color: #dc3545; color: white; }
          .search-input { max-width: 400px; }
-         .pagination-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; background: white; padding: 10px; border-radius: 10px; }
+         .pagination-container { position:'' fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; background: white; padding: 10px; border-radius: 10px; }
       </style>
       <script>
          document.addEventListener("DOMContentLoaded", function () {
