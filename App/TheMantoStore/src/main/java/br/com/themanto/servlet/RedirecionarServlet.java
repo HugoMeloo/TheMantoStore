@@ -20,7 +20,7 @@ public class RedirecionarServlet extends HttpServlet {
         // Verifica se a sessão existe e se o usuário está autenticado
         if (sessao == null || sessao.getAttribute("usuario") == null) {
             response.sendRedirect("login.jsp");
-            return;
+            return; // PARA A EXECUÇÃO AQUI
         }
 
         // Obtém o grupo do usuário da sessão
@@ -32,10 +32,11 @@ public class RedirecionarServlet extends HttpServlet {
         // Estoquista só pode listar produtos
         if ("est".equals(tipoUsuario)) {
             if ("1".equals(opcao)) {
-                response.sendRedirect("produtosBackoffice.jsp");
+                response.sendRedirect("/ExibirProdutosEstoquista");
             } else {
                 response.sendRedirect("escolhaEst.jsp");
             }
+            return; // PARA A EXECUÇÃO AQUI
         }
 
         // Administrador pode escolher entre as opções
@@ -47,9 +48,10 @@ public class RedirecionarServlet extends HttpServlet {
             } else {
                 response.sendRedirect("escolha.jsp");
             }
-        } else {
-            // Se por algum motivo o tipo de usuário não for reconhecido, redireciona para login
-            response.sendRedirect("login.jsp");
+            return; // PARA A EXECUÇÃO AQUI
         }
+
+        // Se por algum motivo o tipo de usuário não for reconhecido, redireciona para login
+        response.sendRedirect("login.jsp");
     }
 }

@@ -20,32 +20,52 @@ public class CadastrarProdutoServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            Map<String, Object> parameters = uploadImage(req);
+            Map<String, Object> parameters = uploadImage(req); // Captura os parâmetros do formulário
 
-            int produtoId = 0;
-            if (parameters.get("id") != null && !parameters.get("id").toString().isEmpty()) {
-                produtoId = Integer.parseInt(parameters.get("id").toString());
+            // Debug: verificar os parâmetros recebidos
+            System.out.println("Parâmetros Recebidos:");
+            for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+                System.out.println(entry.getKey() + " = " + entry.getValue());
             }
 
-            String nomeProduto = parameters.get("produto-name").toString();
-            double avaliacao = Double.parseDouble(parameters.get("avaliacao").toString());
-            String descricao = parameters.get("descricao").toString();
-            double preco = Double.parseDouble(parameters.get("preco").toString());
-            int quantidade = Integer.parseInt(parameters.get("quantidade").toString());
+            // Obtendo valores do request, garantindo que não sejam nulos
+            int produtoId = parameters.get("id") != null && !parameters.get("id").toString().isEmpty()
+                    ? Integer.parseInt(parameters.get("id").toString()) : 0;
 
+            String nomeProduto = parameters.get("produto-name") != null ? parameters.get("produto-name").toString() : "";
+            String avaliacaoStr = parameters.get("avaliacao") != null ? parameters.get("avaliacao").toString() : "0";
+            String descricao = parameters.get("descricao") != null ? parameters.get("descricao").toString() : "";
+            String precoStr = parameters.get("preco") != null ? parameters.get("preco").toString() : "0";
+            String quantidadeStr = parameters.get("quantidade") != null ? parameters.get("quantidade").toString() : "0";
+
+            double avaliacao = Double.parseDouble(avaliacaoStr);
+            double preco = Double.parseDouble(precoStr);
+            int quantidade = Integer.parseInt(quantidadeStr);
+
+            // Criando objeto Produto
             Produtos produto = new Produtos(produtoId, nomeProduto, avaliacao, descricao, preco, quantidade, true);
             ProdutosDao produtosDao = new ProdutosDao();
 
             if (produtoId == 0) {
-                produtoId = produtosDao.createProductAndGetId(produto); // AGORA CORRETO!
+                // Criar novo produto e obter ID gerado
+                produtoId = produtosDao.createProductAndGetId(produto);
             } else {
+                // Atualizar produto existente
                 produtosDao.updateProduto(produto);
+
             }
 
-            List<Imagem> imagens = (List<Imagem>) parameters.get("imagens");
-            for (Imagem imagem : imagens) {
-                imagem.setProdutoId(produtoId); // AGORA TERÁ O ID VÁLIDO!
-                produtosDao.saveImagem(imagem);
+            // Buscar imagens existentes do produto (caso seja uma atualização)
+            List<Imagem> imagensExistentes = produtosDao.getImagensByProdutoId(produtoId);
+            System.out.println("Imagens Existentes: " + imagensExistentes.size());
+
+            // Adicionar novas imagens se houver upload
+            List<Imagem> novasImagens = (List<Imagem>) parameters.get("imagens");
+            if (novasImagens != null && !novasImagens.isEmpty()) {
+                for (Imagem imagem : novasImagens) {
+                    imagem.setProdutoId(produtoId);
+                    produtosDao.saveImagem(imagem);
+                }
             }
 
             resp.sendRedirect("/ExibirProdutos");
@@ -53,10 +73,9 @@ public class CadastrarProdutoServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            resp.getWriter().write("Erro ao cadastrar produto: " + e.getMessage());
+            resp.getWriter().write("Erro ao cadastrar/alterar produto: " + e.getMessage());
         }
     }
-
 
     private Map<String, Object> uploadImage(HttpServletRequest request) throws Exception {
         Map<String, Object> parameters = new HashMap<>();
@@ -69,9 +88,9 @@ public class CadastrarProdutoServlet extends HttpServlet {
             List<FileItem> fileItems = upload.parseRequest(request);
 
             for (FileItem item : fileItems) {
-                if (item.isFormField()) {
-                    parameters.put(item.getFieldName(), item.getString());
-                } else if (item.getSize() > 0) {
+                if (item.isFormField()) { // Se for um campo de formulário (não um arquivo)
+                    parameters.put(item.getFieldName(), item.getString("UTF-8")); // Salvar os valores corretamente
+                } else if (item.getSize() > 0) { // Se for um arquivo
                     String extensao = item.getName().substring(item.getName().lastIndexOf("."));
                     String nomeArquivo = UUID.randomUUID() + extensao;
                     String caminhoArquivo = "img/" + nomeArquivo;
@@ -87,7 +106,8 @@ public class CadastrarProdutoServlet extends HttpServlet {
             }
         }
 
-        parameters.put("imagens", imagens);  // <- CORREÇÃO AQUI!
+        // Adicionando a lista de imagens ao mapa de parâmetros
+        parameters.put("imagens", imagens);
 
         return parameters;
     }

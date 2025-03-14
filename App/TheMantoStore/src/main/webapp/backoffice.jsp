@@ -105,7 +105,7 @@
     </table>
 
 
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/lista-produto'">
+    <button type="button" class="btn btn-primary" onclick="window.location.href='/admin/ExibirProdutos'">
         Ir para Lista de Produtos
     </button>
 

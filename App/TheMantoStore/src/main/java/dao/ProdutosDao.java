@@ -54,16 +54,16 @@ public class ProdutosDao {
 
 
     public List<Produtos> findAllProdutos() {
-        String SQL = "SELECT * FROM PRODUTOS";
-        List<Produtos> allProduct = new ArrayList<>();
+        String SQL = "SELECT * FROM PRODUTOS"; // Ajuste conforme sua tabela
+        List<Produtos> produtos = new ArrayList<>();
 
         try (
                 Connection connection = ConnectionPoolConfig.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-                ResultSet resultSet = preparedStatement.executeQuery()) {
-
+                ResultSet resultSet = preparedStatement.executeQuery()
+        ) {
             while (resultSet.next()) {
-                Produtos produtos = new Produtos(
+                Produtos produto = new Produtos(
                         resultSet.getInt("id"),
                         resultSet.getString("nome"),
                         resultSet.getDouble("avaliacao"),
@@ -72,15 +72,52 @@ public class ProdutosDao {
                         resultSet.getInt("quantidade"),
                         resultSet.getBoolean("status")
                 );
-                allProduct.add(produtos);
-            }
 
-            System.out.println("Sucesso ao consultar os dados na tabela Produtos");
+                // Buscar imagens do produto
+                List<Imagem> imagens = findAllImageById(produto.getId());
+                produto.setImagens(imagens); // Adicionando a lista de imagens ao produto
+
+                produtos.add(produto);
+            }
+            System.out.println("Produtos e imagens carregados com sucesso.");
         } catch (Exception e) {
-            System.out.println("Falha ao consultar os dados na tabela Produtos: " + e.getMessage());
+            System.out.println("Erro ao carregar produtos: " + e.getMessage());
         }
 
-        return allProduct;
+        return produtos;
+    }
+
+    public List<Imagem> findAllImageById(int idProduto) {
+        String SQL = "SELECT * FROM IMAGEM_PRODUTO WHERE produto_id = ?";
+        List<Imagem> allImages = new ArrayList<>();
+
+        try (
+                Connection connection = ConnectionPoolConfig.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL)
+        ) {
+            // Passando o ID do produto na query
+            preparedStatement.setInt(1, idProduto);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Imagem imagem = new Imagem(
+                            resultSet.getInt("ID_IMAGE"),
+                            resultSet.getInt("produto_id"),          // ID do produto
+                            resultSet.getString("nome_arquivo"),     // Nome do arquivo
+                            resultSet.getString("caminho_arquivo"),  // Caminho do arquivo
+                            resultSet.getBoolean("imagem_padrao")    // Se é a imagem padrão
+                    );
+
+                    allImages.add(imagem);
+                }
+            }
+
+            System.out.println("Sucesso ao consultar os dados na tabela IMAGEM_PRODUTO");
+        } catch (Exception e) {
+            System.out.println("Falha ao consultar os dados na tabela IMAGEM_PRODUTO: " + e.getMessage());
+        }
+
+        return allImages;
     }
 
     public Produtos findProdutoById(String idProduto) {
@@ -120,6 +157,8 @@ public class ProdutosDao {
             preparedStatement.setString(3, produtos.getDescricao());
             preparedStatement.setDouble(4, produtos.getPreco());
             preparedStatement.setInt(5, produtos.getQtdEstoque());
+            preparedStatement.setInt(6, produtos.getId()); // Certifique-se de que o ID está correto
+
 
             return preparedStatement.executeUpdate() > 0;
         } catch (Exception e) {
@@ -127,6 +166,22 @@ public class ProdutosDao {
             return false;
         }
     }
+
+    public void atualizarQuantidadeProduto(int produtoId, int novaQuantidade) {
+        String sql = "UPDATE PRODUTOS SET quantidade = ? WHERE id = ?";
+
+        try (Connection conn = ConnectionPoolConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, novaQuantidade);
+            stmt.setInt(2, produtoId);
+
+            int rowsAffected = stmt.executeUpdate();
+            System.out.println("Quantidade do produto ID " + produtoId + " atualizada para " + novaQuantidade);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public boolean updateProdutoStatus(int idProduto, boolean status) {
         String SQL = "UPDATE PRODUTOS SET status = ? WHERE id = ?";
@@ -167,6 +222,32 @@ public class ProdutosDao {
             preparedStatement.executeUpdate();
         }
     }
+
+    public List<Imagem> getImagensByProdutoId(int produtoId) {
+        List<Imagem> imagens = new ArrayList<>();
+        String sql = "SELECT * FROM IMAGEM_PRODUTO WHERE produto_id = ?";
+
+        try (Connection conn = ConnectionPoolConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, produtoId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Imagem imagem = new Imagem(
+                        rs.getInt("id_image"),
+                        rs.getInt("produto_id"),
+                        rs.getString("nome_arquivo"),
+                        rs.getString("caminho_arquivo"),
+                        rs.getBoolean("imagem_padrao")
+                );
+                imagens.add(imagem);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return imagens;
+    }
+
 
 }
 
