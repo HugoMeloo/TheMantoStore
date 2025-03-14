@@ -11,7 +11,7 @@
     String tipoUsuario = (String) sessao.getAttribute("tipoUsuario");
 
     if (!"est".equals(tipoUsuario)) {
-        response.sendRedirect("produtosEstoquista.jsp");
+        response.sendRedirect("/ExibirProdutosEstoquista");
         return;
     }
 %>

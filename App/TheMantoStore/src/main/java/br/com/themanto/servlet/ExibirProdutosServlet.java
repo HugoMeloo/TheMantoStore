@@ -21,6 +21,7 @@ public class ExibirProdutosServlet extends HttpServlet {
         List<Produtos> produtos = new ProdutosDao().findAllProdutos();
 
         req.setAttribute("produtos", produtos);
+        System.out.println("Número de produtos retornados: " + produtos.size());
 
         req.getRequestDispatcher("/produtosBackoffice.jsp").forward(req, resp);
     }

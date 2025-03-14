@@ -723,3 +723,137 @@ UPDATE PRODUTO SET status = ? WHERE id = ? [42102-214]
 2025-03-09 17:40:58 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUTO" not found; SQL statement:
 UPDATE PRODUTO SET status = ? WHERE id = ? [42102-214]
+2025-03-13 19:24:34 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CPF CHARACTER(50)": "U&'551.270.778-76 \\00c2\\00a0\\00c2\\00a0\\00c2\\00a0\\00c2\\00a0\\00c2\\00a0\\00c2\\00a0\\0... (85)"; SQL statement:
+UPDATE USERS SET nome = ?, cpf = ?, senha = ? WHERE idUser = ? [22001-214]
+2025-03-13 19:47:03 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CPF CHARACTER VARYING(14)": "CAST('52675876801                                       ' AS CHAR(50)) (50)"; SQL statement:
+INSERT INTO "PUBLIC"."USERS_COPY_4_0"("IDUSER", "NOME", "EMAIL", "SENHA", "CPF", "STATUS", "GRUPO") OVERRIDING SYSTEM VALUE SELECT "IDUSER", "NOME", "EMAIL", "SENHA", "CPF", "STATUS", "GRUPO" FROM "PUBLIC"."USERS" [22001-214]
+2025-03-13 19:49:09 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CPF CHARACTER VARYING(14)": "CAST('52675876801                                       ' AS CHAR(50)) (50)"; SQL statement:
+INSERT INTO "PUBLIC"."USERS_COPY_4_1"("IDUSER", "NOME", "EMAIL", "SENHA", "CPF", "STATUS", "GRUPO") OVERRIDING SYSTEM VALUE SELECT "IDUSER", "NOME", "EMAIL", "SENHA", "CPF", "STATUS", "GRUPO" FROM "PUBLIC"."USERS" [22001-214]
+2025-03-13 19:49:52 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS_COPY_4_0" not found; SQL statement:
+INSERT INTO "PUBLIC"."USERS_COPY_4_0"("IDUSER", "NOME", "EMAIL", "SENHA", "CPF", "STATUS", "GRUPO") 
+OVERRIDING SYSTEM VALUE 
+SELECT "IDUSER", "NOME", "EMAIL", "SENHA", TRIM("CPF"), "STATUS", "GRUPO" FROM "PUBLIC"."USERS" [42102-214]
+2025-03-13 19:51:11 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CPF CHARACTER VARYING(14)": "'52675876801                                       ' (50)"; SQL statement:
+INSERT INTO "PUBLIC"."USERS_COPY_4_4"("IDUSER", "NOME", "EMAIL", "SENHA", "CPF", "STATUS", "GRUPO") OVERRIDING SYSTEM VALUE SELECT "IDUSER", "NOME", "EMAIL", "SENHA", "CPF", "STATUS", "GRUPO" FROM "PUBLIC"."USERS" [22001-214]
+2025-03-13 21:45:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Parameter "#6" is not set; SQL statement:
+UPDATE PRODUTOS SET nome = ?, avaliacao = ?, descricao = ?, preco = ?, quantidade = ? WHERE id = ? [90012-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:646)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.expression.Parameter.checkSet(Parameter.java:75)
+	at org.h2.command.Prepared.checkParameters(Prepared.java:207)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:159)
+	at org.h2.command.Command.executeUpdate(Command.java:252)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:209)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:169)
+	at org.apache.commons.dbcp2.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:136)
+	at org.apache.commons.dbcp2.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:136)
+	at dao.ProdutosDao.updateProduto(ProdutosDao.java:124)
+	at br.com.themanto.servlet.CadastrarProdutoServlet.doPost(CadastrarProdutoServlet.java:54)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:647)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:728)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:502)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:100)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:953)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:408)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1041)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:603)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+2025-03-13 21:45:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "IMAGENS" not found; SQL statement:
+SELECT * FROM imagens WHERE produto_id = ? [42102-214]
+2025-03-13 21:47:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Parameter "#6" is not set; SQL statement:
+UPDATE PRODUTOS SET nome = ?, avaliacao = ?, descricao = ?, preco = ?, quantidade = ? WHERE id = ? [90012-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:646)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.expression.Parameter.checkSet(Parameter.java:75)
+	at org.h2.command.Prepared.checkParameters(Prepared.java:207)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:159)
+	at org.h2.command.Command.executeUpdate(Command.java:252)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:209)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:169)
+	at org.apache.commons.dbcp2.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:136)
+	at org.apache.commons.dbcp2.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:136)
+	at dao.ProdutosDao.updateProduto(ProdutosDao.java:124)
+	at br.com.themanto.servlet.CadastrarProdutoServlet.doPost(CadastrarProdutoServlet.java:54)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:647)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:728)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:502)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:100)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:953)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:408)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1041)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:603)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+2025-03-13 21:49:03 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Parameter "#6" is not set; SQL statement:
+UPDATE PRODUTOS SET nome = ?, avaliacao = ?, descricao = ?, preco = ?, quantidade = ? WHERE id = ? [90012-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:646)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.expression.Parameter.checkSet(Parameter.java:75)
+	at org.h2.command.Prepared.checkParameters(Prepared.java:207)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:159)
+	at org.h2.command.Command.executeUpdate(Command.java:252)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:209)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:169)
+	at org.apache.commons.dbcp2.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:136)
+	at org.apache.commons.dbcp2.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:136)
+	at dao.ProdutosDao.updateProduto(ProdutosDao.java:124)
+	at br.com.themanto.servlet.CadastrarProdutoServlet.doPost(CadastrarProdutoServlet.java:54)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:647)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:728)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:502)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:100)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:953)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:408)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1041)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:603)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:310)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
