@@ -313,13 +313,11 @@
             </c:if>
             <div class="position-fixed bottom-0 end-0 m-3">
                 <div class="dropdown">
-                    <button class="btn bg-info text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                    <button class="btn bg-info text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Ações
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                               data-bs-target="#cadastrarProdutoModal">+ Novo Produto</a></li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#cadastrarProdutoModal">+ Novo Produto</a></li>
                     </ul>
                 </div>
             </div>
@@ -409,6 +407,12 @@
     </div>
 
 </div>
+<script src="http://localhost:8080/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="../js/feather.min.js"></script>
+<script src="../js/dashboard.js"></script>
+<script src="../js/drop.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="http://localhost:8080/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="../js/feather.min.js"></script>
 <script src="../js/dashboard.js"></script>
