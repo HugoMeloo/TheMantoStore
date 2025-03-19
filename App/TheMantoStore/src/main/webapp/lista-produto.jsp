@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand" href="#">The Manto Store</a>
+            <a class="navbar-brand" href="lista-produto.jsp">The Manto Store</a>
             <form class="d-flex w-50">
                 <div class="input-group">
                     <input type="text" id="filtroNome" class="form-control rounded-pill ps-2" placeholder="O que você procura?" onkeyup="filtrarUsuarios()" style="height: 45px;">
@@ -31,43 +31,46 @@
         <h2 class="text-center">Camisas de Times</h2>
         <div class="row">
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <span>[Imagem Aqui]</span>
+                <a href="detalhe-produto.jsp" class="text-decoration-none text-dark">
+                    <div class="card h-100">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span>[Imagem Aqui]</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">[Nome da Camisa]</h5>
+                            <p class="card-text">[Descrição da camisa]</p>
+                            <p class="fw-bold">[Preço]</p>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title">[Nome da Camisa]</h5>
-                        <p class="card-text">[Descrição da camisa]</p>
-                        <p class="fw-bold">[Preço]</p>
-                        <button class="btn btn-primary">Comprar</button>
-                    </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <span>[Imagem Aqui]</span>
+                <a href="detalhe-produto.jsp" class="text-decoration-none text-dark">
+                    <div class="card h-100">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span>[Imagem Aqui]</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">[Nome da Camisa]</h5>
+                            <p class="card-text">[Descrição da camisa]</p>
+                            <p class="fw-bold">[Preço]</p>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title">[Nome da Camisa]</h5>
-                        <p class="card-text">[Descrição da camisa]</p>
-                        <p class="fw-bold">[Preço]</p>
-                        <button class="btn btn-primary">Comprar</button>
-                    </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <span>[Imagem Aqui]</span>
+                <a href="detalhe-produto.jsp" class="text-decoration-none text-dark">
+                    <div class="card h-100">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span>[Imagem Aqui]</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">[Nome da Camisa]</h5>
+                            <p class="card-text">[Descrição da camisa]</p>
+                            <p class="fw-bold">[Preço]</p>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title">[Nome da Camisa]</h5>
-                        <p class="card-text">[Descrição da camisa]</p>
-                        <p class="fw-bold">[Preço]</p>
-                        <button class="btn btn-primary">Comprar</button>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>

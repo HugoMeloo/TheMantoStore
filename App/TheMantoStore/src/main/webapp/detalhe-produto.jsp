@@ -20,18 +20,25 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">The Manto Store</a>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="O que você procura?" aria-label="Search">
-            </form>
-            <div>
-                <button class="btn btn-danger">Sair</button>
+         <nav class="navbar navbar-dark bg-dark">
+            <div class="container d-flex justify-content-between align-items-center">
+                <a class="navbar-brand" href="lista-produto.jsp">The Manto Store</a>
+                <form class="d-flex w-50">
+                    <div class="input-group">
+                        <input type="text" id="filtroNome" class="form-control rounded-pill ps-2" placeholder="O que você procura?" onkeyup="filtrarUsuarios()" style="height: 45px;">
+                    </div>
+                </form>
+                <div class="d-flex align-items-center">
+                    <a href="/usuarios" class="me-3">
+                        <img src="img/user.png" alt="Usuário" style="width: 30px; height: 30px;">
+                    </a>
+                    <a href="/carrinho" class="me-3">
+                        <img src="img/carrinho.png" alt="Carrinho" style="width: 30px; height: 30px;">
+                    </a>
+                    <a href="/logout" class="btn btn-danger">Sair</a>
+                </div>
             </div>
-        </div>
-    </nav>
-
+        </nav>
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-6">
@@ -51,6 +58,7 @@
                 <h4 class="text-success">R$ 1.538,81 no Pix</h4>
                 <p class="text-muted">R$ 1.729,00 em até 8x de R$ 216,12</p>
                 <button class="btn btn-secondary" disabled>Comprar</button>
+                <a href="carrinho.jsp">Adicionar ao Carrinho</a>
             </div>
         </div>
     </div>
