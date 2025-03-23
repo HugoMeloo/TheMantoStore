@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <head>
@@ -11,21 +11,17 @@
         .table-responsive {
             overflow-x: hidden;
         }
-
         .btn-ativar {
             background-color: #198754;
             color: white;
         }
-
         .btn-desativar {
             background-color: #dc3545;
             color: white;
         }
-
         .search-input {
             max-width: 400px;
         }
-
         .pagination-container {
             position: fixed;
             bottom: 20px;
@@ -37,66 +33,6 @@
             border-radius: 10px;
         }
     </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let originalCheckboxState = {}; // Armazena os estados originais dos checkboxes
-
-            document.querySelectorAll(".form-check-input").forEach(checkbox => {
-                let produtoId = checkbox.id.replace("statusSwitch-", ""); // Pega o ID do produto
-                originalCheckboxState[produtoId] = checkbox.checked; // Salva o estado original
-
-                // Intercepta a mudança do checkbox
-                checkbox.addEventListener("click", function (event) {
-                    event.preventDefault(); // Impede a alteração imediata do estado do checkbox
-                    abrirConfirmacao(event, produtoId, checkbox);
-                });
-            });
-
-            function abrirConfirmacao(event, produtoId, checkbox) {
-                let statusAtual = checkbox.checked;
-                let statusTexto = statusAtual ? "Ativo" : "Inativo";
-                let novoStatus = statusAtual ? "desativar" : "ativar";
-                let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
-
-                // Atualiza o modal com informações do produto
-                document.getElementById("confirmMessage").innerText =
-                    `O produto ID ${produtoId} está atualmente ${statusTexto}. Deseja ${novoStatus} este produto?`;
-
-                document.getElementById("modalProdutoId").value = produtoId;
-                document.getElementById("modalStatus").value = statusAtual ? "false" : "true";
-                document.getElementById("modalCurrentPage").value = currentPage;
-
-                // Exibe o modal
-                let modal = new bootstrap.Modal(document.getElementById("confirmModal"));
-                modal.show();
-
-                // Se o usuário cancelar, volta ao estado original
-                document.getElementById("cancelAction").onclick = function () {
-                    checkbox.checked = originalCheckboxState[produtoId]; // Volta ao estado salvo
-                };
-            }
-
-            // Confirma a ação e submete o formulário
-            document.getElementById("confirmAction").addEventListener("click", function () {
-                let produtoId = document.getElementById("modalProdutoId").value;
-                let novoStatus = document.getElementById("modalStatus").value;
-                let currentPage = document.getElementById("modalCurrentPage").value;
-
-                let form = document.createElement("form");
-                form.method = "POST";
-                form.action = "/AlterarStatusProduto";
-
-                form.innerHTML = `
-                     <input type="hidden" name="id" value="${produtoId}">
-                     <input type="hidden" name="status" value="${novoStatus}">
-                     <input type="hidden" name="page" value="${currentPage}">
-                 `;
-
-                document.body.appendChild(form);
-                form.submit();
-            });
-        });
-    </script>
 </head>
 <body>
 <header class="navbar navbar-dark sticky-top bg-info text-dark flex-md-nowrap p-0 shadow">
@@ -148,86 +84,21 @@
                                 <td>${produto.status ? 'Ativo' : 'Inativo'}</td>
                                 <td>
                                     <div class="d-flex gap-2">
-
                                         <!-- Botão para abrir o modal de atualização -->
-                                        <a class="btn btn-warning" href="#" data-bs-toggle="modal"
-                                           data-bs-target="#updateProdutoModal-${produto.id}">Alterar</a>
-
-                                        <!-- Modal de atualização -->
-                                        <div class="modal fade" id="updateProdutoModal-${produto.id}" tabindex="-1"
-                                             aria-labelledby="updateProdutoModalLabel-${produto.id}"
-                                             aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content p-4">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title"
-                                                            id="updateProdutoModalLabel-${produto.id}">Atualizar
-                                                            Produto</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <!-- Formulário de atualização -->
-                                                        <form action="/CadastrarProduto" method="post" enctype="multipart/form-data">
-                                                            <!-- ID do Produto (campo oculto) -->
-                                                            <input type="hidden" name="id" value="${produto.id}">
-
-                                                            <!-- Nome do Produto -->
-                                                            <div class="form-group">
-                                                                <label for="nome-${produto.id}">Nome do Produto:</label>
-                                                                <input type="text" class="form-control"
-                                                                       id="produto-name-${produto.id}" name="produto-name"
-                                                                       value="${produto.nomeProduto}" required>
-                                                            </div>
-
-                                                            <!-- Avaliação -->
-                                                            <div class="form-group">
-                                                                <label for="avaliacao-${produto.id}">Avaliação:</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="avaliacao-${produto.id}" name="avaliacao"
-                                                                       value="${produto.avaliacao}" required>
-                                                            </div>
-
-                                                            <!-- Quantidade Estoque -->
-                                                            <div class="form-group">
-                                                                <label for="qtdEstoque-${produto.id}">Quantidade:</label>
-                                                                <input type="number" class="form-control"
-                                                                       id="qtdEstoque-${produto.id}" name="qtdEstoque"
-                                                                       value="${produto.qtdEstoque}" required>
-                                                            </div>
-
-                                                            <!-- Preço -->
-                                                            <div class="form-group">
-                                                                <label for="preco-${produto.id}">Preço Unitário (R$):</label>
-                                                                <input type="text" class="form-control"
-                                                                       id="preco-${produto.id}" name="preco"
-                                                                       value="${produto.preco}" required>
-                                                            </div>
-
-                                                            <!-- Upload de Novas Imagens -->
-                                                            <div class="form-group">
-                                                                <label for="imageProduto-${produto.id}">Selecionar novas imagens (opcional):</label>
-                                                                <input type="file" class="form-control"
-                                                                       name="imagemProduto"
-                                                                       id="imageProduto-${produto.id}" multiple>
-                                                                <small class="text-muted">As novas imagens substituirão as antigas.</small>
-                                                            </div>
-
-                                                            <!-- Botão de Atualização -->
-                                                            <button type="submit" class="btn btn-primary mt-3">
-                                                                Atualizar
-                                                            </button>
-                                                        </form>
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <a class="btn btn-warning" href="#" onclick="modalManager.abrirModalAtualizarProduto({
+                                                id: '${produto.id}',
+                                                nomeProduto: '${produto.nomeProduto}',
+                                                avaliacao: '${produto.avaliacao}',
+                                                qtdEstoque: '${produto.qtdEstoque}',
+                                                preco: '${produto.preco}'
+                                                })">Alterar</a>
+                                        <!-- ---------------------------------------------------- -->
+                                        <!-- Botão para chamar o Modal para mostrar detalhes -->
                                         <button class="btn btn-success"
                                                 onclick="mostrarDetalhes('${produto.id}', '${produto.nomeProduto}', '${produto.preco}', '${produto.avaliacao}', '${produto.descricao}', '${produto.imagens[0].caminhoArquivo}')">
                                             Visualizar
                                         </button>
+                                        <!-- ---------------------------------------------------- -->
                                         <!-- Switch de status -->
                                         <form id="statusForm-${produto.id}" action="/AlterarStatusProduto"
                                               method="post" class="d-flex align-items-center">
@@ -238,9 +109,8 @@
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox"
                                                        id="statusSwitch-${produto.id}"
-                                                    ${produto.status ? 'checked' : ''}
-                                                       data-bs-toggle="modal"
-                                                       data-bs-target="#confirmModal-${produto.id}">
+                                                       data-nome-produto="${produto.nomeProduto}"
+                                                    ${produto.status ? 'checked' : ''}>
                                                 <label class="form-check-label fw-bold ms-2"
                                                        for="statusSwitch-${produto.id}">
                                                         ${produto.status ? 'Ativo' : 'Inativo'}
@@ -248,43 +118,8 @@
                                             </div>
                                         </form>
                                     </div>
-
                                 </td>
-
                             </tr>
-                            <!-- Modal de Confirmação puxando os dados do JSP diretamente -->
-                            <div class="modal fade" id="confirmModal-${produto.id}" tabindex="-1"
-                                 aria-labelledby="confirmModalLabel-${produto.id}" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="confirmModalLabel-${produto.id}">Confirmação de
-                                                Alteração</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>O produto <strong>${produto.nomeProduto}</strong> (ID:
-                                                <strong>${produto.id}</strong>) está atualmente
-                                                <strong>${produto.status ? 'Ativo' : 'Inativo'}</strong>.</p>
-                                            <p>Deseja realmente
-                                                <strong>${produto.status ? 'desativar' : 'ativar'}</strong> este
-                                                produto?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Cancelar
-                                            </button>
-                                            <form action="/AlterarStatusProduto" method="post">
-                                                <input type="hidden" name="id" value="${produto.id}">
-                                                <input type="hidden" name="status" value="${!produto.status}">
-                                                <input type="hidden" name="page" value="${currentPage}">
-                                                <button type="submit" class="btn btn-primary">Confirmar</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </c:if>
                     </c:forEach>
                     </tbody>
@@ -312,128 +147,21 @@
                 </div>
             </c:if>
             <div class="position-fixed bottom-0 end-0 m-3">
-                <div class="dropdown">
-                    <button class="btn bg-info text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Ações
+                <div style="position: fixed; bottom: 40px; right: 40px; z-index: 9999;">
+                    <button class="btn btn-info text-dark" onclick="modalManager.abrirCadastroProdutoModal()">
+                        + Novo Produto
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#cadastrarProdutoModal">+ Novo Produto</a></li>
-                    </ul>
-                </div>
-            </div>
-            <!-- Modal de cadastro de produto -->
-            <div class="modal fade" id="cadastrarProdutoModal" tabindex="-1"
-                 aria-labelledby="cadastrarProdutoModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content p-4">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="cadastrarProdutoModalLabel">Cadastrar Produto</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="/CadastrarProduto" method="post" enctype="multipart/form-data">
-                                <input type="hidden" name="id" id="id"
-                                       value="${param.id != null && param.id != '' ? param.id : 0}">
-                                <div class="form-group">
-                                    <label for="produto-name">Nome do Produto:</label>
-                                    <input type="text" class="form-control" id="produto-name" name="produto-name"
-                                           maxlength="255" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="avaliacao">Avaliação:</label>
-                                    <input type="number" step="0.5" min="0.5" max="5" class="form-control"
-                                           id="avaliacao" name="avaliacao" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="descricao">Descrição (até 2000 caracteres):</label>
-                                    <textarea class="form-control" id="descricao" name="descricao" maxlength="2000"
-                                              required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="preco">Preço:</label>
-                                    <input type="number" step="0.01" class="form-control" id="preco" name="preco"
-                                           required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="quantidade">Quantidade Estoque:</label>
-                                    <input type="number" class="form-control" id="quantidade" name="quantidade"
-                                           required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="imageProduto">Imagens:</label>
-                                    <input type="file" class="form-control" name="imageProduto" id="imageProduto"
-                                           multiple required>
-                                    <small>Selecione múltiplas imagens</small>
-                                </div>
-                                <button type="submit" class="btn btn-primary mt-3">Cadastrar</button>
-                                <button type="button" class="btn btn-secondary mt-3"
-                                        onclick="window.location.href='/ExibirProdutos'">Cancelar
-                                </button>
-                            </form>
-                        </div>
-                    </div>
                 </div>
             </div>
         </main>
     </div>
-    <!-- Modal de Detalhes do Produto -->
-    <div class="modal fade" id="detalheProdutoModal" tabindex="-1" aria-labelledby="detalheProdutoModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content bg-dark text-white shadow-lg rounded-4">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title fw-bold" id="detalheProdutoModalLabel">Detalhes do Produto</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row align-items-center">
-                        <div class="col-md-5 text-center">
-                            <img id="produtoImagem" src="https://via.placeholder.com/350" class="img-fluid rounded-3 shadow-sm" alt="Imagem do Produto">
-                        </div>
-                        <div class="col-md-7">
-                            <h3 id="produtoNome" class="fw-bold text-uppercase"></h3>
-                            <p class="text-muted">ID: <span id="produtoId"></span></p>
-                            <p class="fs-5"><strong>Preço:</strong> <span class="text-success fw-bold">R$ <span id="produtoPreco"></span></span></p>
-                            <p class="fs-5"><strong>Avaliação:</strong> <span id="produtoAvaliacao"></span> ⭐</p>
-                            <p><strong>Descrição:</strong></p>
-                            <p id="produtoDescricao" class="text-white"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-outline-light px-4 rounded-pill" data-bs-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
-<script src="http://localhost:8080/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<jsp:include page="modais.jsp"/>
+<script src="../js/ModalManager.js"></script>
 <script src="../js/feather.min.js"></script>
-<script src="../js/dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/drop.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="http://localhost:8080/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script src="../js/feather.min.js"></script>
-<script src="../js/dashboard.js"></script>
-<script src="../js/drop.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-<script>
-    function mostrarDetalhes(id, nome, preco, avaliacao, descricao, imagem) {
-        document.getElementById("produtoId").textContent = id;
-        document.getElementById("produtoNome").textContent = nome;
-        document.getElementById("produtoPreco").textContent = preco;
-        document.getElementById("produtoAvaliacao").textContent = avaliacao;
-        document.getElementById("produtoDescricao").textContent = descricao;
-
-        // Alterando a imagem no modal
-        document.getElementById("produtoImagem").src = imagem ? imagem : "https://via.placeholder.com/350";
-
-        let modal = new bootstrap.Modal(document.getElementById("detalheProdutoModal"));
-        modal.show();
-    }
-</script>
 </body>
 </html>
