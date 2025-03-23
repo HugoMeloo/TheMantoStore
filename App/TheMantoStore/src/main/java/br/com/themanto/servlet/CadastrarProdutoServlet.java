@@ -36,7 +36,7 @@ public class CadastrarProdutoServlet extends HttpServlet {
             String avaliacaoStr = parameters.get("avaliacao") != null ? parameters.get("avaliacao").toString() : "0";
             String descricao = parameters.get("descricao") != null ? parameters.get("descricao").toString() : "";
             String precoStr = parameters.get("preco") != null ? parameters.get("preco").toString() : "0";
-            String quantidadeStr = parameters.get("quantidade") != null ? parameters.get("quantidade").toString() : "0";
+            String quantidadeStr = parameters.get("qtdEstoque") != null ? parameters.get("qtdEstoque").toString() : "0";
 
             double avaliacao = Double.parseDouble(avaliacaoStr);
             double preco = Double.parseDouble(precoStr);
