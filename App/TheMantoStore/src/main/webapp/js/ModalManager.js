@@ -4,6 +4,8 @@ class ModalManager {
         this.originalCheckboxState = {};
     }
 
+
+
     abrirModal(modalId) {
         this.modal = new bootstrap.Modal(document.getElementById(modalId));
         this.modal.show();
@@ -101,14 +103,21 @@ class ModalManager {
 
         const form = modalElement.querySelector('form');
 
+        // Preenche os campos com os dados do produto
         form.querySelector('#updateProdutoId').value = produto.id;
         form.querySelector('#updateProdutoNome').value = produto.nomeProduto;
         form.querySelector('#updateProdutoAvaliacao').value = produto.avaliacao;
         form.querySelector('#updateProdutoQtdEstoque').value =
             produto.qtdEstoque !== undefined && produto.qtdEstoque !== null ? produto.qtdEstoque : '';
         form.querySelector('#updateProdutoPreco').value = produto.preco;
-
         form.querySelector('input[name="imagemProduto"]').value = '';
+
+        // Captura o número da página atual da URL
+        const params = new URLSearchParams(window.location.search);
+        const currentPage = params.get("page") || 1;
+
+        // Preenche o campo hidden com a página atual
+        form.querySelector('#updateProdutoPage').value = currentPage;
 
         this.abrirModal('updateProdutoModal');
     }

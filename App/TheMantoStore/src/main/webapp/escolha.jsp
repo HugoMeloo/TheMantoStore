@@ -9,11 +9,6 @@
     }
 
     String tipoUsuario = (String) sessao.getAttribute("tipoUsuario");
-
-    if (!"admin".equals(tipoUsuario)) {
-        response.sendRedirect("/admin/ExibirProdutos");
-        return;
-    }
 %>
 
 <!DOCTYPE html>
@@ -29,7 +24,10 @@
     <h2 class="text-center">O que deseja fazer?</h2>
     <form action="redirecionar" method="post">
         <button type="submit" name="opcao" value="1" class="btn btn-primary w-100 mb-2">Listar Produtos</button>
+
+        <% if ("admin".equals(tipoUsuario)) { %>
         <button type="submit" name="opcao" value="2" class="btn btn-secondary w-100">Listar Usuários</button>
+        <% } %>
     </form>
 </div>
 
