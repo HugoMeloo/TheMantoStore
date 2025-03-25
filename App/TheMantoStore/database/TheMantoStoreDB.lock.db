@@ -1,0 +1,6 @@
+#FileLock
+#Mon Mar 24 22:54:02 GMT-03:00 2025
+hostName=192.168.0.13
+id=195cafbc232468d1196f06a41858eb4fe8f3d69ee31
+method=file
+server=192.168.0.13\:56522
