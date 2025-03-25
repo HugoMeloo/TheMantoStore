@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Manto Store</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-dark bg-dark">
@@ -13,17 +19,16 @@
             <a class="navbar-brand" href="lista-produto.jsp">The Manto Store</a>
             <form class="d-flex w-50">
                 <div class="input-group">
-                    <input type="text" id="filtroNome" class="form-control rounded-pill ps-2" placeholder="O que você procura?" onkeyup="filtrarUsuarios()" style="height: 45px;">
+                <input id="liveSearchInput" class="form-control form-control-dark rounded-pill border-0 my-2 search-input" type="text" placeholder="Pesquisar..." aria-label="Search">
                 </div>
             </form>
             <div class="d-flex align-items-center">
-                <a href="/usuarios" class="me-3">
+                <a href="/login" class="me-3">
                     <img src="img/user.png" alt="Usuário" style="width: 30px; height: 30px;">
                 </a>
                 <a href="/carrinho" class="me-3">
                     <img src="img/carrinho.png" alt="Carrinho" style="width: 30px; height: 30px;">
                 </a>
-                <a href="/logout" class="btn btn-danger">Sair</a>
             </div>
         </div>
     </nav>
