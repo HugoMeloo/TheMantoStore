@@ -1,6 +1,7 @@
 package br.com.themanto.servlet;
 
 import dao.ProdutosDao;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,13 +14,18 @@ public class AtualizarQuantidadeProdutoServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            String page = req.getParameter("page");
             int produtoId = Integer.parseInt(req.getParameter("id"));
             int novaQuantidade = Integer.parseInt(req.getParameter("qtdEstoque"));
 
             ProdutosDao produtosDao = new ProdutosDao();
             produtosDao.atualizarQuantidadeProduto(produtoId, novaQuantidade);
 
-            resp.sendRedirect("/ExibirProdutos"); // Redireciona após a atualização
+            if (page != null && !page.isEmpty()) {
+                resp.sendRedirect("/ExibirProdutos?page=" + page);
+            } else {
+                resp.sendRedirect("/ExibirProdutos");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

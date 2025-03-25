@@ -37,6 +37,7 @@ public class CadastrarProdutoServlet extends HttpServlet {
             String descricao = parameters.get("descricao") != null ? parameters.get("descricao").toString() : "";
             String precoStr = parameters.get("preco") != null ? parameters.get("preco").toString() : "0";
             String quantidadeStr = parameters.get("qtdEstoque") != null ? parameters.get("qtdEstoque").toString() : "0";
+            String page = parameters.get("page") != null ? parameters.get("page").toString() : null;
 
             double avaliacao = Double.parseDouble(avaliacaoStr);
             double preco = Double.parseDouble(precoStr);
@@ -68,8 +69,11 @@ public class CadastrarProdutoServlet extends HttpServlet {
                 }
             }
 
-            resp.sendRedirect("/ExibirProdutos");
-
+            if (page != null && !page.isEmpty() && !"null".equals(page)) {
+                resp.sendRedirect("/ExibirProdutos?page=" + page);
+            } else {
+                resp.sendRedirect("/ExibirProdutos");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
