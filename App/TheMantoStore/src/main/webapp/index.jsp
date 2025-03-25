@@ -315,5 +315,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 -->
-<a href="/login" class="btn btn-success mt-4 w-100">Ir para Login</a>
+<a href="/login" class="btn btn-success mt-4 w-100">Ir para Login</a> <br><br>
+<a href="/lista-produto.jsp" class="btn btn-success mt-4 w-100">Ir para Produtos</a>
 </html>
