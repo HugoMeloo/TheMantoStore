@@ -11,17 +11,21 @@
         .table-responsive {
             overflow-x: hidden;
         }
+
         .btn-ativar {
             background-color: #198754;
             color: white;
         }
+
         .btn-desativar {
             background-color: #dc3545;
             color: white;
         }
+
         .search-input {
             max-width: 400px;
         }
+
         .pagination-container {
             position: fixed;
             bottom: 20px;
@@ -36,21 +40,29 @@
 </head>
 <body>
 <header class="navbar navbar-dark sticky-top bg-info text-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 bg-info text-dark fw-bold" href="/index.jsp">The Manto
-        Store</a>
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 bg-info text-dark fw-bold" href="/index.jsp">
+        The Manto Store
+    </a>
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <input class="form-control form-control-dark rounded-pill border-0 my-2 search-input" type="text"
-           placeholder="Search" aria-label="Search">
+    <input id="liveSearchInput" class="form-control form-control-dark rounded-pill border-0 my-2 search-input"
+           type="text" placeholder="Pesquisar..." aria-label="Search">
+    <a class="nav-link" aria-current="page" href="#">
+        <span class="align-text-bottom">&#128100;</span> <!-- Ícone Unicode de usuário -->
+        <c:if test="${sessionScope.usuario != null}">
+            <span>${sessionScope.usuario.nome}</span>
+        </c:if>
+    </a>
     <div class="navbar-nav">
         <div class="nav-item text-nowrap">
             <a class="nav-link px-3" href="/logout">Sign out</a>
         </div>
     </div>
 </header>
+
 <div class="container-fluid">
     <div class="row">
         <main class="col-12 px-md-4">
@@ -60,7 +72,7 @@
             <c:set var="totalPages" value="${(totalItems + pageSize - 1) / pageSize}"/>
             <c:set var="currentPage" value="${(totalItems <= pageSize) ? 1 : (param.page ne null ? param.page : 1)}"/>
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-sm w-100">
+                <table id="tabela-produtos" class="table table-striped table-bordered table-sm w-100">
                     <thead>
                     <tr>
                         <th>Código</th>
@@ -85,16 +97,18 @@
                                 <td>
                                     <div class="d-flex gap-2">
                                         <!-- Botão para abrir o modal de atualização -->
-                                        <a class="btn btn-warning" href="#" onclick="modalManager.abrirModalAtualizarProduto({
-                                                id: '${produto.id}',
-                                                nomeProduto: '${produto.nomeProduto}',
-                                                avaliacao: '${produto.avaliacao}',
-                                                qtdEstoque: '${produto.qtdEstoque}',
-                                                preco: '${produto.preco}'
-                                                })">Alterar</a>
+                                        <a class="btn btn-warning" href="#"
+                                           onclick="modalManager.abrirModalAtualizarProduto({
+                                                   id: '${produto.id}',
+                                                   nomeProduto: '${produto.nomeProduto}',
+                                                   avaliacao: '${produto.avaliacao}',
+                                                   qtdEstoque: '${produto.qtdEstoque}',
+                                                   preco: '${produto.preco}'
+                                                   })">Alterar</a>
                                         <!-- ---------------------------------------------------- -->
                                         <!-- Botão para chamar o Modal para mostrar detalhes -->
                                         <button class="btn btn-success"
+                                            ${tipoUsuario ne 'admin' ? 'disabled' : ''}
                                                 onclick="mostrarDetalhes('${produto.id}', '${produto.nomeProduto}', '${produto.preco}', '${produto.avaliacao}', '${produto.descricao}', '${produto.imagens[0].caminhoArquivo}')">
                                             Visualizar
                                         </button>
@@ -102,15 +116,18 @@
                                         <!-- Switch de status -->
                                         <form id="statusForm-${produto.id}" action="/AlterarStatusProduto"
                                               method="post" class="d-flex align-items-center">
+
                                             <input type="hidden" name="id" value="${produto.id}">
                                             <input type="hidden" name="page" value="${currentPage}">
                                             <input type="hidden" id="statusHidden-${produto.id}" name="status"
                                                    value="${produto.status ? 'true' : 'false'}">
+
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox"
                                                        id="statusSwitch-${produto.id}"
                                                        data-nome-produto="${produto.nomeProduto}"
-                                                    ${produto.status ? 'checked' : ''}>
+                                                    ${produto.status ? 'checked' : ''}
+                                                    ${tipoUsuario ne 'admin' ? 'disabled' : ''}>
                                                 <label class="form-check-label fw-bold ms-2"
                                                        for="statusSwitch-${produto.id}">
                                                         ${produto.status ? 'Ativo' : 'Inativo'}
@@ -123,6 +140,7 @@
                         </c:if>
                     </c:forEach>
                     </tbody>
+
                 </table>
             </div>
             <c:if test="${totalPages > 1}">
@@ -148,7 +166,9 @@
             </c:if>
             <div class="position-fixed bottom-0 end-0 m-3">
                 <div style="position: fixed; bottom: 40px; right: 40px; z-index: 9999;">
-                    <button class="btn btn-info text-dark" onclick="modalManager.abrirCadastroProdutoModal()">
+                    <button class="btn btn-info text-dark" ${tipoUsuario ne 'admin' ? 'disabled' : ''}
+                            onclick="modalManager.abrirCadastroProdutoModal()">
+
                         + Novo Produto
                     </button>
                 </div>
@@ -163,5 +183,72 @@
 <script src="../js/drop.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
 <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script>
+    let currentPage = 1;
+
+    // Escuta digitação no campo de busca
+    document.getElementById('liveSearchInput').addEventListener('input', function () {
+        const termo = this.value.trim();
+        currentPage = 1;
+
+        if (termo === "") {
+            buscarProdutosSemFiltro(currentPage); // exibe todos
+        } else {
+            buscarProdutos(termo, currentPage);   // busca filtrada
+        }
+    });
+
+    // 🔎 Busca filtrada por nome
+    function buscarProdutos(termo, page = 1) {
+        const url = '/BuscarProdutos?search=' + encodeURIComponent(termo) + '&page=' + page;
+
+        fetch(url)
+            .then(response => response.text())
+            .then(html => atualizarTbody(html))
+            .catch(error => {
+                console.error("❌ Erro ao buscar produtos:", error);
+            });
+    }
+
+    // 📦 Busca sem filtro (exibe todos)
+    function buscarProdutosSemFiltro(page = 1) {
+        const url = '/BuscarProdutos?page=' + page;
+
+        fetch(url)
+            .then(response => response.text())
+            .then(html => atualizarTbody(html))
+            .catch(error => {
+                console.error("❌ Erro ao buscar todos os produtos:", error);
+            });
+    }
+
+    // 🔁 Atualiza o tbody da tabela com os dados HTML retornados
+    function atualizarTbody(html) {
+        const tabela = document.querySelector('#tabela-produtos');
+        if (!tabela) {
+            console.warn("⚠️ Tabela #tabela-produtos não encontrada.");
+            return;
+        }
+
+        const tempTable = document.createElement('table');
+        tempTable.innerHTML = html.trim();
+
+        const novoTbody = tempTable.querySelector('tbody');
+        if (!novoTbody) {
+            console.warn("⚠️ <tbody> não encontrado.");
+            console.log("🔎 HTML recebido:", html);
+            return;
+        }
+
+        const tbodyAntigo = tabela.querySelector('tbody');
+        if (tbodyAntigo) {
+            tabela.replaceChild(novoTbody, tbodyAntigo);
+            console.log("✅ tbody substituído com sucesso!");
+        } else {
+            tabela.appendChild(novoTbody);
+            console.log("✅ tbody adicionado com sucesso!");
+        }
+    }
+</script>
 </body>
 </html>

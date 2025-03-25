@@ -146,6 +146,55 @@ public class ProdutosDao {
         return null;
     }
 
+    public List<Produtos> buscarTodosPaginado(int limit, int offset) {
+        List<Produtos> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM produtos ORDER BY id ASC LIMIT ? OFFSET ?";
+
+        try (Connection conn = ConnectionPoolConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, limit);
+            stmt.setInt(2, offset);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Produtos produto = new Produtos(
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getDouble("avaliacao"),
+                        rs.getString("descricao"),
+                        rs.getDouble("preco"),
+                        rs.getInt("quantidade"),
+                        rs.getBoolean("status")
+                );
+
+                produto.setId(rs.getInt("id"));
+                produto.setNomeProduto(rs.getString("nome"));
+                produto.setPreco(rs.getDouble("preco"));
+                produto.setQtdEstoque(rs.getInt("quantidade"));
+                produto.setAvaliacao(rs.getDouble("avaliacao"));
+                produto.setDescricao(rs.getString("descricao"));
+                produto.setStatus(rs.getBoolean("status"));
+
+                // 👇 Inclui imagens do produto
+                List<Imagem> imagens = findAllImageById(produto.getId());
+                produto.setImagens(imagens);
+
+                lista.add(produto);
+            }
+
+            rs.close();
+
+        } catch (Exception e) {
+            e.printStackTrace(); // ou log com logger
+        }
+
+        return lista;
+    }
+
+
     public boolean updateProduto(Produtos produtos) {
         String SQL = "UPDATE PRODUTOS SET nome = ?, avaliacao = ?, descricao = ?, preco = ?, quantidade = ? WHERE id = ?";
 
@@ -182,6 +231,36 @@ public class ProdutosDao {
         }
     }
 
+    public List<Produtos> buscarProdutosPorNomePaginado(String termo, int limit, int offset) {
+        List<Produtos> lista = new ArrayList<>();
+        String sql = "SELECT * FROM PRODUTOS WHERE LOWER(nome) LIKE ? ORDER BY id ASC LIMIT ? OFFSET ?";
+
+        try (Connection conn = ConnectionPoolConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, "%" + termo.toLowerCase() + "%");
+            stmt.setInt(2, limit);
+            stmt.setInt(3, offset);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Produtos produto = new Produtos(
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getDouble("avaliacao"),
+                        rs.getString("descricao"),
+                        rs.getDouble("preco"),
+                        rs.getInt("quantidade"),
+                        rs.getBoolean("status")
+                );
+                lista.add(produto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
 
     public boolean updateProdutoStatus(int idProduto, boolean status) {
         String SQL = "UPDATE PRODUTOS SET status = ? WHERE id = ?";
