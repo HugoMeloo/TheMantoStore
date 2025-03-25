@@ -9,6 +9,7 @@ br\com\themanto\servlet\ExibirUsuarios.class
 br\com\themanto\servlet\RedirecionarServlet.class
 model\Produtos.class
 br\com\themanto\servlet\AlterarGrupoUsuarioServlet.class
+br\com\themanto\servlet\BuscarProdutosServlet.class
 model\Imagem.class
 model\Users.class
 utils\PasswordUtils.class
