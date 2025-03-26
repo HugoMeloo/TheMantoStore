@@ -24,4 +24,13 @@ public class ExibirUsuarios extends HttpServlet {
         req.getRequestDispatcher("/backoffice.jsp").forward(req, resp);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        List<Users> user = new UsersDao().findAllUsers();
+
+        req.setAttribute("users", user);
+
+        req.getRequestDispatcher("/backoffice.jsp").forward(req, resp);    }
+
 }
