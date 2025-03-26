@@ -2,6 +2,7 @@ package br.com.themanto.servlet;
 
 import dao.UsersDao;
 import model.Users;
+import utils.CpfValidator;
 import utils.PasswordUtils;
 
 import javax.servlet.ServletException;
@@ -31,9 +32,22 @@ public class AlterarUsuarioServlet extends HttpServlet {
             return;
         }
 
-        String senhaCriptografada = usuarioExistente.getSenha(); // Mantém a senha original
+        // Validar CPF
+        if (!CpfValidator.isValidCpf(cpf)) {
+            request.setAttribute("errorMessage", "CPF inválido.");
+            request.getRequestDispatcher("/admin/ExibirUsuarios").forward(request, response);
+            return;
+        }
 
-        // Se uma nova senha foi informada, validar e encriptar
+        // Verificar se o CPF pertence a outro usuário
+        if (!cpf.equals(usuarioExistente.getCpf()) && usersDao.cpfExists(cpf)) {
+            request.setAttribute("errorMessage", "Este CPF já está cadastrado para outro usuário.");
+            request.getRequestDispatcher("/admin/ExibirUsuarios").forward(request, response);
+            return;
+        }
+
+        // Verificar senha (somente se informada)
+        String senhaCriptografada = usuarioExistente.getSenha();
         if (senha != null && !senha.isEmpty()) {
             if (!senha.equals(confirmSenha)) {
                 request.setAttribute("errorMessage", "As senhas não correspondem.");
@@ -43,10 +57,18 @@ public class AlterarUsuarioServlet extends HttpServlet {
             senhaCriptografada = PasswordUtils.hashPassword(senha);
         }
 
-        // Criar novo objeto `Users` com os dados atualizados
-        Users usuarioAtualizado = new Users(userId, nome, usuarioExistente.getEmail(), senhaCriptografada, cpf, usuarioExistente.isStatus(), usuarioExistente.getGrupo());
+        // Criar objeto atualizado
+        Users usuarioAtualizado = new Users(
+                userId,
+                nome,
+                usuarioExistente.getEmail(), // mantemos o mesmo e-mail
+                senhaCriptografada,
+                cpf,
+                usuarioExistente.isStatus(),
+                usuarioExistente.getGrupo()
+        );
 
-        // Atualizar usuário no banco de dados
+        // Atualizar no banco
         boolean sucesso = usersDao.updateUser(usuarioAtualizado);
         if (sucesso) {
             response.sendRedirect("/admin/ExibirUsuarios?success=usuarioAtualizado");
