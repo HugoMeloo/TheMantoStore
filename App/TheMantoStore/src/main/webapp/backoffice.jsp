@@ -31,6 +31,13 @@
 
 <div class="container mt-4">
     <h1 class="text-center">Gestão de Usuários</h1>
+    <!-- Alerta de erro -->
+    <c:if test="${not empty errorMessage}">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                ${errorMessage}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </c:if>
 
     <!-- Campo de filtro -->
     <div class="mb-3">

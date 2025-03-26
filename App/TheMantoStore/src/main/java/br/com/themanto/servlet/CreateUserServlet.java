@@ -33,7 +33,7 @@ public class CreateUserServlet extends HttpServlet {
         if (usersDao.cpfExists(cpf)) {
             System.out.println("❌ CPF já cadastrado: " + cpf);
             request.setAttribute("errorMessage", "Este CPF já está cadastrado.");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/ExibirUsuarios").forward(request, response);
             return;
         }
 
@@ -43,7 +43,7 @@ public class CreateUserServlet extends HttpServlet {
             request.setAttribute("name", nome);
             request.setAttribute("email", email);
             request.setAttribute("cpf", cpf);
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/ExibirUsuarios").forward(request, response);
             System.out.println("Senha: " + senha + " Confirmsenha " + confirmSenha);
             return;
         }
@@ -53,7 +53,7 @@ public class CreateUserServlet extends HttpServlet {
             request.setAttribute("errorMessage", "CPF inválido.");
             request.setAttribute("name", nome);
             request.setAttribute("email", email);
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/ExibirUsuarios").forward(request, response);
             return;
         }
 
@@ -62,7 +62,7 @@ public class CreateUserServlet extends HttpServlet {
             request.setAttribute("errorMessage", "Email já cadastrado.");
             request.setAttribute("name", nome);
             request.setAttribute("cpf", cpf);
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/ExibirUsuarios").forward(request, response);
             return;
         }
 
