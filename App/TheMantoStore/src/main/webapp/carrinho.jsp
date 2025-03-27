@@ -1,160 +1,64 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho - The Manto Store</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f5f7fa;
-        }
-
-        h2 {
-            font-weight: 600;
-            margin-bottom: 30px;
-            color: #222;
-        }
-
-        .product-card {
-            border-radius: 15px;
-            background: #fff;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .product-card img {
-            border-radius: 10px;
-            width: 90px;
-            height: 90px;
-            object-fit: cover;
-        }
-
-        .product-info h5 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #333;
-            margin: 0;
-        }
-
-        .product-info p {
-            color: #777;
-            margin: 5px 0 0;
-        }
-
-        .remove-btn {
-            background-color: #ffe6e6;
-            color: #d9534f;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-
-        .remove-btn:hover {
-            background-color: #ffcccc;
-        }
-
-        .summary-card {
-            background: #fff;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .summary-card h5 {
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #222;
-        }
-
-        .summary-card p {
-            margin: 10px 0;
-            color: #555;
-        }
-
-        .btn-finalize {
-            background: linear-gradient(to right, #00c853, #64dd17);
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 30px;
-            width: 100%;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: 0.3s;
-        }
-
-        .btn-finalize:hover {
-            background: linear-gradient(to right, #00b347, #52c41a);
-        }
-
-        .frete-box input[type="radio"] {
-            margin-right: 8px;
-        }
-    </style>
 </head>
-
 <body>
+
 <nav class="navbar navbar-dark bg-dark">
     <div class="container d-flex justify-content-between align-items-center">
-        <a class="navbar-brand" href="lista-produto.jsp">The Manto Store</a>
-        <form class="d-flex w-50">
-            <div class="input-group">
-                <input type="text" id="filtroNome" class="form-control rounded-pill ps-2" placeholder="O que você procura?" onkeyup="filtrarUsuarios()" style="height: 45px;">
-            </div>
-        </form>
-        <div class="d-flex align-items-center">
-            <a href="/login" class="me-3">
-                <img src="img/user.png" alt="Usuário" style="width: 30px; height: 30px;">
-            </a>
-            <a href="/carrinho" class="me-3">
-                <img src="img/carrinho.png" alt="Carrinho" style="width: 30px; height: 30px;">
-            </a>
-        </div>
+        <a class="navbar-brand" href="">The Manto Store</a>
+        <a href="/carrinho" class="me-3">
+            <img src="img/carrinho.png" alt="Carrinho" style="width: 30px; height: 30px;">
+        </a>
     </div>
 </nav>
 
-<!-- Exibindo os dados passados na URL -->
+<div class="container mt-5">
+    <h2>Seu Carrinho</h2>
+
+    <c:if test="${empty sessionScope.carrinho}">
+        <p>O carrinho está vazio.</p>
+    </c:if>
+
+    <c:forEach var="item" items="${sessionScope.carrinho}">
+        <div class="product-card d-flex align-items-center mb-4">
+            <img src="${item.produto.imagens[0].caminhoArquivo}" alt="Imagem do Produto" style="width: 90px;">
+            <div class="product-info ms-3">
+                <h5>${item.produto.nomeProduto}</h5>
+                <p>Preço: R$ ${item.produto.preco}</p>
+                <p>Quantidade: ${item.quantidade}</p>
+                <p>Status:
+                    <c:choose>
+                        <c:when test="${item.produto.status}">
+                            Disponível
+                        </c:when>
+                        <c:otherwise>
+                            Indisponível
+                        </c:otherwise>
+                    </c:choose>
+                </p>
+                <!-- Botões de adicionar/remover quantidade -->
+                <a href="/carrinho?id=${item.produto.id}&acao=adicionar" class="btn btn-success">Adicionar 1</a>
+                <a href="/carrinho?id=${item.produto.id}&acao=remover" class="btn btn-danger">Remover 1</a>
+            </div>
+        </div>
+    </c:forEach>
+
+    <div class="summary-card mt-4">
+        <h5>Resumo do Carrinho</h5>
+        <p>Total: R$ ${totalCarrinho}</p>
 
 
-<p>Nome: ${produto.nomeProduto}</p>
-<p> Imagem: <img src="${produto.imagens[0].caminhoArquivo}" alt="Imagem do Produto" style="width: 50px; height: 50px;"></p>
-<p>Nome: ${produto.nomeProduto}</p>
-<p>Descrição: ${produto.descricao}</p>
-<p>Preço: R$ ${produto.preco}</p>
-<p>Quantidade em Estoque: ${produto.qtdEstoque}</p>
-<p>Status:
-    <c:choose>
-        <c:when test="${produto.status == 'true'}">
-            Disponível
-        </c:when>
-        <c:otherwise>
-            Indisponível
-        </c:otherwise>
-    </c:choose>
-</p>
-
-<div class="summary-card mt-4">
-    <h5>Resumo do Carrinho</h5>
-    <p>Total: R$ ${totalCarrinho}</p>
-    <p>Escolha o método de frete:</p>
-    <div class="frete-box">
-        <label><input type="radio" name="frete" value="normal"> Frete Normal</label>
-        <label><input type="radio" name="frete" value="expresso"> Frete Expresso</label>
+        <!-- Formulário para finalizar a compra -->
+        <form action="carrinho" method="POST">
+            <button type="submit" class="btn btn-primary mt-3">Finalizar Compra</button>
+        </form>
     </div>
-    <button class="btn-finalize mt-3">Finalizar Compra</button>
-</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

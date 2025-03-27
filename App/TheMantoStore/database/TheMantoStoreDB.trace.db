@@ -9500,3 +9500,6 @@ SELECT * FROM produtos WHERE LOWER(nome_produto) LIKE ? ORDER BY nome_produto AS
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
 	at java.base/java.lang.Thread.run(Thread.java:1575)
+2025-03-27 20:32:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting ; SQL statement:
+SELECT * FROM PRODUTOS WHERE id = ? [22018-214]

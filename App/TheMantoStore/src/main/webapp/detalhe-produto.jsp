@@ -137,7 +137,6 @@
                 <!-- Botão COMPRAR mais estilizado -->
                 <form action="/carrinho" method="get">
                     <input type="hidden" name="id" value="${produtos.id}">
-
                     <button type="submit" class="btn btn-success btn-lg rounded-pill shadow-sm fw-bold px-5 py-2">
                         COMPRAR
                     </button>
