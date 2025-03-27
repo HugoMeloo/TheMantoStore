@@ -87,47 +87,59 @@
         <div class="modal-content p-4">
             <div class="modal-header">
                 <h5 class="modal-title" id="cadastrarProdutoModalLabel">Cadastrar Produto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
                 <form action="/CadastrarProduto" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id" id="id"
                            value="${param.id != null && param.id != '' ? param.id : 0}">
-                    <div class="form-group">
-                        <label for="produto-name">Nome do Produto:</label>
+                    <input type="hidden" name="imagemPrincipalIndex" id="imagemPrincipalIndex">
+
+                    <div class="mb-3">
+                        <label for="produto-name" class="form-label">Nome do Produto:</label>
                         <input type="text" class="form-control" id="produto-name" name="produto-name"
                                maxlength="255" required>
                     </div>
-                    <div class="form-group">
-                        <label for="avaliacao">Avaliação:</label>
+
+                    <div class="mb-3">
+                        <label for="avaliacao" class="form-label">Avaliação:</label>
                         <input type="number" step="0.5" min="0.5" max="5" class="form-control"
                                id="avaliacao" name="avaliacao" required>
                     </div>
-                    <div class="form-group">
-                        <label for="descricao">Descrição (até 2000 caracteres):</label>
+
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição (até 2000 caracteres):</label>
                         <textarea class="form-control" id="descricao" name="descricao" maxlength="2000"
                                   required></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="preco">Preço:</label>
+
+                    <div class="mb-3">
+                        <label for="preco" class="form-label">Preço:</label>
                         <input type="number" step="0.01" class="form-control" id="preco" name="preco"
                                required>
                     </div>
-                    <div class="form-group">
-                        <label for="qtdEstoque">Quantidade Estoque:</label>
+
+                    <div class="mb-3">
+                        <label for="qtdEstoque" class="form-label">Quantidade Estoque:</label>
                         <input type="number" class="form-control" id="qtdEstoque" name="qtdEstoque"
                                required>
                     </div>
-                    <div class="form-group">
-                        <label for="imageProduto">Imagens:</label>
+
+                    <div class="mb-3">
+                        <label for="imageProduto" class="form-label">Imagens:</label>
                         <input type="file" class="form-control" name="imageProduto" id="imageProduto"
-                               multiple required>
-                        <small>Selecione múltiplas imagens</small>
+                               multiple required accept="image/*">
+                        <small class="form-text text-muted">Selecione múltiplas imagens. Escolha a principal abaixo.</small>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Cadastrar</button>
-                    <button type="button" class="btn btn-secondary mt-3"
-                            onclick="window.location.href='/ExibirProdutos'">Cancelar
-                    </button>
+
+                    <!-- Área de preview das imagens -->
+                    <div id="previewImagens" class="d-flex flex-wrap gap-3 mt-3"></div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <button type="button" class="btn btn-secondary"
+                                onclick="window.location.href='/ExibirProdutos'">Cancelar</button>
+                    </div>
                 </form>
             </div>
         </div>

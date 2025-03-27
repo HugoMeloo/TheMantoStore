@@ -84,35 +84,46 @@ public class CadastrarProdutoServlet extends HttpServlet {
     private Map<String, Object> uploadImage(HttpServletRequest request) throws Exception {
         Map<String, Object> parameters = new HashMap<>();
         List<Imagem> imagens = new ArrayList<>();
-        boolean primeiraImagem = true;
+        int imagemPrincipalIndex = 0;
 
         if (ServletFileUpload.isMultipartContent(request)) {
             DiskFileItemFactory factory = new DiskFileItemFactory();
             ServletFileUpload upload = new ServletFileUpload(factory);
             List<FileItem> fileItems = upload.parseRequest(request);
 
+            List<FileItem> imagensUpload = new ArrayList<>();
+            int indexImagem = 0;
+
             for (FileItem item : fileItems) {
-                if (item.isFormField()) { // Se for um campo de formulário (não um arquivo)
-                    parameters.put(item.getFieldName(), item.getString("UTF-8")); // Salvar os valores corretamente
-                } else if (item.getSize() > 0) { // Se for um arquivo
-                    String extensao = item.getName().substring(item.getName().lastIndexOf("."));
-                    String nomeArquivo = UUID.randomUUID() + extensao;
-                    String caminhoArquivo = "img/" + nomeArquivo;
-
-                    String pathReal = getServletContext().getRealPath("img") + File.separator + nomeArquivo;
-                    item.write(new File(pathReal));
-
-                    boolean isPadrao = primeiraImagem;
-                    primeiraImagem = false;
-
-                    imagens.add(new Imagem(0, 0, nomeArquivo, caminhoArquivo, isPadrao));
+                if (item.isFormField()) {
+                    parameters.put(item.getFieldName(), item.getString("UTF-8"));
+                    if ("imagemPrincipalIndex".equals(item.getFieldName())) {
+                        imagemPrincipalIndex = Integer.parseInt(item.getString("UTF-8"));
+                    }
+                } else if (item.getSize() > 0) {
+                    imagensUpload.add(item); // Guardar para associar com o índice depois
                 }
+            }
+
+            for (int i = 0; i < imagensUpload.size(); i++) {
+                FileItem item = imagensUpload.get(i);
+
+                String extensao = item.getName().substring(item.getName().lastIndexOf("."));
+                String nomeArquivo = UUID.randomUUID() + extensao;
+                String caminhoArquivo = "img/" + nomeArquivo;
+
+                String pathReal = getServletContext().getRealPath("img") + File.separator + nomeArquivo;
+                item.write(new File(pathReal));
+
+                boolean isPadrao = (i == imagemPrincipalIndex);
+
+                Imagem imagem = new Imagem(0, 0, nomeArquivo, caminhoArquivo, isPadrao);
+                imagens.add(imagem);
             }
         }
 
-        // Adicionando a lista de imagens ao mapa de parâmetros
         parameters.put("imagens", imagens);
-
         return parameters;
     }
+
 }

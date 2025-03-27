@@ -28,19 +28,22 @@
         </button>
 
         <!-- Switch de Status -->
-        <form id="statusForm-${produto.id}" action="/AlterarStatusProduto" method="post" class="d-flex align-items-center">
+        <form id="statusForm-${produto.id}" action="/AlterarStatusProduto"
+              method="post" class="d-flex align-items-center">
+
           <input type="hidden" name="id" value="${produto.id}">
-          <input type="hidden" name="page" value="1">
+          <input type="hidden" name="page" value="${currentPage}">
           <input type="hidden" id="statusHidden-${produto.id}" name="status"
                  value="${produto.status ? 'true' : 'false'}">
 
           <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox"
                    id="statusSwitch-${produto.id}"
+                   data-nome-produto="${produto.nomeProduto}"
               ${produto.status ? 'checked' : ''}
-              ${tipoUsuario ne 'admin' ? 'disabled' : ''}
-                   data-nome-produto="${produto.nomeProduto}">
-            <label class="form-check-label fw-bold ms-2" for="statusSwitch-${produto.id}">
+              ${tipoUsuario ne 'admin' ? 'disabled' : ''}>
+            <label class="form-check-label fw-bold ms-2"
+                   for="statusSwitch-${produto.id}">
                 ${produto.status ? 'Ativo' : 'Inativo'}
             </label>
           </div>
