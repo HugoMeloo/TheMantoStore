@@ -84,6 +84,7 @@ public class ProdutosDao {
             System.out.println("Erro ao carregar produtos: " + e.getMessage());
         }
 
+
         return produtos;
     }
 
