@@ -126,20 +126,20 @@ class ModalManager {
 const modalManager = new ModalManager();
 
 function mostrarDetalhes(id, nome, preco, avaliacao, descricao, imagens) {
-    console.log("🛠️ Dados recebidos em mostrarDetalhes:", {
-        id,
-        nome,
-        preco,
-        avaliacao,
-        descricao,
-        imagens
-    });
-    // Garante que imagens seja sempre um array
-    if (!Array.isArray(imagens)) {
+    console.log("🧪 Dados recebidos:", { id, nome, preco, avaliacao, descricao, imagens });
+
+    // Adaptação para string única
+    if (typeof imagens === "string") {
+        imagens = [{
+            caminhoArquivo: imagens,
+            imagemPadrao: true
+        }];
+    } else if (!Array.isArray(imagens)) {
         imagens = imagens ? [imagens] : [];
     }
 
-    // Atualiza os textos do modal
+    imagens.sort((a, b) => (b.imagemPadrao === true) - (a.imagemPadrao === true));
+
     modalManager.atualizarConteudo("detalheProdutoModal", {
         produtoId: id,
         produtoNome: nome,
@@ -148,15 +148,15 @@ function mostrarDetalhes(id, nome, preco, avaliacao, descricao, imagens) {
         produtoDescricao: descricao
     });
 
-    // Preenche dinamicamente o carrossel
     const container = document.getElementById("carouselImagensContainer");
     container.innerHTML = '';
 
     if (imagens.length > 0) {
-        imagens.forEach((url, index) => {
+        imagens.forEach((imagem, index) => {
+            const caminho = imagem.caminhoArquivo || "https://via.placeholder.com/350";
             const item = document.createElement('div');
             item.className = `carousel-item ${index === 0 ? 'active' : ''}`;
-            item.innerHTML = `<img src="${url}" class="d-block w-100 rounded-3 shadow-sm" alt="Imagem do Produto ${index + 1}">`;
+            item.innerHTML = `<img src="${caminho}" class="d-block w-100 rounded-3 shadow-sm" alt="Imagem ${index + 1}">`;
             container.appendChild(item);
         });
     } else {
@@ -166,20 +166,15 @@ function mostrarDetalhes(id, nome, preco, avaliacao, descricao, imagens) {
         container.appendChild(fallback);
     }
 
-    // Reinstancia o carrossel para garantir funcionamento dinâmico
-    const carouselElement = document.querySelector('#carouselImagensProduto');
+    const carouselElement = document.querySelector('#imageCarousel');
     if (carouselElement) {
         const carousel = bootstrap.Carousel.getInstance(carouselElement);
-        if (carousel) {
-            carousel.dispose();
-        }
+        if (carousel) carousel.dispose();
         new bootstrap.Carousel(carouselElement);
     }
 
-    // Abre o modal
     modalManager.abrirModal("detalheProdutoModal");
 }
-
 
 
 
