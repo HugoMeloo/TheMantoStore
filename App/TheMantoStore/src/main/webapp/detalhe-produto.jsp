@@ -61,7 +61,14 @@
             <h4 class="text-success">${produtos.preco} no Pix</h4>
             <p class="text-muted">${produtos.preco} em até 8x de ${produtos.preco}</p>
             <button class="btn btn-secondary" disabled>Comprar</button>
-            <a href="carrinho.jsp">Adicionar ao Carrinho</a>
+            <form action="carrinho.jsp" method="post">
+                <input type="hidden" name="nome" value="${produtos.nomeProduto}">
+                <input type="hidden" name="preco" value="${produtos.preco}">
+                <input type="hidden" name="descricao" value="${produtos.descricao}">
+                <input type="hidden" name="imagem" value="${not empty produtos.imagens ? produtos.imagens[0].caminhoArquivo : 'img/padrao.jpg'}">
+
+                <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
+            </form>
         </div>
     </div>
 </div>

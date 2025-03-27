@@ -129,7 +129,7 @@
 
 <p>Nome: ${param.nome}</p>
 <p>Imagem: <img src="${param.imagem}" alt="Imagem do Produto" style="width: 50px; height: 50px;"></p>
-<p>Avaliação: ${param.avaliacao}</p>
+<p>Nome: ${param.nome}</p>
 <p>Descrição: ${param.descricao}</p>
 <p>Preço: R$ ${param.preco}</p>
 <p>Quantidade em Estoque: ${param.qtdEstoque}</p>
