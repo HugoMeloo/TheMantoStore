@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho - The Manto Store</title>
@@ -127,13 +128,22 @@
 <!-- Exibindo os dados passados na URL -->
 
 
-<p>Nome: ${param.nome}</p>
-<p>Imagem: <img src="${param.imagem}" alt="Imagem do Produto" style="width: 50px; height: 50px;"></p>
-<p>Nome: ${param.nome}</p>
-<p>Descrição: ${param.descricao}</p>
-<p>Preço: R$ ${param.preco}</p>
-<p>Quantidade em Estoque: ${param.qtdEstoque}</p>
-<p>Status: ${param.status}</p>
+<p>Nome: ${produto.nomeProduto}</p>
+<p> Imagem: <img src="${produto.imagens[0].caminhoArquivo}" alt="Imagem do Produto" style="width: 50px; height: 50px;"></p>
+<p>Nome: ${produto.nomeProduto}</p>
+<p>Descrição: ${produto.descricao}</p>
+<p>Preço: R$ ${produto.preco}</p>
+<p>Quantidade em Estoque: ${produto.qtdEstoque}</p>
+<p>Status:
+    <c:choose>
+        <c:when test="${produto.status == 'true'}">
+            Disponível
+        </c:when>
+        <c:otherwise>
+            Indisponível
+        </c:otherwise>
+    </c:choose>
+</p>
 
 <div class="summary-card mt-4">
     <h5>Resumo do Carrinho</h5>

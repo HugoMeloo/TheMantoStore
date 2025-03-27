@@ -12,81 +12,134 @@
     <link rel="stylesheet" href="css/body.css">
 </head>
 <style>
-    /* Estilo para o card do filme */
+    /* Global Styling */
+    body {
+        background-color: #f4f6f9;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    /* Product Card Refinements */
     .movie-card {
-        border: none;
-        position: relative;
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         overflow: hidden;
-        border-radius: 20px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        background-color: #121212;
     }
 
     .movie-card:hover {
-        transform: scale(1.03);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        transform: translateY(-15px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
 
-    /* Imagem com efeito dinâmico */
+    .image-container {
+        position: relative;
+        overflow: hidden;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
     .image-container img {
-        border-radius: 20px;
-        transition: transform 0.4s ease-in-out, filter 0.4s ease-in-out;
+        transition: transform 0.5s ease;
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
     }
 
-    .movie-card:hover img {
+    .movie-card:hover .image-container img {
         transform: scale(1.1);
-        filter: brightness(80%);
+        filter: brightness(0.8);
     }
 
-    /* Camada de sobreposição escura */
+    /* Overlay Styling */
     .overlay {
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
         position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 20px;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
-        text-align: center;
+        overflow: hidden;
+        width: 100%;
+        height: 0;
+        transition: 0.5s ease;
     }
 
-    /* Título do filme */
+    .movie-card:hover .overlay {
+        height: 100%;
+    }
+
     .overlay h4 {
-        font-size: 1.8rem;
-        color: #fff;
-        font-weight: bold;
-        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-        margin-bottom: 15px;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        margin: 0;
+        opacity: 0;
+        transition: opacity 0.5s;
     }
 
-    /* Botão elegante */
+    .movie-card:hover .overlay h4 {
+        opacity: 1;
+    }
+
+    /* Button Styling */
     .btn-action {
-        display: inline-block;
-        background-color: #e50914;
-        color: white;
-        font-weight: bold;
-        padding: 12px 20px;
+        background: linear-gradient(45deg, #e94560, #ff6b6b);
         border: none;
-        border-radius: 10px;
-        font-size: 1rem;
+        color: white;
+        font-weight: 600;
         text-transform: uppercase;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0 4px 12px rgba(229, 9, 20, 0.4);
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
     }
 
     .btn-action:hover {
-        background-color: #ff0a16;
-        transform: translateY(-5px);
-        box-shadow: 0 6px 20px rgba(255, 10, 22, 0.6);
+        background: linear-gradient(45deg, #ff6b6b, #e94560);
+        transform: translateY(-3px);
+        box-shadow: 0 7px 14px rgba(233,69,96,0.4);
     }
 
-    /* Texto com sombra */
-    .text-shadow {
-        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+    /* Section Title */
+    h2 {
+        color: #16213e;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 30px;
+        position: relative;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: linear-gradient(to right, #e94560, #16213e);
+    }
+
+    /* Card Body Enhancements */
+    .card-body {
+        background-color: #f8f9fa;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .movie-card {
+            margin-bottom: 20px;
+        }
+    }
+    .card-title {
+        color: #212529;
     }
 </style>
-
 <body>
-
 
 <nav class="navbar navbar-dark bg-dark">
     <div class="container d-flex justify-content-between align-items-center">
@@ -144,22 +197,24 @@
 -->
 
 <div class="container mt-4">
-    <h2 class="text-center">Produtos</h2>
-    <div class="row">
+    <h2>Nossa Coleção</h2>
+    <div class="row g-4">
         <c:forEach var="produto" items="${produtos}">
-            <div class="col-md-4 mb-4">
-                <a href="/detalha-produto?id=${produto.id}" class="text-decoration-none text-dark">
+            <div class="col-12 col-md-4 col-lg-3">
+                <a href="/detalha-produto?id=${produto.id}" class="text-decoration-none">
                     <div class="movie-card h-100">
                         <div class="image-container">
-                            <img src="${produto.imagens[0].caminhoArquivo}" alt="Poster" class="w-100 h-100" style="height: 350px; object-fit: cover;">
+                            <img src="${produto.imagens[0].caminhoArquivo}" alt="${produto.nomeProduto}">
                             <div class="overlay">
-                                <h4 class="text-white text-shadow">${produto.nomeProduto}</h4>
+                                <h4>${produto.nomeProduto}</h4>
                             </div>
                         </div>
-                        <div class="card-body text-center">
-                            <p class="fw-bold">${produto.preco}</p>
-                            <p class="card-text">${produto.descricao}</p>
-                            <a href="/detalha-produto" class="btn btn-action w-100">Ver mais</a>
+                        <div class="card-body text-center p-3">
+                            <h5 class="card-title fw-bold mb-2">${produto.nomeProduto}</h5>
+                            <p class="text-muted mb-3">${produto.descricao}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="h5 text-danger mb-0">R$${produto.preco}</span>
+                            </div>
                         </div>
                     </div>
                 </a>
