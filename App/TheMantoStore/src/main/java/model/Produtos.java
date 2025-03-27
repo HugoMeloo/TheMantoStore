@@ -12,6 +12,10 @@ public class Produtos {
     private boolean status;
     private List<Imagem> imagens; // Adicionando suporte para imagens
 
+    //Contrustor vazio para padrão
+    public Produtos() {
+
+    }
     // Construtor atualizado (sem imagens)
     public Produtos(int id, String nomeProduto, double avaliacao, String descricao, double preco, int qtdEstoque, boolean status) {
         this.id = id;
@@ -87,5 +91,10 @@ public class Produtos {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Id "+getId();
     }
 }
