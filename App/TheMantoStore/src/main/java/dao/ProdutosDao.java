@@ -287,6 +287,20 @@ public class ProdutosDao {
         }
     }
 
+    public void deleteImagensByProdutoId(int produtoId) throws SQLException {
+        String sql = "DELETE FROM IMAGEM_PRODUTO WHERE produto_id = ?";
+
+        try (Connection conn = ConnectionPoolConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, produtoId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erro ao deletar imagens do produto: " + e.getMessage());
+            throw e;
+        }
+    }
+
+
     public void saveImagem(Imagem imagem) throws SQLException {
         String SQL = "INSERT INTO imagem_produto (produto_id, nome_arquivo, caminho_arquivo, imagem_padrao) VALUES (?, ?, ?, ?)";
 
