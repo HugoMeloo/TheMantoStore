@@ -151,7 +151,7 @@
                 <a href="/detalha-produto?id=${produto.id}" class="text-decoration-none text-dark">
                     <div class="movie-card h-100">
                         <div class="image-container">
-                            <img src="${produto.imagens[0]}" alt="Poster" class="w-100 h-100" style="height: 350px; object-fit: cover;">
+                            <img src="${produto.imagens[0].caminhoArquivo}" alt="Poster" class="w-100 h-100" style="height: 350px; object-fit: cover;">
                             <div class="overlay">
                                 <h4 class="text-white text-shadow">${produto.nomeProduto}</h4>
                             </div>
