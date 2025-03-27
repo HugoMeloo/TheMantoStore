@@ -9,44 +9,37 @@
 </head>
 <body>
 <!-- Modal de Detalhes do Produto -->
-<div class="modal fade" id="detalheProdutoModal" tabindex="-1" aria-labelledby="detalheProdutoModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="detalheProdutoModal" tabindex="-1" aria-labelledby="detalheProdutoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content bg-dark text-white shadow-lg rounded-4">
             <div class="modal-header border-0">
                 <h5 class="modal-title fw-bold" id="detalheProdutoModalLabel">Detalhes do Produto</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
                 <div class="row align-items-center">
                     <div class="col-md-5 text-center">
                         <!-- Carrossel de Imagens -->
-                        <div id="carouselImagensProduto" class="carousel slide" data-bs-ride="carousel">
+                        <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner" id="carouselImagensContainer">
-                                <!-- Imagens serão inseridas dinamicamente aqui via JS -->
-                                <div class="carousel-item active">
-                                    <img src="https://via.placeholder.com/350"
-                                         class="d-block w-100 rounded-3 shadow-sm" alt="Imagem do Produto">
-                                </div>
+                                <!-- Imagens preenchidas dinamicamente -->
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselImagensProduto" data-bs-slide="prev">
+                            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Anterior</span>
                             </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselImagensProduto" data-bs-slide="next">
+                            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Próxima</span>
+                                <span class="visually-hidden">Próximo</span>
                             </button>
                         </div>
                     </div>
                     <div class="col-md-7">
-                        <h3 id="produtoNome" class="fw-bold text-uppercase"></h3>
+                        <h3 id="produtoNome" class="fw-bold text-uppercase mb-2"></h3>
                         <p class="text-muted">ID: <span id="produtoId"></span></p>
-                        <p class="fs-5"><strong>Preço:</strong> <span class="text-success fw-bold">R$ <span
-                                id="produtoPreco"></span></span></p>
+                        <p class="fs-5"><strong>Preço:</strong> <span class="text-success fw-bold">R$ <span id="produtoPreco"></span></span></p>
                         <p class="fs-5"><strong>Avaliação:</strong> <span id="produtoAvaliacao"></span> ⭐</p>
-                        <p><strong>Descrição:</strong></p>
+                        <p class="mt-3"><strong>Descrição:</strong></p>
                         <p id="produtoDescricao" class="text-white"></p>
                     </div>
                 </div>
