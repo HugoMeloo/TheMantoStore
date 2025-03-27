@@ -19,5 +19,6 @@ dao\ProdutosDao.class
 utils\CpfValidator.class
 br\com\themanto\servlet\AtualizarQuantidadeProdutoServlet.class
 br\com\themanto\servlet\AlterarStatusUsuarioServlet.class
+br\com\themanto\servlet\CarrinhoServlet.class
 br\com\themanto\servlet\CadastrarProdutoServlet.class
 config\ConnectionPoolConfig.class
