@@ -21,8 +21,24 @@
             <div class="modal-body">
                 <div class="row align-items-center">
                     <div class="col-md-5 text-center">
-                        <img id="produtoImagem" src="https://via.placeholder.com/350"
-                             class="img-fluid rounded-3 shadow-sm" alt="Imagem do Produto">
+                        <!-- Carrossel de Imagens -->
+                        <div id="carouselImagensProduto" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner" id="carouselImagensContainer">
+                                <!-- Imagens serão inseridas dinamicamente aqui via JS -->
+                                <div class="carousel-item active">
+                                    <img src="https://via.placeholder.com/350"
+                                         class="d-block w-100 rounded-3 shadow-sm" alt="Imagem do Produto">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselImagensProduto" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselImagensProduto" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Próxima</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="col-md-7">
                         <h3 id="produtoNome" class="fw-bold text-uppercase"></h3>
@@ -36,12 +52,13 @@
                 </div>
             </div>
             <div class="modal-footer border-0">
-                <button type="button" class="btn btn-outline-light px-4 rounded-pill" data-bs-dismiss="modal">Fechar
-                </button>
+                <button type="button" class="btn btn-outline-light px-4 rounded-pill" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-success px-4 rounded-pill" disabled>Comprar</button>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Modal Genérico de Confirmação com informações detalhadas do produto -->
 <div class="modal fade" id="confirmModal" tabindex="-1"
@@ -87,52 +104,65 @@
         <div class="modal-content p-4">
             <div class="modal-header">
                 <h5 class="modal-title" id="cadastrarProdutoModalLabel">Cadastrar Produto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
                 <form action="/CadastrarProduto" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id" id="id"
                            value="${param.id != null && param.id != '' ? param.id : 0}">
-                    <div class="form-group">
-                        <label for="produto-name">Nome do Produto:</label>
+                    <input type="hidden" name="imagemPrincipalIndex" id="imagemPrincipalIndex">
+
+                    <div class="mb-3">
+                        <label for="produto-name" class="form-label">Nome do Produto:</label>
                         <input type="text" class="form-control" id="produto-name" name="produto-name"
                                maxlength="255" required>
                     </div>
-                    <div class="form-group">
-                        <label for="avaliacao">Avaliação:</label>
+
+                    <div class="mb-3">
+                        <label for="avaliacao" class="form-label">Avaliação:</label>
                         <input type="number" step="0.5" min="0.5" max="5" class="form-control"
                                id="avaliacao" name="avaliacao" required>
                     </div>
-                    <div class="form-group">
-                        <label for="descricao">Descrição (até 2000 caracteres):</label>
+
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição (até 2000 caracteres):</label>
                         <textarea class="form-control" id="descricao" name="descricao" maxlength="2000"
                                   required></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="preco">Preço:</label>
+
+                    <div class="mb-3">
+                        <label for="preco" class="form-label">Preço:</label>
                         <input type="number" step="0.01" class="form-control" id="preco" name="preco"
                                required>
                     </div>
-                    <div class="form-group">
-                        <label for="qtdEstoque">Quantidade Estoque:</label>
+
+                    <div class="mb-3">
+                        <label for="qtdEstoque" class="form-label">Quantidade Estoque:</label>
                         <input type="number" class="form-control" id="qtdEstoque" name="qtdEstoque"
                                required>
                     </div>
-                    <div class="form-group">
-                        <label for="imageProduto">Imagens:</label>
+
+                    <div class="mb-3">
+                        <label for="imageProduto" class="form-label">Imagens:</label>
                         <input type="file" class="form-control" name="imageProduto" id="imageProduto"
-                               multiple required>
-                        <small>Selecione múltiplas imagens</small>
+                               multiple required accept="image/*">
+                        <small class="form-text text-muted">Selecione múltiplas imagens. Escolha a principal abaixo.</small>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Cadastrar</button>
-                    <button type="button" class="btn btn-secondary mt-3"
-                            onclick="window.location.href='/ExibirProdutos'">Cancelar
-                    </button>
+
+                    <!-- Área de preview das imagens -->
+                    <div id="previewImagens" class="d-flex flex-wrap gap-3 mt-3"></div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <button type="button" class="btn btn-secondary"
+                                onclick="window.location.href='/ExibirProdutos'">Cancelar</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Modal Genérico de Atualização de Produto -->
 <div class="modal fade" id="updateProdutoModal" tabindex="-1" aria-labelledby="updateProdutoModalLabel"
@@ -147,46 +177,56 @@
                 <form action="${tipoUsuario eq 'admin' ? '/CadastrarProduto' : '/AtualizarQuantidadeProduto'}"
                       method="post"
                 ${tipoUsuario eq 'admin' ? 'enctype="multipart/form-data"' : ''}>
+
                     <input type="hidden" name="page" id="updateProdutoPage">
                     <input type="hidden" id="updateProdutoId" name="id">
+                    <input type="hidden" name="imagemPrincipalIndex" id="imagemPrincipalIndexUpdate">
 
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label>Nome do Produto:</label>
                         <input type="text" class="form-control" id="updateProdutoNome" name="produto-name"
                                required ${tipoUsuario ne 'admin' ? 'disabled' : ''}>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label>Avaliação:</label>
                         <input type="number" step="0.5" min="0.5" max="5" class="form-control"
                                id="updateProdutoAvaliacao" name="avaliacao"
                                required ${tipoUsuario ne 'admin' ? 'disabled' : ''}>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label>Quantidade Estoque:</label>
                         <input type="number" class="form-control"
                                id="updateProdutoQtdEstoque" name="qtdEstoque" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label>Preço Unitário (R$):</label>
                         <input type="text" class="form-control" id="updateProdutoPreco" name="preco"
                                required ${tipoUsuario ne 'admin' ? 'disabled' : ''}>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <label>Selecionar novas imagens (opcional):</label>
-                        <input type="file" class="form-control" name="imagemProduto"
-                               multiple ${tipoUsuario ne 'admin' ? 'disabled' : ''}>
-                        <small class="text-muted">As novas imagens substituirão as antigas.</small>
+                        <input type="file" class="form-control" name="imagemProduto" id="imageProdutoUpdate"
+                               multiple accept="image/*" ${tipoUsuario ne 'admin' ? 'disabled' : ''}>
+                        <small class="text-muted">As novas imagens substituirão as antigas. Selecione a principal abaixo.</small>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Atualizar</button>
+
+                    <!-- Área de preview das imagens novas -->
+                    <div id="previewImagensUpdate" class="d-flex flex-wrap gap-3 mt-3"></div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary">Atualizar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 
 
 <script src="../js/feather.min.js"></script>

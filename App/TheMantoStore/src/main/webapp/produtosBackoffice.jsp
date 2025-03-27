@@ -183,6 +183,7 @@
 <script src="../js/drop.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
 <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="/js/cadastro-produtos.js"></script>
 <script>
     let currentPage = 1;
 
