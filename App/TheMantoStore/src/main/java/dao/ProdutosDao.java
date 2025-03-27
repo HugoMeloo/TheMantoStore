@@ -131,7 +131,7 @@ public class ProdutosDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                return new Produtos(
+                Produtos produto = new Produtos(
                         resultSet.getInt("id"),
                         resultSet.getString("nome"),
                         resultSet.getDouble("avaliacao"),
@@ -140,6 +140,12 @@ public class ProdutosDao {
                         resultSet.getInt("quantidade"),
                         resultSet.getBoolean("status")
                 );
+
+                // ✅ adiciona as imagens direto aqui
+                List<Imagem> imagens = getImagensByProdutoId(produto.getId());
+                produto.setImagens(imagens);
+
+                return produto;
             }
         } catch (SQLException e) {
             System.out.println("Erro ao buscar produto pelo ID: " + e.getMessage());
