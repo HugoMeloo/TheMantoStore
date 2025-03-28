@@ -107,9 +107,27 @@
                                                    })">Alterar</a>
                                         <!-- ---------------------------------------------------- -->
                                         <!-- Botão para chamar o Modal para mostrar detalhes -->
+                                        <c:set var="jsonImagens">
+                                            [
+                                            <c:forEach var="img" items="${produto.imagens}" varStatus="loop">
+                                                {
+                                                "caminhoArquivo": "${fn:escapeXml(img.caminhoArquivo)}",
+                                                "imagemPadrao": ${img.imagemPadrao}
+                                                }<c:if test="${!loop.last}">,</c:if>
+                                            </c:forEach>
+                                            ]
+                                        </c:set>
+
                                         <button class="btn btn-success"
                                             ${tipoUsuario ne 'admin' ? 'disabled' : ''}
-                                                onclick="mostrarDetalhes('${produto.id}', '${produto.nomeProduto}', '${produto.preco}', '${produto.avaliacao}', '${produto.descricao}', '${produto.imagens[0].caminhoArquivo}')">
+                                                onclick='mostrarDetalhes(
+                                                        "${produto.id}",
+                                                        "${fn:escapeXml(produto.nomeProduto)}",
+                                                        "${produto.preco}",
+                                                        "${produto.avaliacao}",
+                                                        "${fn:escapeXml(produto.descricao)}",
+                                                    ${jsonImagens}
+                                                        )'>
                                             Visualizar
                                         </button>
                                         <!-- ---------------------------------------------------- -->
