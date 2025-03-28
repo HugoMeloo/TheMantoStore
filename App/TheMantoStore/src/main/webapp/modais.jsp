@@ -1,183 +1,232 @@
-class ModalManager {
-constructor() {
-this.modal = null;
-this.originalCheckboxState = {};
-}
+<!DOCTYPE html>
+<html lang="pt-br">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<head>
+    <meta charset="UTF-8"/>
+    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <link href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- Modal de Detalhes do Produto -->
+<div class="modal fade" id="detalheProdutoModal" tabindex="-1" aria-labelledby="detalheProdutoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark text-white shadow-lg rounded-4">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold" id="detalheProdutoModalLabel">Detalhes do Produto</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row align-items-center">
+                    <div class="col-md-5 text-center">
+                        <!-- Carrossel de Imagens -->
+                        <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner" id="carouselImagensContainer">
+                                <!-- Imagens preenchidas dinamicamente -->
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Próximo</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <h3 id="produtoNome" class="fw-bold text-uppercase mb-2"></h3>
+                        <p class="text-muted">ID: <span id="produtoId"></span></p>
+                        <p class="fs-5"><strong>Preço:</strong> <span class="text-success fw-bold">R$ <span id="produtoPreco"></span></span></p>
+                        <p class="fs-5"><strong>Avaliação:</strong> <span id="produtoAvaliacao"></span> ⭐</p>
+                        <p class="mt-3"><strong>Descrição:</strong></p>
+                        <p id="produtoDescricao" class="text-white"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-outline-light px-4 rounded-pill" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-success px-4 rounded-pill" disabled>Comprar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Genérico de Confirmação com informações detalhadas do produto -->
+<div class="modal fade" id="confirmModal" tabindex="-1"
+     aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmação de Alteração</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    O produto <strong id="modalNomeProduto"></strong> (ID: <strong id="modalProdutoIdTexto"></strong>)
+                    está atualmente
+                    <strong id="modalStatusAtual"></strong>.
+                </p>
+                <p>
+                    Deseja realmente <strong id="modalNovoStatus"></strong> este produto?
+                </p>
+
+                <!-- Campos ocultos usados pelo JavaScript -->
+                <input type="hidden" id="modalProdutoId">
+                <input type="hidden" id="modalStatus">
+                <input type="hidden" id="modalCurrentPage">
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelAction" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+                <button type="button" id="confirmAction" class="btn btn-primary">
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal para Cadastro de Produto -->
+<div class="modal fade" id="cadastrarProdutoModal" tabindex="-1" aria-labelledby="cadastrarProdutoModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content p-4">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cadastrarProdutoModalLabel">Cadastrar Produto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/CadastrarProduto" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" id="id"
+                           value="${param.id != null && param.id != '' ? param.id : 0}">
+                    <input type="hidden" name="imagemPrincipalIndex" id="imagemPrincipalIndex">
+
+                    <div class="mb-3">
+                        <label for="produto-name" class="form-label">Nome do Produto:</label>
+                        <input type="text" class="form-control" id="produto-name" name="produto-name"
+                               maxlength="255" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="avaliacao" class="form-label">Avaliação:</label>
+                        <input type="number" step="0.5" min="0.5" max="5" class="form-control"
+                               id="avaliacao" name="avaliacao" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição (até 2000 caracteres):</label>
+                        <textarea class="form-control" id="descricao" name="descricao" maxlength="2000"
+                                  required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="preco" class="form-label">Preço:</label>
+                        <input type="number" step="0.01" class="form-control" id="preco" name="preco"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="qtdEstoque" class="form-label">Quantidade Estoque:</label>
+                        <input type="number" class="form-control" id="qtdEstoque" name="qtdEstoque"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="imageProduto" class="form-label">Imagens:</label>
+                        <input type="file" class="form-control" name="imageProduto" id="imageProduto"
+                               multiple required accept="image/*">
+                        <small class="form-text text-muted">Selecione múltiplas imagens. Escolha a principal abaixo.</small>
+                    </div>
+
+                    <!-- Área de preview das imagens -->
+                    <div id="previewImagens" class="d-flex flex-wrap gap-3 mt-3"></div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <button type="button" class="btn btn-secondary"
+                                onclick="window.location.href='/ExibirProdutos'">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Genérico de Atualização de Produto -->
+<div class="modal fade" id="updateProdutoModal" tabindex="-1" aria-labelledby="updateProdutoModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content p-4">
+            <div class="modal-header">
+                <h5 class="modal-title">Atualizar Produto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="${tipoUsuario eq 'admin' ? '/CadastrarProduto' : '/AtualizarQuantidadeProduto'}"
+                      method="post"
+                ${tipoUsuario eq 'admin' ? 'enctype="multipart/form-data"' : ''}>
+
+                    <input type="hidden" name="page" id="updateProdutoPage">
+                    <input type="hidden" id="updateProdutoId" name="id">
+                    <input type="hidden" name="imagemPrincipalIndex" id="imagemPrincipalIndexUpdate">
+
+                    <div class="form-group mb-3">
+                        <label>Nome do Produto:</label>
+                        <input type="text" class="form-control" id="updateProdutoNome" name="produto-name"
+                               required ${tipoUsuario ne 'admin' ? 'disabled' : ''}>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Avaliação:</label>
+                        <input type="number" step="0.5" min="0.5" max="5" class="form-control"
+                               id="updateProdutoAvaliacao" name="avaliacao"
+                               required ${tipoUsuario ne 'admin' ? 'disabled' : ''}>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Quantidade Estoque:</label>
+                        <input type="number" class="form-control"
+                               id="updateProdutoQtdEstoque" name="qtdEstoque" required>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Preço Unitário (R$):</label>
+                        <input type="text" class="form-control" id="updateProdutoPreco" name="preco"
+                               required ${tipoUsuario ne 'admin' ? 'disabled' : ''}>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>Selecionar novas imagens (opcional):</label>
+                        <input type="file" class="form-control" name="imagemProduto" id="imageProdutoUpdate"
+                               multiple accept="image/*" ${tipoUsuario ne 'admin' ? 'disabled' : ''}>
+                        <small class="text-muted">As novas imagens substituirão as antigas. Selecione a principal abaixo.</small>
+                    </div>
+
+                    <!-- Área de preview das imagens novas -->
+                    <div id="previewImagensUpdate" class="d-flex flex-wrap gap-3 mt-3"></div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary">Atualizar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
-abrirModal(modalId) {
-this.modal = new bootstrap.Modal(document.getElementById(modalId));
-this.modal.show();
-}
+<script src="../js/feather.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/drop.js"></script>
+<script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 
-atualizarConteudo(modalId, conteudo) {
-let modalElement = document.getElementById(modalId);
-if (modalElement) {
-for (let key in conteudo) {
-let element = modalElement.querySelector(`#${key}`);
-if (element) {
-if (element.tagName === "IMG") {
-const caminhoImagem = conteudo[key];
-element.src = caminhoImagem
-? `http://localhost:8080/${caminhoImagem}`
-: "https://via.placeholder.com/350";
-} else {
-element.textContent = conteudo[key];
-}
-}
-}
-}
-}
-
-abrirConfirmacaoCheckbox(produtoId, nomeProduto, statusAtual, checkbox) {
-let statusTexto = statusAtual ? "Ativo" : "Inativo";
-let novoStatusTexto = statusAtual ? "desativar" : "ativar";
-let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
-
-document.getElementById("modalProdutoIdTexto").textContent = produtoId;
-document.getElementById("modalNomeProduto").textContent = nomeProduto;
-document.getElementById("modalStatusAtual").textContent = statusTexto;
-document.getElementById("modalNovoStatus").textContent = novoStatusTexto;
-
-document.getElementById("modalProdutoId").value = produtoId;
-document.getElementById("modalStatus").value = statusAtual ? "false" : "true";
-document.getElementById("modalCurrentPage").value = currentPage;
-
-this.abrirModal("confirmModal");
-
-document.getElementById("cancelAction").onclick = () => {
-checkbox.checked = this.originalCheckboxState[produtoId];
-};
-}
-
-inicializarCheckboxes() {
-document.querySelectorAll(".form-check-input").forEach(checkbox => {
-let produtoId = checkbox.id.replace("statusSwitch-", "");
-let nomeProduto = checkbox.getAttribute("data-nome-produto");
-let statusAtual = checkbox.checked;
-
-this.originalCheckboxState[produtoId] = checkbox.checked;
-
-checkbox.addEventListener("click", (event) => {
-event.preventDefault();
-this.abrirConfirmacaoCheckbox(produtoId, nomeProduto, statusAtual, checkbox);
-});
-});
-
-document.getElementById("confirmAction").addEventListener("click", () => {
-let produtoId = document.getElementById("modalProdutoId").value;
-let novoStatus = document.getElementById("modalStatus").value;
-let currentPage = document.getElementById("modalCurrentPage").value;
-
-let form = document.createElement("form");
-form.method = "POST";
-form.action = "/AlterarStatusProduto";
-
-form.innerHTML = `
-<input type="hidden" name="id" value="${produtoId}">
-<input type="hidden" name="status" value="${novoStatus}">
-<input type="hidden" name="page" value="${currentPage}">
-`;
-
-document.body.appendChild(form);
-form.submit();
-});
-}
-
-abrirCadastroProdutoModal() {
-const modal = new bootstrap.Modal(document.getElementById('cadastrarProdutoModal'));
-const form = document.querySelector('#cadastrarProdutoModal form');
-form.reset();
-form.querySelector('#id').value = '0';
-modal.show();
-}
-
-abrirModalAtualizarProduto(produto) {
-const modalElement = document.getElementById('updateProdutoModal');
-
-if (!modalElement) {
-console.error('Modal de atualização não encontrado!');
-return;
-}
-
-const form = modalElement.querySelector('form');
-
-// Preenche os campos com os dados do produto
-form.querySelector('#updateProdutoId').value = produto.id;
-form.querySelector('#updateProdutoNome').value = produto.nomeProduto;
-form.querySelector('#updateProdutoAvaliacao').value = produto.avaliacao;
-form.querySelector('#updateProdutoQtdEstoque').value =
-produto.qtdEstoque !== undefined && produto.qtdEstoque !== null ? produto.qtdEstoque : '';
-form.querySelector('#updateProdutoPreco').value = produto.preco;
-form.querySelector('input[name="imagemProduto"]').value = '';
-
-// Captura o número da página atual da URL
-const params = new URLSearchParams(window.location.search);
-const currentPage = params.get("page") || 1;
-
-// Preenche o campo hidden com a página atual
-form.querySelector('#updateProdutoPage').value = currentPage;
-
-this.abrirModal('updateProdutoModal');
-}
-}
-
-const modalManager = new ModalManager();
-
-function mostrarDetalhes(id, nome, preco, avaliacao, descricao, imagens) {
-console.log("🧪 Dados recebidos:", { id, nome, preco, avaliacao, descricao, imagens });
-
-// Adaptação para string única
-if (typeof imagens === "string") {
-imagens = [{
-caminhoArquivo: imagens,
-imagemPadrao: true
-}];
-} else if (!Array.isArray(imagens)) {
-imagens = imagens ? [imagens] : [];
-}
-
-imagens.sort((a, b) => (b.imagemPadrao === true) - (a.imagemPadrao === true));
-
-modalManager.atualizarConteudo("detalheProdutoModal", {
-produtoId: id,
-produtoNome: nome,
-produtoPreco: Number(preco).toFixed(2),
-produtoAvaliacao: avaliacao,
-produtoDescricao: descricao
-});
-
-const container = document.getElementById("carouselImagensContainer");
-container.innerHTML = '';
-
-if (imagens.length > 0) {
-imagens.forEach((imagem, index) => {
-const caminho = imagem.caminhoArquivo || "https://via.placeholder.com/350";
-const item = document.createElement('div');
-item.className = `carousel-item ${index === 0 ? 'active' : ''}`;
-item.innerHTML = `<img src="${caminho}" class="d-block w-100 rounded-3 shadow-sm" alt="Imagem ${index + 1}">`;
-container.appendChild(item);
-});
-} else {
-const fallback = document.createElement('div');
-fallback.className = 'carousel-item active';
-fallback.innerHTML = `<img src="https://via.placeholder.com/350" class="d-block w-100 rounded-3 shadow-sm" alt="Imagem padrão">`;
-container.appendChild(fallback);
-}
-
-const carouselElement = document.querySelector('#imageCarousel');
-if (carouselElement) {
-const carousel = bootstrap.Carousel.getInstance(carouselElement);
-if (carousel) carousel.dispose();
-new bootstrap.Carousel(carouselElement);
-}
-
-modalManager.abrirModal("detalheProdutoModal");
-}
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-modalManager.inicializarCheckboxes();
-});
+</body>
+</html>
