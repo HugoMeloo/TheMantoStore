@@ -71,7 +71,6 @@
             <a href="/carrinho" class="me-3">
                 <img src="img/carrinho.png" alt="Carrinho" style="width: 30px; height: 30px;">
             </a>
-            <a href="/logout" class="btn btn-danger">Sair</a>
         </div>
     </div>
 </nav>
