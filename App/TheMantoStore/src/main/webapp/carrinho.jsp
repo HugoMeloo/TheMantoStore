@@ -6,206 +6,452 @@
     <meta charset="UTF-8">
     <title>Carrinho - The Manto Store</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-             body {
-                 font-family: 'Poppins', sans-serif;
-                 background-color: #f5f7fa;
-             }
+        :root {
+            --primary-color: #28a745;
+            --secondary-color: #218838;
+            --dark-color: #2d3436;
+            --light-color: #f5f6fa;
+            --success-color: #00b894;
+            --danger-color: #d63031;
+            --warning-color: #fdcb6e;
+            --info-color: #0984e3;
+        }
 
-             h2 {
-                 font-weight: 600;
-                 margin-bottom: 30px;
-                 color: #222;
-             }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
 
-             .product-card {
-                 border-radius: 10px;
-                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-                 margin-bottom: 15px;
-                 padding: 15px;
-                 transition: transform 0.3s ease;
-                 border-radius: 15px;
-                 background: #fff;
-                 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-                 padding: 20px;
-                 margin-bottom: 20px;
-                 transition: 0.3s;
-             }
+        .navbar {
+            background: #212529 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
 
-             .product-card:hover {
-                 transform: translateY(-5px);
-             }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+        }
 
-             .product-card img {
-                 border-radius: 8px;
-                 width: 80px;
-                 height: 80px;
-                 border-radius: 10px;
-                 width: 90px;
-                 height: 90px;
-                 object-fit: cover;
-             }
+        .cart-icon {
+            position: relative;
+            transition: transform 0.3s ease;
+        }
 
-             .product-info {
-                 margin-left: 15px;
-             }
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
 
-             .product-info h5 {
-                 font-size: 1.1rem;
-                 font-size: 1.2rem;
-                 font-weight: 600;
-                 color: #333;
-                 margin: 0;
-             }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-             .product-info p {
-                 font-size: 0.9rem;
-                 color: #555;
-                 color: #777;
-                 margin: 5px 0 0;
-             }
+        .page-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-             .remove-btn {
-                 background-color: #f8d7da;
-                 background-color: #ffe6e6;
-                 color: #d9534f;
-                 border: none;
-                 color: #721c24;
-                 padding: 5px 10px;
-                 border-radius: 5px;
-                 font-size: 0.9rem;
-                 cursor: pointer;
-                 padding: 8px 15px;
-                 border-radius: 8px;
-                 transition: 0.3s;
-             }
+        .empty-cart {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
 
-             .remove-btn:hover {
-                 background-color: #f5c6cb;
-                 background-color: #ffcccc;
-             }
+        .empty-cart-icon {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
 
-             .summary-card {
-                 border-radius: 10px;
-                 box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-                 padding: 25px;
-                 margin-top: 30px;
-                 background: #fff;
-                 border-radius: 15px;
-                 padding: 30px;
-                 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-             }
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid var(--primary-color);
+        }
 
-             .summary-card h5 {
-                 font-size: 1.25rem;
-                 color: #333;
-                 font-weight: 600;
-                 margin-bottom: 20px;
-                 color: #222;
-             }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
 
-             .summary-card p {
-                 font-size: 1rem;
-                 margin: 10px 0;
-                 color: #555;
-             }
+        .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
 
-             .btn-finalize {
-                 background-color: #28a745;
-                 background: linear-gradient(to right, #00c853, #64dd17);
-                 color: white;
-                 padding: 12px 20px;
-                 border-radius: 50px;
-                 padding: 14px;
-                 border: none;
-                 border-radius: 30px;
-                 width: 100%;
-                 font-weight: 600;
-                 font-size: 1.1rem;
-                 transition: background-color 0.3s ease;
-                 transition: 0.3s;
-             }
+        .product-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
 
-             .btn-finalize:hover {
-                 background-color: #218838;
-                 background: linear-gradient(to right, #00b347, #52c41a);
-             }
+        .product-price {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
 
-             .frete-box input[type="radio"] {
-                 margin-right: 8px;
-             }
-         </style>
+        .product-quantity {
+            background-color: var(--light-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-available {
+            color: var(--success-color);
+            font-weight: 500;
+        }
+
+        .status-unavailable {
+            color: var(--danger-color);
+            font-weight: 500;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .add-btn {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .add-btn:hover {
+            background-color: #00a383;
+        }
+
+        .remove-btn {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .remove-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .summary-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .summary-total {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-top: 15px;
+        }
+
+        .btn-checkout {
+            background: linear-gradient(to right, #00c853, #64dd17);
+            border: none;
+            border-radius: 30px;
+            padding: 12px 0;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-checkout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .shipping-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .shipping-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .shipping-options {
+            margin-top: 15px;
+        }
+
+        .shipping-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .shipping-option:hover {
+            background-color: #f8f9fa;
+        }
+
+        .shipping-option input {
+            margin-right: 10px;
+        }
+
+        .shipping-option label {
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cep-input {
+            max-width: 300px;
+            border-radius: 8px;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+        }
+
+        .btn-calculate {
+            background-color: var(--info-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-calculate:hover {
+            background-color: #0877d1;
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-between align-items-center">
-        <a class="navbar-brand" href="">The Manto Store</a>
-        <a href="/carrinho" class="me-3">
-            <img src="img/carrinho.png" alt="Carrinho" style="width: 30px; height: 30px;">
-        </a>
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#">The Manto Store</a>
+        <div class="d-flex align-items-center">
+            <a href="/carrinho" class="cart-icon position-relative me-3">
+                <i class="fas fa-shopping-cart fa-lg text-white"></i>
+                <c:if test="${not empty sessionScope.carrinho}">
+                    <span class="cart-count">${sessionScope.carrinho.size()}</span>
+                </c:if>
+            </a>
+        </div>
     </div>
 </nav>
 
-<div class="container mt-5">
-    <h2 class="mb-4">🛒 Seu Carrinho</h2>
+<div class="container mb-5">
+    <h2 class="page-title">
+        <i class="fas fa-shopping-cart"></i> Seu Carrinho
+    </h2>
 
     <c:if test="${empty sessionScope.carrinho}">
-        <div class="alert alert-info">O carrinho está vazio.</div>
+        <div class="empty-cart">
+            <div class="empty-cart-icon">
+                <i class="fas fa-shopping-basket"></i>
+            </div>
+            <h4 class="mb-3">Seu carrinho está vazio</h4>
+            <p class="text-muted mb-4">Adicione produtos para continuar</p>
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-arrow-left me-2"></i> Voltar às compras
+            </a>
+        </div>
     </c:if>
+    <div class="row">
+        <div class="col-lg-8">
+            <c:forEach var="item" items="${sessionScope.carrinho}">
+                <div class="product-card d-flex">
+                    <img src="${item.produto.imagens[0].caminhoArquivo}" alt="Imagem do Produto" class="product-image me-4">
+                    <div class="flex-grow-1">
+                        <h5 class="product-title">${item.produto.nomeProduto}</h5>
+                        <p class="product-price mb-2">R$ ${item.produto.preco}</p>
 
-    <c:forEach var="item" items="${sessionScope.carrinho}">
-        <div class="product-card d-flex align-items-start mb-4">
-            <img src="${item.produto.imagens[0].caminhoArquivo}" alt="Imagem do Produto" style="width: 100px; height: auto;">
-            <div class="product-info ms-4">
-                <h5>${item.produto.nomeProduto}</h5>
-                <p>Preço: R$ ${item.produto.preco}</p>
-                <p>Quantidade: ${item.quantidade}</p>
-                <p>Status:
-                    <c:choose>
-                        <c:when test="${item.produto.status}">
-                            <span class="text-success fw-bold">Disponível</span>
-                        </c:when>
-                        <c:otherwise>
-                            <span class="text-danger fw-bold">Indisponível</span>
-                        </c:otherwise>
-                    </c:choose>
-                </p>
-                <div class="d-flex gap-2 mt-2">
-                    <a href="/carrinho?id=${item.produto.id}&acao=adicionar" class="btn btn-success">Adicionar 1</a>
-                    <a href="/carrinho?id=${item.produto.id}&acao=remover" class="btn btn-danger">Remover 1</a>
+                        <div class="d-flex align-items-center gap-4 mb-2">
+                            <span class="product-quantity">
+                                <i class="fas fa-box-open"></i> ${item.quantidade} un.
+                            </span>
+
+                            <span class="status-${item.produto.status ? 'available' : 'unavailable'}">
+                                <i class="fas fa-${item.produto.status ? 'check-circle' : 'times-circle'}"></i>
+                                ${item.produto.status ? 'Disponível' : 'Indisponível'}
+                            </span>
+                        </div>
+
+                        <div class="quantity-control">
+                            <a href="/carrinho?id=${item.produto.id}&acao=remover" class="quantity-btn remove-btn">
+                                <i class="fas fa-minus"></i>
+                            </a>
+                            <a href="/carrinho?id=${item.produto.id}&acao=adicionar" class="quantity-btn add-btn">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+            <br>
+            <div class="shipping-card">
+                <h5 class="shipping-title">
+                    <i class="fas fa-truck"></i> Calcular Frete
+                </h5>
+                <div class="d-flex flex-column flex-md-row align-items-start gap-3 mb-3">
+                    <input type="text" id="cep" class="form-control cep-input" placeholder="Digite seu CEP">
+                    <button class="btn btn-calculate" onclick="calcularFrete()">
+                        <i class="fas fa-calculator me-2"></i>Calcular
+                    </button>
+                </div>
+                <div id="frete-opcoes" class="shipping-options" style="display:none;">
+                    <p class="mb-3">Escolha o tipo de entrega:</p>
+                    <div class="shipping-option">
+                        <input type="radio" name="frete" id="frete-rapido" value="25" onclick="selecionarFrete(25)">
+                        <label for="frete-rapido">
+                            <span>Entrega Rápida <small>(2-3 dias úteis)</small></span>
+                            <span>R$ 25,00</span>
+                        </label>
+                    </div>
+                    <div class="shipping-option">
+                        <input type="radio" name="frete" id="frete-sedex" value="20" onclick="selecionarFrete(20)">
+                        <label for="frete-sedex">
+                            <span>SEDEX <small>(3-5 dias úteis)</small></span>
+                            <span>R$ 20,00</span>
+                        </label>
+                    </div>
+                    <div class="shipping-option">
+                        <input type="radio" name="frete" id="frete-agendada" value="15" onclick="selecionarFrete(15)">
+                        <label for="frete-agendada">
+                            <span>Entrega Agendada <small>(5-7 dias úteis)</small></span>
+                            <span>R$ 15,00</span>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="summary-card mt-4">
-            <h5>📦 Calcular Frete</h5>
-            <div class="d-flex flex-column flex-md-row align-items-start gap-3 mb-3">
-                <input type="text" id="cep" class="form-control" placeholder="Digite seu CEP" style="max-width: 300px;">
-                <button class="btn btn-outline-success mt-2 mt-md-0" onclick="calcularFrete()">Calcular Frete</button>
-            </div>
-            <div id="frete-opcoes" class="frete-box" style="display:none;">
-                <p class="mb-2">Escolha o tipo de entrega:</p>
-                <div>
-                    <label><input type="radio" name="frete" value="25" onclick="selecionarFrete(25)"> Entrega Rápida - R$ 25,00</label><br>
-                    <label><input type="radio" name="frete" value="20" onclick="selecionarFrete(20)"> SEDEX - R$ 20,00</label><br>
-                    <label><input type="radio" name="frete" value="15" onclick="selecionarFrete(15)"> Entrega Agendada - R$ 15,00</label>
+
+        <div class="col-lg-4">
+            <div class="summary-card">
+                <h5 class="summary-title">
+                    <i class="fas fa-receipt"></i> Resumo do Pedido
+                </h5>
+
+                <div class="summary-item">
+                    <span>Subtotal</span>
+                    <span>R$ ${totalCarrinho}</span>
                 </div>
+
+                <div class="summary-item">
+                    <span>Frete</span>
+                    <span id="frete-valor">-</span>
+                </div>
+
+                <div class="summary-item">
+                    <span>Descontos</span>
+                    <span>R$ 0,00</span>
+                </div>
+
+                <div class="summary-total d-flex justify-content-between">
+                    <span>Total</span>
+                    <span id="total-com-frete">R$ ${totalCarrinho}</span>
+                </div>
+
+                <form action="carrinho" method="POST">
+                    <button type="submit" class="btn btn-checkout">
+                        <i class="fas fa-credit-card me-2"></i> Finalizar Compra
+                    </button>
+                </form>
             </div>
         </div>
-    </c:forEach>
-
-
-
-    <div class="summary-card mt-5">
-        <h5>Resumo do Carrinho</h5>
-        <p class="fs-5">Total: <strong>R$ ${totalCarrinho}</strong></p>
-
-        <form action="carrinho" method="POST">
-            <button type="submit" class="btn btn-primary mt-3">Finalizar Compra</button>
-        </form>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function calcularFrete() {
+        const cep = document.getElementById('cep').value;
+        if (cep.length === 8) {
+            document.getElementById('frete-opcoes').style.display = 'block';
+        } else {
+            alert('Por favor, digite um CEP válido com 8 dígitos.');
+        }
+    }
+
+    function selecionarFrete(valor) {
+        const freteValor = document.getElementById('frete-valor');
+        const totalComFrete = document.getElementById('total-com-frete');
+
+        freteValor.textContent = `R$ ${valor.toFixed(2)}`;
+
+        // Calcula o total com frete (substitua pelo seu valor real do carrinho)
+        const subtotal = ${totalCarrinho};
+        const total = subtotal + valor;
+        totalComFrete.textContent = `R$ ${total.toFixed(2)}`;
+    }
+</script>
 </body>
 </html>
