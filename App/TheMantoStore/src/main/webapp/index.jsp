@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Manto Store - Coleção Exclusiva</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Optimized CSS Loading -->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"></noscript>
@@ -125,29 +125,32 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark mb-4" style="background: #212529 !important; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
     <div class="container">
-        <a class="navbar-brand" href="">The Manto Store</a>
+        <a class="navbar-brand" href="lista-produto.jsp" style="font-weight: 700; font-size: 1.5rem; letter-spacing: 0.5px;">The Manto Store</a>
 
-        <div class="d-flex justify-content-between align-items-center w-100">
-            <form class="flex-grow-1 mx-3">
-                <div class="input-group">
-                    <input type="search" id="productSearch" class="form-control rounded-pill"
-                           placeholder="Busque por produtos..." aria-label="Buscar produtos">
-                </div>
-            </form>
-
-            <div class="nav-actions d-flex align-items-center">
-                <a href="/login" class="text-white me-3" aria-label="Perfil do Usuário">
-                    <i class="bi bi-person-fill fs-4"></i>
-                </a>
-                <a href="/carrinho" class="me-3">
-                    <img src="img/carrinho.png" alt="Carrinho" style="width: 30px; height: 30px;">
-                </a>
+        <form class="d-flex flex-grow-1 mx-3">
+            <div class="input-group">
+                <input type="search" id="productSearch" class="form-control rounded-pill ps-2" placeholder="O que você procura?" style="height: 45px;">
             </div>
+        </form>
+
+        <div class="d-flex align-items-center">
+            <a href="/usuarios" class="me-3">
+                <img src="img/user.png" alt="Usuário" style="width: 30px; height: 30px;">
+            </a>
+            <a href="/carrinho" class="cart-icon position-relative me-3">
+                <i class="fas fa-shopping-cart fa-lg text-white"></i>
+                <c:if test="${not empty sessionScope.carrinho}">
+                    <span class="cart-count" style="position: absolute; top: -8px; right: -8px; background-color: #d63031; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; display: flex; align-items: center; justify-content: center;">
+                        ${sessionScope.carrinho.size()}
+                    </span>
+                </c:if>
+            </a>
         </div>
     </div>
 </nav>
+
 
 <main class="container mt-5">
     <h2 class="section-title">Nossa Coleção</h2>

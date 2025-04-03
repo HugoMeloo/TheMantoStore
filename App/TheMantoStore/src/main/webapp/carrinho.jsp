@@ -363,9 +363,7 @@
                 </h5>
                 <div class="d-flex flex-column flex-md-row align-items-start gap-3 mb-3">
                     <input type="text" id="cep" class="form-control cep-input" placeholder="Digite seu CEP">
-                    <button class="btn btn-calculate" onclick="calcularFrete()">
-                        <i class="fas fa-calculator me-2"></i>Calcular
-                    </button>
+                    <button class="btn btn-outline-success mt-2 mt-md-0" onclick="calcularFrete()">Calcular Frete</button>
                 </div>
                 <div id="frete-opcoes" class="shipping-options" style="display:none;">
                     <p class="mb-3">Escolha o tipo de entrega:</p>
@@ -402,7 +400,7 @@
 
                 <div class="summary-item">
                     <span>Subtotal</span>
-                    <span>R$ ${totalCarrinho}</span>
+                    <span>${totalCarrinho}</span>
                 </div>
 
                 <div class="summary-item">
@@ -417,7 +415,7 @@
 
                 <div class="summary-total d-flex justify-content-between">
                     <span>Total</span>
-                    <span id="total-com-frete">R$ ${totalCarrinho}</span>
+                    <span id="total-com-frete"> ${totalCarrinho}</span>
                 </div>
 
                 <form action="carrinho" method="POST">
@@ -433,24 +431,24 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     function calcularFrete() {
-        const cep = document.getElementById('cep').value;
-        if (cep.length === 8) {
-            document.getElementById('frete-opcoes').style.display = 'block';
+        let cep = document.getElementById("cep").value.trim();
+        let opcoesFrete = document.getElementById("frete-opcoes");
+
+        if (cep.length === 8 && !isNaN(cep)) {
+            opcoesFrete.style.display = "block";
         } else {
-            alert('Por favor, digite um CEP válido com 8 dígitos.');
+            alert("Por favor, digite um CEP válido com 8 números.");
         }
     }
-
     function selecionarFrete(valor) {
-        const freteValor = document.getElementById('frete-valor');
-        const totalComFrete = document.getElementById('total-com-frete');
+        document.getElementById('frete-valor').innerText = `R$ ${valor.toFixed(2)}`;
 
-        freteValor.textContent = `R$ ${valor.toFixed(2)}`;
+        // Pegando o subtotal e convertendo para número
+        let subtotal = parseFloat(document.getElementById('subtotal').getAttribute('data-valor'));
 
-        // Calcula o total com frete (substitua pelo seu valor real do carrinho)
-        const subtotal = ${totalCarrinho};
-        const total = subtotal + valor;
-        totalComFrete.textContent = `R$ ${total.toFixed(2)}`;
+        // Atualizando o total
+        let total = subtotal + valor;
+        document.getElementById('total-pedido').innerText = `R$ ${total.toFixed(2)}`;
     }
 </script>
 </body>
