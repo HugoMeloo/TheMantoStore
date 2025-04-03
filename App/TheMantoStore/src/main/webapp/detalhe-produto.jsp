@@ -8,6 +8,7 @@
     <title>Detalhes do Produto</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         .thumbnail-column {
             display: flex;
@@ -56,9 +57,9 @@
 </head>
 <body>
 <!-- Navbar -->
-<nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-between align-items-center">
-        <a class="navbar-brand" href="lista-produto.jsp">The Manto Store</a>
+<nav class="navbar navbar-expand-lg navbar-dark mb-4" style="background: #212529 !important; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+    <div class="container">
+        <a class="navbar-brand" href="lista-produto.jsp" style="font-weight: 700; font-size: 1.5rem; letter-spacing: 0.5px;">The Manto Store</a>
         <form class="d-flex w-50">
             <div class="input-group">
                 <input type="text" id="filtroNome" class="form-control rounded-pill ps-2" placeholder="O que você procura?" onkeyup="filtrarUsuarios()" style="height: 45px;">
@@ -68,12 +69,18 @@
             <a href="/usuarios" class="me-3">
                 <img src="img/user.png" alt="Usuário" style="width: 30px; height: 30px;">
             </a>
-            <a href="/carrinho" class="me-3">
-                <img src="img/carrinho.png" alt="Carrinho" style="width: 30px; height: 30px;">
+            <a href="/carrinho" class="cart-icon position-relative me-3">
+                <i class="fas fa-shopping-cart fa-lg text-white"></i>
+                <c:if test="${not empty sessionScope.carrinho}">
+                    <span class="cart-count" style="position: absolute; top: -8px; right: -8px; background-color: #d63031; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; display: flex; align-items: center; justify-content: center;">
+                        ${sessionScope.carrinho.size()}
+                    </span>
+                </c:if>
             </a>
         </div>
     </div>
 </nav>
+
 <br>
 <div class="container mt-4">
     <div class="row">
