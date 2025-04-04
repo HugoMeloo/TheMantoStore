@@ -10,31 +10,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #28a745;
-            --secondary-color: #218838;
-            --dark-color: #2d3436;
-            --light-color: #f5f6fa;
-            --success-color: #00b894;
-            --danger-color: #d63031;
-            --warning-color: #fdcb6e;
-            --info-color: #0984e3;
+            --primary-color: #D10024; /* Vermelho vibrante */
+            --secondary-color: #15161D; /* Preto azulado */
+            --bg-light: #F6F6F6; /* Fundo claro */
+            --text-dark: #2B2D42; /* Texto escuro */
+            --text-light: #E5E5E5; /* Texto claro */
+            --success-color: #00A651; /* Verde */
+            --danger-color: #E53935; /* Vermelho para ações importantes */
+            --warning-color: #FFB300; /* Amarelo */
+            --info-color: #1E88E5; /* Azul */
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-weight: 400;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
         }
 
+        /* Navbar consistente */
         .navbar {
-            background: #212529 !important;
+            background: var(--secondary-color) !important;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
         }
 
         .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
+            font-weight: 800;
+            font-size: 1.8rem;
             letter-spacing: 0.5px;
+            color: white !important;
         }
 
         .cart-icon {
@@ -50,77 +55,112 @@
             position: absolute;
             top: -8px;
             right: -8px;
-            background-color: var(--danger-color);
+            background-color: var(--primary-color) !important;
             color: white;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             font-size: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: bold;
         }
 
+        /* Títulos */
         .page-title {
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 30px;
+            font-weight: 800;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }
 
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+        /* Carrinho vazio */
         .empty-cart {
             background-color: white;
-            border-radius: 12px;
-            padding: 30px;
+            border-radius: 15px;
+            padding: 40px;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin: 30px 0;
         }
 
         .empty-cart-icon {
-            font-size: 3rem;
+            font-size: 4rem;
             color: #ddd;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
+        /* Cards de produto */
         .product-card {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             padding: 20px;
             margin-bottom: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
             border-left: 4px solid var(--primary-color);
+            display: flex;
+            align-items: center;
         }
 
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
         .product-image {
             width: 100px;
             height: 100px;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 10px;
-            border: 1px solid #eee;
+            margin-right: 20px;
+            background: #f9f9f9;
+            padding: 10px;
+        }
+
+        .product-info {
+            flex-grow: 1;
         }
 
         .product-title {
-            font-weight: 600;
-            color: var(--dark-color);
+            font-weight: 700;
+            font-size: 1.1rem;
             margin-bottom: 5px;
+            color: var(--secondary-color);
         }
 
         .product-price {
-            font-weight: 500;
+            font-weight: 800;
             color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .product-meta {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
         }
 
         .product-quantity {
-            background-color: var(--light-color);
-            padding: 5px 10px;
+            background: #f5f5f5;
+            padding: 5px 15px;
             border-radius: 20px;
             font-size: 0.9rem;
             display: inline-flex;
@@ -130,17 +170,16 @@
 
         .status-available {
             color: var(--success-color);
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .status-unavailable {
             color: var(--danger-color);
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .quantity-control {
             display: flex;
-            align-items: center;
             gap: 10px;
             margin-top: 15px;
         }
@@ -163,7 +202,7 @@
         }
 
         .add-btn:hover {
-            background-color: #00a383;
+            background-color: #008a45;
         }
 
         .remove-btn {
@@ -172,92 +211,77 @@
         }
 
         .remove-btn:hover {
-            background-color: #c0392b;
+            background-color: #c62828;
         }
 
-        .summary-card {
+        /* Seção de frete */
+        .shipping-card {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             padding: 25px;
-            margin-top: 30px;
+            margin-bottom: 20px;
         }
 
-        .summary-title {
-            font-weight: 600;
-            color: var(--dark-color);
+        .shipping-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .summary-item {
+        .cep-input-group {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px dashed #eee;
-        }
-
-        .summary-total {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-top: 15px;
-        }
-
-        .btn-checkout {
-            background: linear-gradient(to right, #00c853, #64dd17);
-            border: none;
-            border-radius: 30px;
-            padding: 12px 0;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            width: 100%;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-        }
-
-        .btn-checkout:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-        }
-
-        .shipping-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            padding: 25px;
-            margin-bottom: 30px;
-        }
-
-        .shipping-title {
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .cep-input {
+            flex-grow: 1;
+            min-width: 200px;
+            border-radius: 8px;
+            padding: 10px 15px;
+            border: 2px solid #eee;
+            transition: all 0.3s;
+        }
+
+        .cep-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(209,0,36,0.1);
+        }
+
+        .btn-calculate {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-calculate:hover {
+            background-color: #b3001b;
+            transform: translateY(-2px);
         }
 
         .shipping-options {
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         .shipping-option {
-            display: flex;
-            align-items: center;
-            padding: 10px;
+            background: #f9f9f9;
             border-radius: 8px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: background 0.2s ease;
+            padding: 15px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
         }
 
         .shipping-option:hover {
-            background-color: #f8f9fa;
+            background: #f0f0f0;
         }
 
         .shipping-option input {
@@ -265,30 +289,92 @@
         }
 
         .shipping-option label {
-            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
             width: 100%;
+            cursor: pointer;
+        }
+
+        /* Resumo do pedido */
+        .summary-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .summary-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .summary-total {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--secondary-color);
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
             display: flex;
             justify-content: space-between;
         }
 
-        .cep-input {
-            max-width: 300px;
-            border-radius: 8px;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-        }
-
-        .btn-calculate {
-            background-color: var(--info-color);
+        .btn-checkout {
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            transition: all 0.2s ease;
+            border-radius: 50px;
+            padding: 15px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(209,0,36,0.2);
         }
 
-        .btn-calculate:hover {
-            background-color: #0877d1;
+        .btn-checkout:hover {
+            background-color: #b3001b;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(209,0,36,0.3);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .product-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .product-image {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .product-meta {
+                justify-content: center;
+            }
+
+            .quantity-control {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -296,10 +382,18 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" href="#">The Manto Store</a>
+        <a class="navbar-brand" href="lista-produto.jsp">
+            <i class="fas fa-tshirt me-2"></i>The Manto Store
+        </a>
+
         <div class="d-flex align-items-center">
-            <a href="/carrinho" class="cart-icon position-relative me-3">
-                <i class="fas fa-shopping-cart fa-lg text-white"></i>
+            <a href="/usuarios" class="btn btn-outline-light me-2" title="Minha conta">
+                <i class="fas fa-user"></i>
+                <span class="d-none d-lg-inline ms-1">Conta</span>
+            </a>
+            <a href="/carrinho" class="btn btn-outline-light position-relative" title="Carrinho">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="d-none d-lg-inline ms-1">Carrinho</span>
                 <c:if test="${not empty sessionScope.carrinho}">
                     <span class="cart-count">${sessionScope.carrinho.size()}</span>
                 </c:if>
@@ -309,123 +403,122 @@
 </nav>
 
 <div class="container mb-5">
-    <h2 class="page-title">
+    <h1 class="page-title">
         <i class="fas fa-shopping-cart"></i> Seu Carrinho
-    </h2>
+    </h1>
 
     <c:if test="${empty sessionScope.carrinho}">
         <div class="empty-cart">
             <div class="empty-cart-icon">
                 <i class="fas fa-shopping-basket"></i>
             </div>
-            <h4 class="mb-3">Seu carrinho está vazio</h4>
+            <h3 class="mb-3">Seu carrinho está vazio</h3>
             <p class="text-muted mb-4">Adicione produtos para continuar</p>
             <a href="/" class="btn btn-primary">
                 <i class="fas fa-arrow-left me-2"></i> Voltar às compras
             </a>
         </div>
     </c:if>
-    <div class="row">
-        <div class="col-lg-8">
-            <c:forEach var="item" items="${sessionScope.carrinho}">
-                <div class="product-card d-flex">
-                    <img src="${item.produto.imagens[0].caminhoArquivo}" alt="Imagem do Produto" class="product-image me-4">
-                    <div class="flex-grow-1">
-                        <h5 class="product-title">${item.produto.nomeProduto}</h5>
-                        <p class="product-price mb-2">R$ ${item.produto.preco}</p>
 
-                        <div class="d-flex align-items-center gap-4 mb-2">
-                            <span class="product-quantity">
-                                <i class="fas fa-box-open"></i> ${item.quantidade} un.
-                            </span>
+    <c:if test="${not empty sessionScope.carrinho}">
+        <div class="row">
+            <div class="col-lg-8">
+                <c:forEach var="item" items="${sessionScope.carrinho}">
+                    <div class="product-card">
+                        <img src="${item.produto.imagens[0].caminhoArquivo}" alt="Imagem do Produto" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-title">${item.produto.nomeProduto}</h3>
+                            <p class="product-price">R$ ${item.produto.preco}</p>
 
-                            <span class="status-${item.produto.status ? 'available' : 'unavailable'}">
-                                <i class="fas fa-${item.produto.status ? 'check-circle' : 'times-circle'}"></i>
-                                ${item.produto.status ? 'Disponível' : 'Indisponível'}
-                            </span>
+                            <div class="product-meta">
+                                <span class="product-quantity">
+                                    <i class="fas fa-box-open"></i> ${item.quantidade} un.
+                                </span>
+                                <span class="status-${item.produto.status ? 'available' : 'unavailable'}">
+                                    <i class="fas fa-${item.produto.status ? 'check-circle' : 'times-circle'}"></i>
+                                    ${item.produto.status ? 'Disponível' : 'Indisponível'}
+                                </span>
+                            </div>
+
+                            <div class="quantity-control">
+                                <a href="/carrinho?id=${item.produto.id}&acao=remover" class="quantity-btn remove-btn">
+                                    <i class="fas fa-minus"></i>
+                                </a>
+                                <a href="/carrinho?id=${item.produto.id}&acao=adicionar" class="quantity-btn add-btn">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            </div>
                         </div>
+                    </div>
+                </c:forEach>
 
-                        <div class="quantity-control">
-                            <a href="/carrinho?id=${item.produto.id}&acao=remover" class="quantity-btn remove-btn">
-                                <i class="fas fa-minus"></i>
-                            </a>
-                            <a href="/carrinho?id=${item.produto.id}&acao=adicionar" class="quantity-btn add-btn">
-                                <i class="fas fa-plus"></i>
-                            </a>
+                <div class="shipping-card">
+                    <h3 class="shipping-title">
+                        <i class="fas fa-truck"></i> Calcular Frete
+                    </h3>
+                    <div class="cep-input-group">
+                        <input type="text" id="cep" class="form-control cep-input" placeholder="Digite seu CEP">
+                        <button class="btn btn-calculate" onclick="calcularFrete()">
+                            <i class="fas fa-calculator me-2"></i> Calcular
+                        </button>
+                    </div>
+                    <div id="frete-opcoes" class="shipping-options" style="display:none;">
+                        <p class="mb-3">Escolha o tipo de entrega:</p>
+                        <div class="shipping-option">
+                            <input type="radio" name="frete" id="frete-rapido" value="25" onclick="selecionarFrete(25)">
+                            <label for="frete-rapido">
+                                <span>Entrega Rápida <small>(2-3 dias úteis)</small></span>
+                                <span>R$ 25,00</span>
+                            </label>
                         </div>
-                    </div>
-                </div>
-            </c:forEach>
-            <br>
-            <div class="shipping-card">
-                <h5 class="shipping-title">
-                    <i class="fas fa-truck"></i> Calcular Frete
-                </h5>
-                <div class="d-flex flex-column flex-md-row align-items-start gap-3 mb-3">
-                    <input type="text" id="cep" class="form-control cep-input" placeholder="Digite seu CEP">
-                    <button class="btn btn-outline-success mt-2 mt-md-0" onclick="calcularFrete()">Calcular Frete</button>
-                </div>
-                <div id="frete-opcoes" class="shipping-options" style="display:none;">
-                    <p class="mb-3">Escolha o tipo de entrega:</p>
-                    <div class="shipping-option">
-                        <input type="radio" name="frete" id="frete-rapido" value="25" onclick="selecionarFrete(25)">
-                        <label for="frete-rapido">
-                            <span>Entrega Rápida <small>(2-3 dias úteis)</small></span>
-                            <span>R$ 25,00</span>
-                        </label>
-                    </div>
-                    <div class="shipping-option">
-                        <input type="radio" name="frete" id="frete-sedex" value="20" onclick="selecionarFrete(20)">
-                        <label for="frete-sedex">
-                            <span>SEDEX <small>(3-5 dias úteis)</small></span>
-                            <span>R$ 20,00</span>
-                        </label>
-                    </div>
-                    <div class="shipping-option">
-                        <input type="radio" name="frete" id="frete-agendada" value="15" onclick="selecionarFrete(15)">
-                        <label for="frete-agendada">
-                            <span>Entrega Agendada <small>(5-7 dias úteis)</small></span>
-                            <span>R$ 15,00</span>
-                        </label>
+                        <div class="shipping-option">
+                            <input type="radio" name="frete" id="frete-sedex" value="20" onclick="selecionarFrete(20)">
+                            <label for="frete-sedex">
+                                <span>SEDEX <small>(3-5 dias úteis)</small></span>
+                                <span>R$ 20,00</span>
+                            </label>
+                        </div>
+                        <div class="shipping-option">
+                            <input type="radio" name="frete" id="frete-agendada" value="15" onclick="selecionarFrete(15)">
+                            <label for="frete-agendada">
+                                <span>Entrega Agendada <small>(5-7 dias úteis)</small></span>
+                                <span>R$ 15,00</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-4">
-            <div class="summary-card">
-                <h5 class="summary-title">
-                    <i class="fas fa-receipt"></i> Resumo do Pedido
-                </h5>
+            <div class="col-lg-4">
+                <div class="summary-card">
+                    <h3 class="summary-title">
+                        <i class="fas fa-receipt"></i> Resumo do Pedido
+                    </h3>
 
-                <div class="summary-item">
-                    <span>Subtotal</span>
-                    <span>${totalCarrinho}</span>
+                    <div class="summary-item">
+                        <span>Subtotal</span>
+                        <span>${totalCarrinho}</span>
+                    </div>
+
+                    <div class="summary-item">
+                        <span>Frete</span>
+                        <span id="frete-valor">-</span>
+                    </div>
+
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span id="total-com-frete">${totalCarrinho}</span>
+                    </div>
+
+                    <form action="carrinho" method="POST">
+                        <button type="submit" class="btn btn-checkout">
+                            <i class="fas fa-credit-card me-2"></i> Finalizar Compra
+                        </button>
+                    </form>
                 </div>
-
-                <div class="summary-item">
-                    <span>Frete</span>
-                    <span id="frete-valor">-</span>
-                </div>
-
-                <div class="summary-item">
-                    <span>Descontos</span>
-                    <span>R$ 0,00</span>
-                </div>
-
-                <div class="summary-total d-flex justify-content-between">
-                    <span>Total</span>
-                    <span id="total-com-frete"> ${totalCarrinho}</span>
-                </div>
-
-                <form action="carrinho" method="POST">
-                    <button type="submit" class="btn btn-checkout">
-                        <i class="fas fa-credit-card me-2"></i> Finalizar Compra
-                    </button>
-                </form>
             </div>
         </div>
-    </div>
+    </c:if>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -440,16 +533,21 @@
             alert("Por favor, digite um CEP válido com 8 números.");
         }
     }
-    function selecionarFrete(valor) {
-        document.getElementById('frete-valor').innerText = `R$ ${valor.toFixed(2)}`;
+    function selecionarFrete(valorFrete) {
+        // Atualiza o valor do frete no resumo
+        document.getElementById("frete-valor").innerText = "R$ " + valorFrete.toFixed(2);
 
-        // Pegando o subtotal e convertendo para número
-        let subtotal = parseFloat(document.getElementById('subtotal').getAttribute('data-valor'));
+        // Obtém o subtotal do carrinho
+        let subtotalText = document.getElementById("total-com-frete").innerText;
+        let subtotal = parseFloat(subtotalText.replace("R$", "").replace(",", ".").trim());
 
-        // Atualizando o total
-        let total = subtotal + valor;
-        document.getElementById('total-pedido').innerText = `R$ ${total.toFixed(2)}`;
+        // Calcula o total com frete
+        let totalComFrete = subtotal + valorFrete;
+
+        // Atualiza o total no resumo do pedido
+        document.getElementById("total-com-frete").innerText = "R$ " + totalComFrete.toFixed(2);
     }
+
 </script>
 </body>
 </html>
