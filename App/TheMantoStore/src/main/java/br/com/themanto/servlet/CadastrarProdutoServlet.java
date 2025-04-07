@@ -19,6 +19,7 @@ import java.util.*;
 public class CadastrarProdutoServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        req.setCharacterEncoding("UTF-8");
         try {
             Map<String, Object> parameters = uploadImage(req); // Captura os parâmetros do formulário
 
@@ -103,7 +104,10 @@ public class CadastrarProdutoServlet extends HttpServlet {
                 if (item.isFormField()) {
                     parameters.put(item.getFieldName(), item.getString("UTF-8"));
                     if ("imagemPrincipalIndex".equals(item.getFieldName())) {
-                        imagemPrincipalIndex = Integer.parseInt(item.getString("UTF-8"));
+                        String indexStr = item.getString("UTF-8");
+                        if (indexStr != null && !indexStr.isEmpty()) {
+                            imagemPrincipalIndex = Integer.parseInt(indexStr);
+                        }
                     }
                 } else if (item.getSize() > 0) {
                     imagensUpload.add(item); // Guardar para associar com o índice depois

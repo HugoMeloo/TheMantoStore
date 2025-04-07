@@ -18,6 +18,7 @@ public class AlterarUsuarioServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         int userId = Integer.parseInt(request.getParameter("userId"));
         String nome = request.getParameter("nome");
         String cpf = request.getParameter("cpf");

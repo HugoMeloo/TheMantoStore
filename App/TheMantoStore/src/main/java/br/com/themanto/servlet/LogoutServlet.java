@@ -12,8 +12,9 @@ public class LogoutServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         req.getSession().invalidate();
         req.setAttribute("message", "Successo em sair");
-        req.getRequestDispatcher("/login").forward(req, resp);
+        req.getRequestDispatcher("/").forward(req, resp);
     }
 }

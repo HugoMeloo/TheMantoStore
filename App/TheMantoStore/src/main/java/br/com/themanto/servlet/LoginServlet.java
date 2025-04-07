@@ -44,6 +44,9 @@ public class LoginServlet extends HttpServlet {
                 } else if ("est".equals(usuario.getGrupo())) {
                     resp.sendRedirect("escolha.jsp"); // ambos vão para o mesmo JSP agora
                 }
+                else if ("client".equals(usuario.getGrupo())) {
+                    resp.sendRedirect("/"); // ambos vão para o mesmo JSP agora
+                }
             } else {
                 req.setAttribute("errorMessage", "Usuário inativo.");
                 req.getRequestDispatcher("login.jsp").forward(req, resp);

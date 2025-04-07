@@ -9503,3 +9503,6 @@ SELECT * FROM produtos WHERE LOWER(nome_produto) LIKE ? ORDER BY nome_produto AS
 2025-03-27 20:32:46 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLDataException: Data conversion error converting ; SQL statement:
 SELECT * FROM PRODUTOS WHERE id = ? [22018-214]
+2025-04-06 18:46:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]SELEUSERS CT * FROM DADOS_PESSOAIS"; expected "SAVEPOINT, SCRIPT, SHUTDOWN, SHOW"; SQL statement:
+SELEUSERS CT * FROM DADOS_PESSOAIS [42001-214]

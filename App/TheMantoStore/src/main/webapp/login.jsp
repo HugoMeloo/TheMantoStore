@@ -20,17 +20,45 @@
 %>
 
 <div class="container" id="container">
+    <!-- Formulário de Cadastro -->
+    <div class="form-container cadastrar">
+        <form action="/create-user-client" method="post">
+            <h1>Criar conta</h1>
+
+            <!-- Dados pessoais -->
+            <input type="text" name="name" id="name" placeholder="Nome completo" value="${name}" required>
+            <input type="date" name="dataNascimento" id="dataNascimento" value="${dataNascimento}" required>
+
+            <select name="genero" id="genero" required>
+                <option value="">Selecione o gênero</option>
+                <option value="M" ${genero == 'M' ? 'selected' : ''}>Masculino</option>
+                <option value="F" ${genero == 'F' ? 'selected' : ''}>Feminino</option>
+                <option value="O" ${genero == 'O' ? 'selected' : ''}>Outro</option>
+            </select>
+
+            <input type="email" name="email" id="email" placeholder="Email" value="${email}" required>
+            <input type="text" name="cpf" id="cpf" placeholder="CPF" value="${cpf}" required>
+
+            <!-- Senhas -->
+            <input type="password" name="senhaCadastro" id="senhaCadastro" placeholder="Senha" required>
+            <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirmar Senha" required>
+
+            <br>
+            <button class="btn btn-primary" type="submit">Cadastrar</button>
+        </form>
+    </div>
+
     <!-- Formulário de Login -->
     <div class="form-container login">
         <form action="/login" method="post">
             <h1>Logar</h1>
-            <input type="email" name="loginEmail" id="loginEmail" placeholder="Email" class="form-control" required>
-            <input type="password" name="loginSenha" id="loginSenha" placeholder="Senha" class="form-control" required>
+            <input type="email" name="loginEmail" id="loginEmail" placeholder="Email" required>
+            <input type="password" name="loginSenha" id="loginSenha" placeholder="Senha" required>
             <button class="btn btn-primary" type="submit">Entrar</button>
         </form>
     </div>
 
-    <!-- Alternador entre login e cadastro -->
+    <!-- Painel de troca -->
     <div class="toggle-container">
         <div class="toggle">
             <div class="toggle-panel toggle-left">
@@ -40,6 +68,8 @@
             </div>
             <div class="toggle-panel toggle-right">
                 <h1>Olá, Amigo!</h1>
+                <p>Cadastre-se agora e aproveite a praticidade de comprar suas camisas com conforto e segurança!</p>
+                <button class="hidden" id="register">Cadastrar</button>
             </div>
         </div>
     </div>

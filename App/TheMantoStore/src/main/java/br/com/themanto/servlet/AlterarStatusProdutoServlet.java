@@ -12,6 +12,8 @@ import java.io.IOException;
 public class AlterarStatusProdutoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        req.setCharacterEncoding("UTF-8");
+
         try {
             String idProdutoStr = req.getParameter("id");
             String statusStr = req.getParameter("status");

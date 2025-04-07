@@ -16,7 +16,7 @@ import java.util.List;
 public class ExibirUsuarios extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.setCharacterEncoding("UTF-8");
         List<Users> user = new UsersDao().findAllUsers();
 
         req.setAttribute("users", user);
@@ -26,7 +26,7 @@ public class ExibirUsuarios extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.setCharacterEncoding("UTF-8");
         List<Users> user = new UsersDao().findAllUsers();
 
         req.setAttribute("users", user);

@@ -13,6 +13,7 @@ import java.util.List;
 @WebServlet("/BuscarProdutos")
 public class BuscarProdutosServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String termo = req.getParameter("search");
         int page = 1;
         int pageSize = 10;

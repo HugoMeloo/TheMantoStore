@@ -13,6 +13,7 @@ import java.io.IOException;
 public class AtualizarQuantidadeProdutoServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         try {
             String page = req.getParameter("page");
             int produtoId = Integer.parseInt(req.getParameter("id"));
