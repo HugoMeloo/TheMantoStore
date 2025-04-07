@@ -13,14 +13,14 @@ import java.util.List;
 
 public class UsersDao {
 
-    public void createUsers(Users users) {
+    public int createUsers(Users users) {
         String SQL = "INSERT INTO USERS (nome, email, senha, cpf, status, grupo) VALUES (?, ?, ?, ?, ?, ?)";
-
 
         try {
             Connection connection = ConnectionPoolConfig.getConnection();
 
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            // Solicita retorno da chave gerada
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, users.getNome());
             preparedStatement.setString(2, users.getEmail());
@@ -29,17 +29,27 @@ public class UsersDao {
             preparedStatement.setBoolean(5, users.isStatus());
             preparedStatement.setString(6, users.getGrupo());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
 
-            System.out.println("Sucesso ao inserir Usuario");
+            // Recupera a chave primária gerada
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            int idGerado = -1;
+
+            if (generatedKeys.next()) {
+                idGerado = generatedKeys.getInt(1);
+                System.out.println("Usuário inserido com sucesso. ID gerado: " + idGerado);
+            }
+
             connection.close();
+            return idGerado;
 
         } catch (SQLException e) {
             System.err.println("Erro ao inserir usuario: " + e.getMessage());
             e.printStackTrace();
-
+            throw new RuntimeException(e);
         }
     }
+
 
     public List<Users> findAllUsers() {
         String SQL = "SELECT * FROM USERS";

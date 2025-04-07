@@ -16,9 +16,8 @@ public class AlterarStatusUsuarioServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String userId = req.getParameter("id");
-
-
         Users usuario = usersDao.findUserById(userId);
         if (usuario != null) {
             boolean novoStatus = !usuario.isStatus();
