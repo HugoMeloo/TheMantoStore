@@ -17,7 +17,17 @@
 </script>
 <%
     }
+
+    String logout = request.getParameter("logout");
+    if ("ok".equals(logout)) {
 %>
+<script>
+    alert("Você saiu com sucesso!");
+</script>
+<%
+    }
+%>
+
 
 <div class="container" id="container">
     <!-- Formulário de Cadastro -->
