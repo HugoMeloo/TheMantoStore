@@ -239,7 +239,6 @@
               <c:if test="${not end.padrao}">
                 <a href="/excluir-endereco?id=${end.idEndereco}" class="text-muted">EXCLUIR</a>
               </c:if>
-              <a href="/editar-endereco?id=${end.idEndereco}" class="text-muted">EDITAR</a>
               <c:if test="${not end.padrao}">
                 <a href="/definir-endereco-padrao?id=${end.idEndereco}" class="text-warning">DEIXAR PADRÃO</a>
               </c:if>

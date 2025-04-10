@@ -6,55 +6,185 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Cadastro de Endereço</title>
+  <title>Cadastro de Endereço - The Manto Store</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .address-card {
+      border-left: 4px solid #0d6efd;
+      transition: all 0.3s ease;
+    }
+    .address-card:hover {
+      box-shadow: 0 0.5rem 1.2rem rgba(0,0,0,.1);
+    }
+    .form-label {
+      font-weight: 500;
+      color: #495057;
+    }
+    .btn-primary {
+      background-color: #0d6efd;
+      border: none;
+      padding: 10px 25px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    .btn-primary:hover {
+      background-color: #0b5ed7;
+      transform: translateY(-2px);
+    }
+    .header-icon {
+      font-size: 2rem;
+      color: #0d6efd;
+      margin-bottom: 1rem;
+    }
+    .input-group-text {
+      background-color: #f8f9fa;
+    }
+    .form-control:focus {
+      border-color: #86b7fe;
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+    .navbar {
+      background-color: #343a40 !important;
+    }
+    .search-input {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: white;
+    }
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .search-input:focus {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+    }
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #dc3545;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
 <body class="bg-light">
 
-<div class="container mt-5 mb-5">
-  <div class="card shadow">
-    <div class="card-body">
-      <h3 class="mb-4 text-center">Cadastro de Endereço</h3>
-      <form action="/novoEndereco" method="post">
-        <input type="hidden" name="idUser" value="<%= idUser %>">
+<!-- NAV Padrão IDÊNTICA ao index.jsp -->
+<!-- NAV Padrão IDÊNTICA ao index.jsp -->
+<nav class="navbar navbar-expand-lg navbar-dark mb-4" style="background-color: #343a40 !important;">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <i class="fas fa-tshirt me-2"></i>The Manto Store
+    </a>
+    <div class="d-flex align-items-center">
+      <% if (session.getAttribute("usuario") != null) { %>
+        <a href="/minhaConta" class="btn btn-outline-light me-2">
+          <i class="fas fa-user-cog"></i>
+          <span class="d-none d-lg-inline ms-1">Minha Conta</span>
+        </a>
+        <a href="/logout" class="btn btn-outline-light me-2">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="d-none d-lg-inline ms-1">Sair</span>
+        </a>
+      <% } else { %>
+        <a href="/login" class="btn btn-outline-light me-2">
+          <i class="fas fa-user"></i>
+          <span class="d-none d-lg-inline ms-1">Conta</span>
+        </a>
+      <% } %>
 
+      <a href="/carrinho" class="btn btn-outline-light position-relative">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="d-none d-lg-inline ms-1">Carrinho</span>
+        <% if (session.getAttribute("carrinho") != null && ((java.util.List<?>)session.getAttribute("carrinho")).size() > 0) { %>
+          <span class="cart-count"><%= ((java.util.List<?>)session.getAttribute("carrinho")).size() %></span>
+        <% } %>
+      </a>
+    </div>
+  </div>
+</nav>
 
-        <h5>Endereço de Entrega</h5>
-        <div class="row mb-3">
-          <div class="col-md-4">
-            <label>CEP</label>
-            <input type="text" class="form-control" id="cep_entrega" name="cep_entrega" maxlength="9" required>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card border-0 address-card">
+        <div class="card-body p-4 p-md-5">
+          <div class="text-center">
+            <i class="fas fa-map-marker-alt header-icon"></i>
+            <h2 class="mb-4 fw-bold text-primary">Cadastro de Endereço</h2>
+            <p class="text-muted mb-4">Preencha os dados do endereço de entrega</p>
           </div>
-          <div class="col-md-8">
-            <label>Logradouro</label>
-            <input type="text" class="form-control" id="logradouro_entrega" name="logradouro_entrega" required>
-          </div>
-          <div class="col-md-4 mt-3">
-            <label>Número</label>
-            <input type="text" class="form-control" id="numero_entrega" name="numero_entrega" required>
-          </div>
-          <div class="col-md-8 mt-3">
-            <label>Complemento</label>
-            <input type="text" class="form-control" id="complemento_entrega" name="complemento_entrega">
-          </div>
-          <div class="col-md-6 mt-3">
-            <label>Bairro</label>
-            <input type="text" class="form-control" id="bairro_entrega" name="bairro_entrega" required>
-          </div>
-          <div class="col-md-4 mt-3">
-            <label>Cidade</label>
-            <input type="text" class="form-control" id="cidade_entrega" name="cidade_entrega" required>
-          </div>
-          <div class="col-md-2 mt-3">
-            <label>UF</label>
-            <input type="text" class="form-control" id="uf_entrega" name="uf_entrega" maxlength="2" required>
-          </div>
+
+          <form action="/novoEndereco" method="post">
+            <input type="hidden" name="idUser" value="<%= idUser %>">
+
+            <div class="mb-4">
+              <div class="d-flex align-items-center mb-3">
+                <div class="bg-primary rounded-circle p-2 me-3">
+                  <i class="fas fa-truck text-white"></i>
+                </div>
+                <h4 class="mb-0 text-dark">Endereço de Entrega</h4>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label for="cep_entrega" class="form-label">CEP</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="cep_entrega" name="cep_entrega" maxlength="9" required placeholder="00000-000">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                  </div>
+                </div>
+
+                <div class="col-md-8">
+                  <label for="logradouro_entrega" class="form-label">Logradouro</label>
+                  <input type="text" class="form-control" id="logradouro_entrega" name="logradouro_entrega" required placeholder="Rua, Avenida, etc.">
+                </div>
+
+                <div class="col-md-4">
+                  <label for="numero_entrega" class="form-label">Número</label>
+                  <input type="text" class="form-control" id="numero_entrega" name="numero_entrega" required placeholder="Nº">
+                </div>
+
+                <div class="col-md-8">
+                  <label for="complemento_entrega" class="form-label">Complemento</label>
+                  <input type="text" class="form-control" id="complemento_entrega" name="complemento_entrega" placeholder="Apto, Bloco, etc.">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="bairro_entrega" class="form-label">Bairro</label>
+                  <input type="text" class="form-control" id="bairro_entrega" name="bairro_entrega" required>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="cidade_entrega" class="form-label">Cidade</label>
+                  <input type="text" class="form-control" id="cidade_entrega" name="cidade_entrega" required>
+                </div>
+
+                <div class="col-md-2">
+                  <label for="uf_entrega" class="form-label">UF</label>
+                  <input type="text" class="form-control text-uppercase" id="uf_entrega" name="uf_entrega" maxlength="2" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-save me-2"></i>Salvar Endereço
+              </button>
+            </div>
+          </form>
         </div>
-
-        <div class="text-center">
-          <button type="submit" class="btn btn-primary mt-3 px-5">Salvar Endereços</button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>

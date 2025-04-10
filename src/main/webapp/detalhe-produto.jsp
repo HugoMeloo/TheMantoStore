@@ -11,6 +11,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="css/detalhe.css">
 </head>
+<style>
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+</style>
 <body>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark mb-4">
@@ -37,7 +54,7 @@
                     </a>
                     <a href="/logout" class="btn btn-outline-light me-2">
                         <i class="fas fa-sign-out-alt"></i>
-                        <span class="d-none d-lg-inline ms-1">Logout</span>
+                        <span class="d-none d-lg-inline ms-1">Sair</span>
                     </a>
                 </c:when>
                 <c:otherwise>
@@ -49,11 +66,11 @@
             </c:choose>
 
             <a href="/carrinho" class="btn btn-outline-light position-relative">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="d-none d-lg-inline ms-1">Carrinho</span>
-                <c:if test="${not empty sessionScope.carrinho}">
-                    <span class="cart-count">${sessionScope.carrinho.size()}</span>
-                </c:if>
+              <i class="fas fa-shopping-cart"></i>
+              <span class="d-none d-lg-inline ms-1">Carrinho</span>
+              <c:if test="${not empty sessionScope.carrinho}">
+                <span class="cart-count">${sessionScope.carrinho.size()}</span>
+              </c:if>
             </a>
         </div>
     </div>

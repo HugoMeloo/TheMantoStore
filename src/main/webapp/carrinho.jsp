@@ -26,7 +26,7 @@
                     </a>
                     <a href="/logout" class="btn btn-outline-light me-2">
                         <i class="fas fa-sign-out-alt"></i>
-                        <span class="d-none d-lg-inline ms-1">Logout</span>
+                        <span class="d-none d-lg-inline ms-1">Sair</span>
                     </a>
                 </c:when>
                 <c:otherwise>
