@@ -23,6 +23,7 @@ br\com\themanto\servlet\CreateUserServlet.class
 br\com\themanto\servlet\NovoEnderecoServlet.class
 br\com\themanto\servlet\LoginServlet.class
 model\Endereco.class
+br\com\themanto\servlet\AlterarSenhaClienteServlet.class
 br\com\themanto\servlet\ExibirUsuarios.class
 model\Produtos.class
 br\com\themanto\servlet\AlterarGrupoUsuarioServlet.class

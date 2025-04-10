@@ -10,6 +10,43 @@
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <i class="fas fa-tshirt me-2"></i>The Manto Store
+    </a>
+    <div class="d-flex align-items-center">
+      <c:choose>
+        <c:when test="${not empty sessionScope.usuario}">
+          <a href="/minhaConta" class="btn btn-outline-light me-2">
+            <i class="fas fa-user-cog"></i>
+            <span class="d-none d-lg-inline ms-1">Minha Conta</span>
+          </a>
+          <a href="/logout" class="btn btn-outline-light me-2">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="d-none d-lg-inline ms-1">Logout</span>
+          </a>
+        </c:when>
+        <c:otherwise>
+          <a href="/login" class="btn btn-outline-light me-2">
+            <i class="fas fa-user"></i>
+            <span class="d-none d-lg-inline ms-1">Conta</span>
+          </a>
+        </c:otherwise>
+      </c:choose>
+
+      <a href="/carrinho" class="btn btn-outline-light position-relative">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="d-none d-lg-inline ms-1">Carrinho</span>
+        <c:if test="${not empty sessionScope.carrinho}">
+          <span class="cart-count">${sessionScope.carrinho.size()}</span>
+        </c:if>
+      </a>
+    </div>
+  </div>
+</nav>
+
+
 <div class="container py-5">
 
   <!-- Dados Básicos -->
@@ -19,12 +56,14 @@
 
       <div class="row g-2 mb-4">
         <div class="col-md-6">
-          <button class="btn btn-outline-warning w-100">Alterar E-mail</button>
-        </div>
-        <div class="col-md-6">
-          <button class="btn btn-outline-warning w-100">Alterar Senha</button>
+          <!-- Botão que abre o modal -->
+          <button type="button" class="btn btn-outline-warning w-100" data-bs-toggle="modal" data-bs-target="#modalAlterarSenha">
+            Alterar Senha
+          </button>
         </div>
       </div>
+
+
 
       <form action="/alterar-dados-cliente" method="post">
         <div class="row g-3">
@@ -107,6 +146,40 @@
     </div>
   </div>
 
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalAlterarSenha" tabindex="-1" aria-labelledby="modalAlterarSenhaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAlterarSenhaLabel">Alterar Senha</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+
+      <div class="modal-body">
+        <form id="formAlterarSenha" method="post" action="/novaSenhaCliente">
+          <div class="mb-3">
+            <label for="novaSenha" class="form-label">Nova Senha</label>
+            <input type="password" class="form-control" id="novaSenha" name="novaSenha" required>
+          </div>
+          <div class="mb-3">
+            <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
+            <input type="password" class="form-control" id="confirmarSenha" name="confirmarSenha" required>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" form="formAlterarSenha" class="btn btn-warning">Salvar</button>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <script src="https://kit.fontawesome.com/a2d0d6d72b.js" crossorigin="anonymous"></script>

@@ -47,10 +47,10 @@ public class NovoEnderecoServlet extends HttpServlet {
                 true
         );
 
-        // Salva
+
 
         enderecoDao.salvarEndereco(entrega);
-        String idStr = String.valueOf(idUser); // agora é String "14"
+        String idStr = String.valueOf(idUser);
         Users usuario = usersDao.findUserById(idStr);
 
 

@@ -23,7 +23,7 @@
 </c:if>
 <nav class="navbar navbar-expand-lg navbar-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" href="/TheMantoStore">
+        <a class="navbar-brand" href="/">
             <i class="fas fa-tshirt me-2"></i>The Manto Store
         </a>
 

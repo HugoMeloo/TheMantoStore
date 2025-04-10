@@ -115,6 +115,7 @@ public class UsersDao {
         }
         return false;
     }
+
     public boolean cpfExists(String cpf) {
         String SQL = "SELECT COUNT(*) FROM USERS WHERE cpf = ?";
 
@@ -205,6 +206,23 @@ public class UsersDao {
             return preparedStatement.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Erro ao atualizar usuário: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean updateUserClientePassword(String senha, int idUser) {
+        String SQL = "UPDATE USERS SET senha = ? WHERE idUser = ?";
+
+        try (Connection connection = ConnectionPoolConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, senha);
+            preparedStatement.setInt(2, idUser);
+
+
+            return preparedStatement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar senha do usuário cliente: " + e.getMessage());
             return false;
         }
     }
