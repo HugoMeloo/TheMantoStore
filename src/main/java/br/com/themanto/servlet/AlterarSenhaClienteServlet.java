@@ -19,24 +19,27 @@ public class AlterarSenhaClienteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
         Users usuarioLogado = (Users) session.getAttribute("usuario");
-        int idUser = usuarioLogado.getIdUser();
 
+        if (usuarioLogado == null) {
+            resp.sendRedirect("/login");
+            return;
+        }
+
+        int idUser = usuarioLogado.getIdUser();
         String novaSenha = req.getParameter("novaSenha");
         String confirmarSenha = req.getParameter("confirmarSenha");
 
-        if (novaSenha == null || !novaSenha.equals(confirmarSenha)) {
+        if (novaSenha == null || confirmarSenha == null || !novaSenha.equals(confirmarSenha)) {
             req.setAttribute("errorMessage", "As senhas não correspondem.");
             req.getRequestDispatcher("/configuracoes-usuario.jsp").forward(req, resp);
+            return;
         }
 
         String senhaHash = PasswordUtils.hashPassword(confirmarSenha);
-
         UsersDao udao = new UsersDao();
         udao.updateUserClientePassword(senhaHash, idUser);
 
-
-
         resp.sendRedirect("/minhaConta");
-
     }
 }
+

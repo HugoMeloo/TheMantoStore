@@ -6,9 +6,119 @@
   <meta charset="UTF-8">
   <title>Configurações do Usuário</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/minhaConta.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #2d3436;
+      --secondary-color: #e94560;
+      --light-bg: #f8f9fa;
+    }
+
+    body {
+      background-color: var(--light-bg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .navbar {
+      background: var(--primary-color) !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .section-title {
+      color: var(--primary-color);
+      font-weight: 600;
+      border-bottom: 2px solid var(--secondary-color);
+      padding-bottom: 8px;
+      display: inline-block;
+    }
+
+    .card {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-bottom: 25px;
+      overflow: hidden;
+    }
+
+    .card-destaque {
+      border-left: 4px solid var(--secondary-color);
+    }
+
+    .form-control, .form-select {
+      border-radius: 8px;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+    }
+
+    .btn-primary {
+      background-color: var(--secondary-color);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 500;
+    }
+
+    .btn-outline-warning {
+      border-radius: 8px;
+      padding: 10px 20px;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: var(--secondary-color);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .endereco-acao a {
+      margin-left: 15px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .endereco-acao a:hover {
+      color: var(--secondary-color) !important;
+    }
+
+    /* Estilos específicos para o modal */
+    .modal-content {
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .btn-close-white {
+      filter: invert(1);
+    }
+
+    .modal-header {
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .modal-footer {
+      border-top: 1px solid #eee;
+    }
+  </style>
 </head>
 <body>
+<c:if test="${not empty errorMessage}">
+  <div class="alert alert-danger" role="alert">
+    ${errorMessage}
+  </div>
+</c:if>
 
 <nav class="navbar navbar-expand-lg navbar-dark mb-4">
   <div class="container">
@@ -24,7 +134,7 @@
           </a>
           <a href="/logout" class="btn btn-outline-light me-2">
             <i class="fas fa-sign-out-alt"></i>
-            <span class="d-none d-lg-inline ms-1">Logout</span>
+            <span class="d-none d-lg-inline ms-1">Sair</span>
           </a>
         </c:when>
         <c:otherwise>
@@ -46,9 +156,7 @@
   </div>
 </nav>
 
-
 <div class="container py-5">
-
   <!-- Dados Básicos -->
   <div class="card shadow-sm">
     <div class="card-body">
@@ -56,14 +164,12 @@
 
       <div class="row g-2 mb-4">
         <div class="col-md-6">
-          <!-- Botão que abre o modal -->
+          <!-- Botão que abre o modal - MANTIDO EXATAMENTE IGUAL -->
           <button type="button" class="btn btn-outline-warning w-100" data-bs-toggle="modal" data-bs-target="#modalAlterarSenha">
             Alterar Senha
           </button>
         </div>
       </div>
-
-
 
       <form action="/alterar-dados-cliente" method="post">
         <div class="row g-3">
@@ -107,7 +213,6 @@
 
         <button type="submit" class="btn btn-primary mt-3">Salvar Alterações</button>
       </form>
-
     </div>
   </div>
 
@@ -142,24 +247,20 @@
           </div>
         </div>
       </c:forEach>
-
     </div>
   </div>
-
 </div>
 
-
-
-<!-- Modal -->
+<!-- Modal de Alterar Senha - Funcionalidade Original com Visual Aprimorado -->
 <div class="modal fade" id="modalAlterarSenha" tabindex="-1" aria-labelledby="modalAlterarSenhaLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalAlterarSenhaLabel">Alterar Senha</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="modalAlterarSenhaLabel">
+          <i class="fas fa-key me-2"></i>Alterar Senha
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
       </div>
-
       <div class="modal-body">
         <form id="formAlterarSenha" method="post" action="/novaSenhaCliente">
           <div class="mb-3">
@@ -172,12 +273,14 @@
           </div>
         </form>
       </div>
-
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="submit" form="formAlterarSenha" class="btn btn-warning">Salvar</button>
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          <i class="fas fa-times me-1"></i> Cancelar
+        </button>
+        <button type="submit" form="formAlterarSenha" class="btn btn-primary">
+          <i class="fas fa-save me-1"></i> Salvar
+        </button>
       </div>
-
     </div>
   </div>
 </div>
