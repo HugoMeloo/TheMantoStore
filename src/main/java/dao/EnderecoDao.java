@@ -73,6 +73,8 @@ public class EnderecoDao {
 
         return enderecos;
     }
+
+
     public void definirEnderecoPadrao(int idEndereco, int idUsuario) {
         String desmarcarTodos = "UPDATE ENDERECO SET padrao = FALSE WHERE IDUSER = ?";
         String marcarNovo = "UPDATE ENDERECO SET padrao = TRUE WHERE IDENDERECO = ?";

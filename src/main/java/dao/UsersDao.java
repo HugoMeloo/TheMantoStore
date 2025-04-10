@@ -209,6 +209,23 @@ public class UsersDao {
         }
     }
 
+    public boolean updateUserClient(String nome, String id) {
+        String SQL = "UPDATE USERS SET nome = ? WHERE idUser = ?";
+
+        try (Connection connection = ConnectionPoolConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, nome);
+            preparedStatement.setString(2, id);
+
+            return preparedStatement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar nome de Cliente: " + e.getMessage());
+            return false;
+        }
+    }
+
+
     public boolean updateUserStatus(String email, boolean status) {
         String SQL = "UPDATE USERS SET status = ? WHERE email = ?";
 

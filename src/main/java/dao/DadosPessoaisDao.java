@@ -44,4 +44,28 @@ public class DadosPessoaisDao {
 
         return null;
     }
+
+    public void updateDadosPessoais(String idUser, String dataNascimento, String genero) {
+        String sql = "UPDATE DADOS_PESSOAIS SET data_nascimento = ?, genero = ? WHERE idUser = ?";
+
+        try (Connection conn = ConnectionPoolConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, dataNascimento); // formato yyyy-MM-dd
+            stmt.setString(2, genero);
+            stmt.setString(3, idUser);
+
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                System.out.println("Dados pessoais de cliente atualizados com sucesso!");
+            } else {
+                System.out.println("Nenhum registro foi atualizado. Verifique o ID do usuário.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

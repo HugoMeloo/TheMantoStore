@@ -1,4 +1,5 @@
 br\com\themanto\servlet\AlterarUsuarioServlet.class
+br\com\themanto\servlet\AlterarUsuarioClienteServlet.class
 br\com\themanto\servlet\RedirecionarConfig.class
 br\com\themanto\servlet\LandingPageServlet.class
 br\com\themanto\servlet\ExibirProdutosServlet.class
@@ -19,6 +20,7 @@ br\com\themanto\servlet\CadastrarProdutoServlet.class
 config\ConnectionPoolConfig.class
 br\com\themanto\servlet\LogoutServlet.class
 br\com\themanto\servlet\CreateUserServlet.class
+br\com\themanto\servlet\NovoEnderecoServlet.class
 br\com\themanto\servlet\LoginServlet.class
 model\Endereco.class
 br\com\themanto\servlet\ExibirUsuarios.class

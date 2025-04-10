@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="css/minhaConta.css">
 </head>
 <body>
+
 <div class="container py-5">
 
   <!-- Dados Básicos -->
@@ -25,32 +26,36 @@
         </div>
       </div>
 
-      <form>
+      <form action="/alterar-dados-cliente" method="post">
         <div class="row g-3">
           <div class="col-md-6">
             <label>Nome completo*</label>
-            <input type="text" class="form-control" value="${dadosPadrao.nome}" required>
+            <input type="text" name="nome" class="form-control" value="${dadosPadrao.nome}" required>
           </div>
+
           <div class="col-md-6">
-            <label>Gênero**</label>
-            <select class="form-select">
-              <option ${dadosPessoais.genero eq 'Homem' ? 'selected' : ''}>Homem</option>
-              <option ${dadosPessoais.genero eq 'Mulher' ? 'selected' : ''}>Mulher</option>
-              <option ${dadosPessoais.genero eq 'Outros' ? 'selected' : ''}>Outros</option>
-              <option ${dadosPessoais.genero eq 'Nao especificar' ? 'selected' : ''}>Não especificar</option>
+            <label>Gênero*</label>
+            <select name="genero" class="form-select">
+              <option ${dadosPessoais.genero eq 'H' ? 'selected' : ''}>Homem</option>
+              <option ${dadosPessoais.genero eq 'M' ? 'selected' : ''}>Mulher</option>
+              <option ${dadosPessoais.genero eq 'O' ? 'selected' : ''}>Outros</option>
+              <option ${dadosPessoais.genero eq 'N' ? 'selected' : ''}>Não especificar</option>
             </select>
           </div>
+
           <div class="col-md-6">
             <label>E-mail</label>
             <input type="email" class="form-control" value="${dadosPadrao.email}" disabled>
           </div>
+
           <div class="col-md-6">
             <label>CPF</label>
             <input type="text" class="form-control" value="${dadosPadrao.cpf}" disabled>
           </div>
+
           <div class="col-md-6">
             <label>Data de nascimento</label>
-            <input type="text" class="form-control" value="${dadosPessoais.dataNascimento}" disabled>
+            <input type="date" name="dataNascimento" class="form-control" value="${dadosPessoais.dataNascimento}">
           </div>
         </div>
 
@@ -60,7 +65,10 @@
             Quero receber ofertas e novidades por e-mail, SMS, WhatsApp ou mensagens nos apps
           </label>
         </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Salvar Alterações</button>
       </form>
+
     </div>
   </div>
 
@@ -69,7 +77,7 @@
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="section-title"><i class="fas fa-map-marker-alt"></i> Endereços Cadastrados</h5>
-        <a href="/cadastrar-endereco.jsp" class="text-decoration-none fw-bold text-warning">+ Novo Endereço</a>
+        <a href="/novoEndereco" class="text-decoration-none fw-bold text-warning">+ Novo Endereço</a>
       </div>
 
       <c:forEach var="end" items="${listaEnderecos}">

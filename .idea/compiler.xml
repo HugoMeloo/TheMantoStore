@@ -7,10 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="TheMantoStore (1)" />
+        <module name="TheMantoStore" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="TheMantoStore" target="15" />
-    </bytecodeTargetLevel>
   </component>
 </project>
