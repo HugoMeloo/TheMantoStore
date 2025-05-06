@@ -1,5 +1,6 @@
 br\com\themanto\servlet\AlterarUsuarioServlet.class
 br\com\themanto\servlet\AlterarUsuarioClienteServlet.class
+dao\PedidosDao.class
 br\com\themanto\servlet\RedirecionarConfig.class
 br\com\themanto\servlet\LandingPageServlet.class
 br\com\themanto\servlet\ExibirProdutosServlet.class
@@ -16,11 +17,14 @@ utils\PasswordUtils.class
 dao\ProdutosDao.class
 utils\CpfValidator.class
 br\com\themanto\servlet\AtualizarQuantidadeProdutoServlet.class
+br\com\themanto\servlet\ResumoPedidoServlet.class
 br\com\themanto\servlet\CadastrarProdutoServlet.class
 config\ConnectionPoolConfig.class
 br\com\themanto\servlet\LogoutServlet.class
+model\Pedidos.class
 br\com\themanto\servlet\CreateUserServlet.class
 br\com\themanto\servlet\NovoEnderecoServlet.class
+br\com\themanto\servlet\ConcluirCompraServlet.class
 br\com\themanto\servlet\LoginServlet.class
 model\Endereco.class
 br\com\themanto\servlet\AlterarSenhaClienteServlet.class
@@ -30,7 +34,9 @@ br\com\themanto\servlet\AlterarGrupoUsuarioServlet.class
 br\com\themanto\servlet\BuscarProdutosServlet.class
 br\com\themanto\servlet\DetalhaProdutoServlet.class
 model\Imagem.class
+model\ItemPedido.class
 br\com\themanto\servlet\AlterarStatusProdutoServlet.class
+br\com\themanto\servlet\ExibirPedidosServlet.class
 br\com\themanto\servlet\AlterarStatusUsuarioServlet.class
 br\com\themanto\servlet\CarrinhoServlet.class
 model\CarrinhoItem.class

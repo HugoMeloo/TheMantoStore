@@ -1,8 +1,11 @@
 package br.com.themanto.servlet;
 
+import dao.EnderecoDao;
 import dao.ProdutosDao;
 import model.CarrinhoItem;
+import model.Endereco;
 import model.Produtos;
+import model.Users;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,8 +30,20 @@ public class CarrinhoServlet extends HttpServlet {
 
         // Obtém a sessão do usuário
         HttpSession session = req.getSession();
-        List<CarrinhoItem> carrinho = (List<CarrinhoItem>) session.getAttribute("carrinho");
+        System.out.println("Atributos disponíveis na sessão:");
 
+        var attributeNames = session.getAttributeNames(); // Obtém o Enumeration de atributos
+
+        while (attributeNames.hasMoreElements()) {
+            String attributeName = attributeNames.nextElement(); // Nome do atributo
+            Object attributeValue = session.getAttribute(attributeName); // Valor do atributo
+            System.out.println("Atributo: " + attributeName + " -> Valor: " + attributeValue);
+        }
+
+
+
+
+        List<CarrinhoItem> carrinho = (List<CarrinhoItem>) session.getAttribute("carrinho");
         if (carrinho == null) {
             carrinho = new ArrayList<>();
         }
@@ -47,10 +62,13 @@ public class CarrinhoServlet extends HttpServlet {
                         jaNoCarrinho = true;
                         if ("adicionar".equals(acao)) {
                             item.setQuantidade(item.getQuantidade() + 1); // Incrementa a quantidade
+                            System.out.println("Adicionando mais um item ao carrinho");
                         } else if ("remover".equals(acao) && item.getQuantidade() > 1) {
                             item.setQuantidade(item.getQuantidade() - 1); // Decrementa a quantidade
+                            System.out.println("Removendo uma unidade do item do carrinho");
                         } else if ("remover".equals(acao) && item.getQuantidade() == 1) {
                             // Remove o item do carrinho se a quantidade for zero
+                            System.out.println("Removendo o item do carrinho");
                             carrinho.remove(item);
                         }
                         break;
@@ -77,21 +95,95 @@ public class CarrinhoServlet extends HttpServlet {
 
         req.setAttribute("totalCarrinho", totalFormatado);
 
+        Users usuarioLogado = (Users) session.getAttribute("usuario");
+        if (usuarioLogado != null) {
+            String idUserStr = String.valueOf(usuarioLogado.getIdUser());
+            EnderecoDao enderecoDao = new EnderecoDao();
+            List<Endereco> enderecos = enderecoDao.buscarEnderecosPorUsuario(idUserStr);
+            System.out.println("Endereços retornados: " + enderecos);
+            req.setAttribute("enderecosUsuario", enderecos);
+        }
+
         // Encaminha para a página JSP
         req.getRequestDispatcher("carrinho.jsp").forward(req, resp);
     }
 
-    // Método para finalizar a compra
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Finalizar a compra: limpa o carrinho e finaliza a sessão
         HttpSession session = req.getSession();
-        session.removeAttribute("carrinho");
+        req.setCharacterEncoding("UTF-8");
 
-        // Você pode invalidar a sessão completamente se quiser
-        // session.invalidate();
+        // 1. Verifica se o usuário está logado
+        Users usuario = (Users) session.getAttribute("usuario");
+        if (usuario == null) {
+            resp.sendRedirect("login.jsp");
+            return;
+        }
 
-        // Redireciona o usuário para uma página de confirmação
-        resp.sendRedirect("");
+        // 2. Verifica se endereço e frete foram preenchidos
+        String enderecoSelecionado = req.getParameter("enderecoSelecionado");
+        if (enderecoSelecionado == null || enderecoSelecionado.isBlank()) {
+            session.setAttribute("erroEndereco", "Por favor, selecione um endereço de entrega.");
+            resp.sendRedirect("carrinho");
+            return;
+        }
+
+        String valorFrete = req.getParameter("valorFrete");
+        if (valorFrete == null || valorFrete.isBlank()) {
+            session.setAttribute("erroFrete", "Por favor, selecione um valor de frete.");
+            resp.sendRedirect("carrinho");
+            return;
+        }
+
+        // 3. Verifica o carrinho
+        List<CarrinhoItem> carrinho = (List<CarrinhoItem>) session.getAttribute("carrinho");
+        if (carrinho == null || carrinho.isEmpty()) {
+            resp.sendRedirect("carrinho");
+            return;
+        }
+
+        // 4. Calcula totais
+        double totalProdutos = carrinho.stream()
+                .mapToDouble(item -> item.getProduto().getPreco() * item.getQuantidade())
+                .sum();
+
+        double freteDouble = Double.parseDouble(valorFrete);
+        double totalComFrete = totalProdutos + freteDouble;
+        double descontoPix = totalComFrete * 0.07;
+        double totalPix = totalComFrete - descontoPix;
+
+        // 5. Busca o endereço detalhado
+        EnderecoDao enderecoDao = new EnderecoDao();
+        Endereco enderecoObj = enderecoDao.buscarEnderecoPorId(enderecoSelecionado); // você precisa implementar isso
+
+        if (enderecoObj != null) {
+            String enderecoFormatado = String.format(
+                    "%s, %s%s, %s, %s - %s, CEP: %s",
+                    enderecoObj.getLogradouro(),
+                    enderecoObj.getNumero(),
+                    enderecoObj.getComplemento() != null && !enderecoObj.getComplemento().isBlank()
+                            ? " - " + enderecoObj.getComplemento() : "",
+                    enderecoObj.getBairro(),
+                    enderecoObj.getCidade(),
+                    enderecoObj.getUf(),
+                    enderecoObj.getCep()
+            );
+            session.setAttribute("enderecoSelecionadoDetalhado", enderecoFormatado);
+        }
+
+        // 6. Salva na sessão
+        session.setAttribute("valorProdutos", totalProdutos);
+        session.setAttribute("valorFrete", freteDouble);
+        session.setAttribute("totalComFrete", totalComFrete);
+        session.setAttribute("totalPix", totalPix);
+        session.setAttribute("descontoPix", descontoPix);
+        session.setAttribute("enderecoSelecionado", enderecoSelecionado);
+
+        session.removeAttribute("erroEndereco");
+        session.removeAttribute("erroFrete");
+
+        // 7. Redireciona para pagamento
+        resp.sendRedirect("pagamento.jsp");
     }
+
 }

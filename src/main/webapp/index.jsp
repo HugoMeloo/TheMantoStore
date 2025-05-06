@@ -43,6 +43,10 @@
                         <i class="fas fa-user-cog"></i>
                         <span class="d-none d-lg-inline ms-1">Minha Conta</span>
                     </a>
+                    <a href="/exibirPedidos" class="btn btn-outline-light me-2">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span class="d-none d-lg-inline ms-1">Meus Pedidos</span>
+                    </a>
                     <a href="/logout" class="btn btn-outline-light me-2">
                         <i class="fas fa-sign-out-alt"></i>
                         <span class="d-none d-lg-inline ms-1">Sair</span>
@@ -72,6 +76,8 @@
 
     <div id="productGrid" class="product-grid">
         <c:forEach var="produto" items="${produtos}">
+            <c:if test="${produto.status ne 'FALSE'}">
+
             <div class="product-card h-100 product-item" data-name="${produto.nomeProduto.toLowerCase()}">
                 <a href="/detalha-produto?id=${produto.id}" class="text-decoration-none">
                     <div class="product-image-container">
@@ -91,6 +97,7 @@
                     </div>
                 </a>
             </div>
+            </c:if>
         </c:forEach>
     </div>
 </main>

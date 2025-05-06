@@ -66,9 +66,14 @@
             <h1>Logar</h1>
             <input type="email" name="loginEmail" id="loginEmail" placeholder="Email" required>
             <input type="password" name="loginSenha" id="loginSenha" placeholder="Senha" required>
+
+            <!-- Campo oculto para preservar o redirect -->
+            <input type="hidden" name="redirect" value="${param.redirect}" />
+
             <button class="btn btn-primary" type="submit">Entrar</button>
         </form>
     </div>
+
 
     <!-- Painel de troca -->
     <div class="toggle-container">

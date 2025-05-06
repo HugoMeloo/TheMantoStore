@@ -39,6 +39,21 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("usuario", usuario);
                 session.setAttribute("tipoUsuario", usuario.getGrupo());
 
+                // Novo trecho: verifica se há parâmetro ?redirect
+                String redirect = req.getParameter("redirect");
+                System.out.println(redirect);
+
+                if (redirect != null && !redirect.isBlank()) {
+                    // Se for uma tentativa de acessar a página diretamente, redireciona para o Servlet
+                    if (redirect.contains("/carrinho.jsp")) {
+                        redirect = "/carrinho"; // força o uso correto do Servlet
+                    }
+                    resp.sendRedirect(redirect);
+                    return;
+                }
+
+
+
                 if ("admin".equals(usuario.getGrupo())) {
                     resp.sendRedirect("escolha.jsp");
                 } else if ("est".equals(usuario.getGrupo())) {

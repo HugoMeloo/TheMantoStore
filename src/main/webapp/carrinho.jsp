@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <title>Carrinho - The Manto Store</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/carrinho.css">
 </head>
@@ -23,6 +24,10 @@
                     <a href="/minhaConta" class="btn btn-outline-light me-2">
                         <i class="fas fa-user-cog"></i>
                         <span class="d-none d-lg-inline ms-1">Minha Conta</span>
+                    </a>
+                    <a href="/exibirPedidos" class="btn btn-outline-light me-2">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span class="d-none d-lg-inline ms-1">Meus Pedidos</span>
                     </a>
                     <a href="/logout" class="btn btn-outline-light me-2">
                         <i class="fas fa-sign-out-alt"></i>
@@ -71,7 +76,8 @@
             <div class="col-lg-8">
                 <c:forEach var="item" items="${sessionScope.carrinho}">
                     <div class="product-card">
-                        <img src="${item.produto.imagens[0].caminhoArquivo}" alt="Imagem do Produto" class="product-image">
+                        <img src="${item.produto.imagens[0].caminhoArquivo}" alt="Imagem do Produto"
+                             class="product-image">
                         <div class="product-info">
                             <h3 class="product-title">${item.produto.nomeProduto}</h3>
                             <p class="product-price">R$ ${item.produto.preco}</p>
@@ -125,7 +131,8 @@
                             </label>
                         </div>
                         <div class="shipping-option">
-                            <input type="radio" name="frete" id="frete-agendada" value="15" onclick="selecionarFrete(15)">
+                            <input type="radio" name="frete" id="frete-agendada" value="15"
+                                   onclick="selecionarFrete(15)">
                             <label for="frete-agendada">
                                 <span>Entrega Agendada <small>(5-7 dias úteis)</small></span>
                                 <span>R$ 15,00</span>
@@ -136,14 +143,23 @@
             </div>
 
             <div class="col-lg-4">
+                <c:if test="${not empty sessionScope.usuario}">
+                    <c:if test="${not empty sessionScope.erroEndereco}">
+                        <div class="alert alert-warning">${sessionScope.erroEndereco}</div>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.erroFrete}">
+                        <div class="alert alert-warning">${sessionScope.erroFrete}</div>
+                    </c:if>
+                </c:if>
                 <div class="summary-card">
+
                     <h3 class="summary-title">
                         <i class="fas fa-receipt"></i> Resumo do Pedido
                     </h3>
 
                     <div class="summary-item">
                         <span>Subtotal</span>
-                        <span>${totalCarrinho}</span>
+                        <span>${requestScope.totalCarrinho}</span>
                     </div>
 
                     <div class="summary-item">
@@ -156,11 +172,63 @@
                         <span id="total-com-frete">${totalCarrinho}</span>
                     </div>
 
-                    <form action="carrinho" method="POST">
-                        <button type="submit" class="btn btn-checkout">
-                            <i class="fas fa-credit-card me-2"></i> Finalizar Compra
-                        </button>
-                    </form>
+                    <c:if test="${not empty requestScope.enderecosUsuario}">
+
+
+                        <!-- Bloco de endereços -->
+                        <div class="summary-card mt-4">
+                            <h3 class="summary-title">
+                                <i class="fas fa-map-marker-alt"></i> Endereço de Entrega
+                            </h3>
+                            <form id="form-endereco">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <a href="/novoEndereco" class="text-decoration-none fw-bold text-warning">+ Novo
+                                        Endereço</a>
+                                </div>
+                                <c:forEach var="endereco" items="${requestScope.enderecosUsuario}">
+
+                                    <c:if test="${endereco.tipoEndereco ne 'FATURAMENTO'}">
+
+
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio"
+                                                   name="enderecoEntrega"
+                                                   id="endereco-${endereco.idEndereco}"
+                                                   value="${endereco.idEndereco}" required>
+                                            <label class="form-check-label" for="endereco-${endereco.idEndereco}">
+                                                    ${endereco.tipoEndereco}
+                                                - ${endereco.logradouro}, ${endereco.numero},
+                                                    ${endereco.bairro}, ${endereco.cidade} - ${endereco.uf},
+                                                CEP: ${endereco.cep}
+                                            </label>
+                                        </div>
+                                    </c:if>
+                                </c:forEach>
+                            </form>
+                        </div>
+                    </c:if>
+
+                    <!-- Botão de finalização com lógica condicional -->
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.usuario}">
+                            <form action="carrinho" method="POST" class="mt-2">
+                                <input type="hidden" name="enderecoSelecionado" id="enderecoSelecionado"/>
+                                <button type="submit" class="btn btn-checkout w-100">
+                                    <i class="fas fa-credit-card me-2"></i> Finalizar Compra
+                                </button>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="currentUrl" value="/carrinho"/>
+                            <c:if test="${not empty param.id}">
+                                <c:set var="currentUrl" value="/carrinho?id=${param.id}"/>
+                            </c:if>
+
+                            <a href="/login?redirect=${currentUrl}" class="btn btn-outline-primary w-100 mt-2">
+                                <i class="fas fa-lock me-2"></i> Faça login para finalizar a compra
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
@@ -179,6 +247,7 @@
             alert("Por favor, digite um CEP válido com 8 números.");
         }
     }
+
     function selecionarFrete(valorFrete) {
         // Atualiza o valor do frete no resumo
         document.getElementById("frete-valor").innerText = "R$ " + valorFrete.toFixed(2);
@@ -193,6 +262,51 @@
         // Atualiza o total no resumo do pedido
         document.getElementById("total-com-frete").innerText = "R$ " + totalComFrete.toFixed(2);
     }
+
+    document.querySelector("form[action='carrinho']").addEventListener("submit", function (e) {
+        const enderecoSelecionado = document.querySelector("input[name='enderecoEntrega']:checked");
+        const freteSelecionado = document.querySelector("input[name='frete']:checked");
+
+        if (!enderecoSelecionado) {
+            e.preventDefault();
+            alert("Por favor, selecione um endereço de entrega.");
+            return;
+        }
+
+        if (!freteSelecionado) {
+            e.preventDefault();
+            alert("Por favor, selecione uma opção de frete.");
+            return;
+        }
+
+        document.getElementById("enderecoSelecionado").value = enderecoSelecionado.value;
+
+        // Cria campo hidden dinamicamente para o frete
+        let freteInput = document.getElementById("freteSelecionado");
+        if (!freteInput) {
+            freteInput = document.createElement("input");
+            freteInput.type = "hidden";
+            freteInput.name = "valorFrete";
+            freteInput.id = "freteSelecionado";
+            this.appendChild(freteInput);
+        }
+
+        freteInput.value = freteSelecionado.value;
+    });
+
+    // Ao selecionar um endereço, preenche automaticamente o campo de CEP (sem caracteres especiais)
+    document.querySelectorAll("input[name='enderecoEntrega']").forEach(function (radio) {
+        radio.addEventListener("change", function () {
+            const label = this.nextElementSibling.innerText;
+            const cepMatch = label.match(/\d{5}-?\d{3}/); // captura CEP no formato 00000-000 ou 00000000
+            if (cepMatch) {
+                const cepLimpo = cepMatch[0].replace(/\D/g, ""); // remove tudo que não for dígito
+                document.getElementById("cep").value = cepLimpo;
+                calcularFrete(); // exibe as opções de frete
+            }
+        });
+    });
+
 
 </script>
 </body>

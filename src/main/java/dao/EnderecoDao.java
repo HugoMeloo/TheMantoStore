@@ -74,6 +74,34 @@ public class EnderecoDao {
         return enderecos;
     }
 
+    public Endereco buscarEnderecoPorId(String idEndereco) {
+        String sql = "SELECT * FROM ENDERECO WHERE IDENDERECO = ?";
+        try (Connection conn = ConnectionPoolConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, Integer.parseInt(idEndereco));
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Endereco e = new Endereco();
+                e.setIdEndereco(rs.getInt("idendereco"));
+                e.setCep(rs.getString("cep"));
+                e.setLogradouro(rs.getString("logradouro"));
+                e.setNumero(rs.getString("numero"));
+                e.setComplemento(rs.getString("complemento"));
+                e.setBairro(rs.getString("bairro"));
+                e.setCidade(rs.getString("cidade"));
+                e.setUf(rs.getString("uf"));
+                e.setTipoEndereco(rs.getString("tipo_endereco"));
+                e.setIdUser(rs.getInt("iduser"));
+                return e;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public void definirEnderecoPadrao(int idEndereco, int idUsuario) {
         String desmarcarTodos = "UPDATE ENDERECO SET padrao = FALSE WHERE IDUSER = ?";
