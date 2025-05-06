@@ -52,6 +52,10 @@
                         <i class="fas fa-user-cog"></i>
                         <span class="d-none d-lg-inline ms-1">Minha Conta</span>
                     </a>
+                    <a href="/exibirPedidos" class="btn btn-outline-light me-2">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span class="d-none d-lg-inline ms-1">Meus Pedidos</span>
+                    </a>
                     <a href="/logout" class="btn btn-outline-light me-2">
                         <i class="fas fa-sign-out-alt"></i>
                         <span class="d-none d-lg-inline ms-1">Sair</span>
