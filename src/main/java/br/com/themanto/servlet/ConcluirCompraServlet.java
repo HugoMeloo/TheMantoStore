@@ -29,6 +29,7 @@ public class ConcluirCompraServlet extends HttpServlet {
         Double valorFrete = (Double) session.getAttribute("valorFrete");
         Double descontoPix = (Double) session.getAttribute("descontoPix");
         Double totalComDesconto = (Double) session.getAttribute("totalPix");
+        Double valorTotal = (Double) session.getAttribute("totalComFrete");
         String enderecoFormatado = (String) session.getAttribute("enderecoSelecionadoDetalhado");
         String idEnderecoStr = String.valueOf(session.getAttribute("enderecoSelecionado"));
         List<CarrinhoItem> carrinho = (List<CarrinhoItem>) session.getAttribute("carrinho");
@@ -51,7 +52,7 @@ public class ConcluirCompraServlet extends HttpServlet {
         pedido.setValorProdutos(valorProdutos);
         pedido.setValorFrete(valorFrete);
         pedido.setValorDesconto(descontoPix);
-        pedido.setValorTotal(totalComDesconto);
+        pedido.setValorTotal(valorTotal);
         pedido.setStatus("aguardando pagamento");
         pedido.setObservacoes("Pedido realizado por " + usuario.getNome());
 

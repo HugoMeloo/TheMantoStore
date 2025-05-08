@@ -71,8 +71,8 @@
             <div id="detalhes-${pedido.idPedido}" class="collapse">
                 <div class="card-body">
                     <p><strong>Forma de Pagamento:</strong> ${pedido.formaPagamento}</p>
-                    <p><strong>Total:</strong> <fmt:formatNumber value="${pedido.valorTotal}" type="currency"
-                                                                 currencyCode="BRL"/></p>
+                    <p><strong>Total:</strong> <fmt:formatNumber value="${pedido.valorTotal}" type="currency" currencyCode="BRL"/></p>
+                    <p><strong>Frete:</strong> <fmt:formatNumber value="${pedido.valorFrete}" type="currency" currencyCode="BRL"/></p>
 
                     <h6 class="mt-3">Produtos:</h6>
                     <table class="table table-sm">

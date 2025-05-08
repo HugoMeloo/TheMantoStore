@@ -116,9 +116,9 @@
         <h5><i class="fas fa-receipt me-2"></i>Resumo Financeiro</h5>
         <p>Produtos: <strong><fmt:formatNumber value="${sessionScope.valorProdutos}" type="currency" currencyCode="BRL"/></strong></p>
         <p>Frete: <strong><fmt:formatNumber value="${sessionScope.valorFrete}" type="currency" currencyCode="BRL"/></strong></p>
-        <p>Desconto no PIX: <span class="text-success">- <fmt:formatNumber value="${sessionScope.descontoPix}" type="currency" currencyCode="BRL"/></span></p>
+        <!-- <p>Desconto no PIX: <span class="text-success">- <fmt:formatNumber value="${sessionScope.descontoPix}" type="currency" currencyCode="BRL"/></span></p> -->
         <hr>
-        <h5>Total: <fmt:formatNumber value="${sessionScope.totalPix}" type="currency" currencyCode="BRL"/></h5>
+        <h5>Total: <fmt:formatNumber value="${sessionScope.totalComFrete}" type="currency" currencyCode="BRL"/></h5>
 
         <form action="concluir-compra" method="post" class="mt-4">
           <button type="submit" class="btn btn-orange w-100">CONCLUIR COMPRA</button>
