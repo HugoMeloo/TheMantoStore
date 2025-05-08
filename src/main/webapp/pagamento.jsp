@@ -131,10 +131,10 @@
             <div class="resumo-card">
                 <h5><i class="fas fa-search me-2"></i>Resumo do Pedido</h5>
                 <p>Valor dos Produtos: <strong><fmt:formatNumber value="${valorProdutos}" type="currency" currencyCode="BRL"/></strong></p>
-                <p>Descontos: <span class="text-success">- <fmt:formatNumber value="${descontoPix}" type="currency" currencyCode="BRL"/></span></p>
+                <!-- <p>Descontos: <span class="text-success">- <fmt:formatNumber value="${descontoPix}" type="currency" currencyCode="BRL"/></span></p> -->
                 <p>Frete: <strong><fmt:formatNumber value="${valorFrete}" type="currency" currencyCode="BRL"/></strong></p>
                 <hr>
-                <p>Total no PIX: <strong><fmt:formatNumber value="${totalPix}" type="currency" currencyCode="BRL"/></strong></p>
+                <p>Total: <strong><fmt:formatNumber value="${totalComFrete}" type="currency" currencyCode="BRL"/></strong></p>
                 <a href="carrinho" class="btn btn-outline-secondary w-100 mt-3">VOLTAR</a>
             </div>
         </div>
