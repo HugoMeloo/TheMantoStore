@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import java.io.IOException;
 
 @WebServlet("/alterar-dados-cliente")
@@ -26,21 +25,21 @@ public class AlterarUsuarioClienteServlet extends HttpServlet {
         String nome = req.getParameter("nome");
         String genero = req.getParameter("genero");
         String novoGenero = null;
-        if(genero.equals("Mulher")){
+        if (genero.equals("Mulher")) {
             novoGenero = "M";
-        }else if(genero.equals("Homem")){
+        } else if (genero.equals("Homem")) {
             novoGenero = "H";
-        }else if(genero.equals("Outros")){
+        } else if (genero.equals("Outros")) {
             novoGenero = "O";
-        }else if(genero.equals("Nao especificar")){
+        } else if (genero.equals("Nao especificar")) {
             novoGenero = "N";
         }
         String dataNascimento = req.getParameter("dataNascimento");
 
         UsersDao udao = new UsersDao();
-        udao.updateUserClient(nome,idUsuario);
+        udao.updateUserClient(nome, idUsuario);
         DadosPessoaisDao dpdao = new DadosPessoaisDao();
-        dpdao.updateDadosPessoais(idUsuario,dataNascimento,novoGenero);
+        dpdao.updateDadosPessoais(idUsuario, dataNascimento, novoGenero);
 
         resp.sendRedirect("minhaConta");
 

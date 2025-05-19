@@ -29,16 +29,16 @@ public class Pedidos {
         return itens;
     }
 
+    public void setItens(List<CarrinhoItem> itens) {
+        this.itens = itens;
+    }
+
     public Date getDataCriacaoDate() {
         return dataCriacaoDate;
     }
 
     public void setDataCriacaoDate(Date dataCriacaoDate) {
         this.dataCriacaoDate = dataCriacaoDate;
-    }
-
-    public void setItens(List<CarrinhoItem> itens) {
-        this.itens = itens;
     }
 
     public int getIdPedido() {

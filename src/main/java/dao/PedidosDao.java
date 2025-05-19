@@ -6,10 +6,10 @@ import model.Pedidos;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class PedidosDao {
@@ -163,6 +163,7 @@ public class PedidosDao {
 
         return lista;
     }
+
     public List<CarrinhoItem> buscarItensPedido(int idPedido) {
         List<CarrinhoItem> itens = new ArrayList<>();
 

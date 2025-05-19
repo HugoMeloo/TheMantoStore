@@ -1,6 +1,7 @@
 package config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ public class ConnectionPoolConfig {
     private ConnectionPoolConfig() {
         getDataSource();
     }
+
     // usar essa url para acessar o banco pelo console: jdbc:h2:file:./database/TheMantoStoreDB
     private static BasicDataSource getDataSource() {
         if (dataSource == null) {
@@ -60,16 +62,16 @@ public class ConnectionPoolConfig {
 
     private static void createTableUsers(Connection connection) {
         String SQL = """
-            CREATE TABLE IF NOT EXISTS USERS (
-                iduser INT AUTO_INCREMENT PRIMARY KEY,
-                nome VARCHAR(50) NOT NULL,
-                email VARCHAR(50) UNIQUE NOT NULL,
-                senha VARCHAR(255) NOT NULL,
-                cpf CHAR(50) UNIQUE NOT NULL,
-                status BOOLEAN DEFAULT TRUE,
-                grupo CHAR(3) CHECK (grupo IN ('adm', 'est'))
-            );
-        """;
+                    CREATE TABLE IF NOT EXISTS USERS (
+                        iduser INT AUTO_INCREMENT PRIMARY KEY,
+                        nome VARCHAR(50) NOT NULL,
+                        email VARCHAR(50) UNIQUE NOT NULL,
+                        senha VARCHAR(255) NOT NULL,
+                        cpf CHAR(50) UNIQUE NOT NULL,
+                        status BOOLEAN DEFAULT TRUE,
+                        grupo CHAR(3) CHECK (grupo IN ('adm', 'est'))
+                    );
+                """;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
             preparedStatement.execute();

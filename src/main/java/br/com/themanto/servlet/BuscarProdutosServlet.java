@@ -1,4 +1,5 @@
 package br.com.themanto.servlet;
+
 import dao.ProdutosDao;
 import model.Produtos;
 
@@ -20,7 +21,8 @@ public class BuscarProdutosServlet extends HttpServlet {
 
         try {
             page = Integer.parseInt(req.getParameter("page"));
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         int offset = (page - 1) * pageSize;
 

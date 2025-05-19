@@ -53,13 +53,11 @@ public class LoginServlet extends HttpServlet {
                 }
 
 
-
                 if ("admin".equals(usuario.getGrupo())) {
                     resp.sendRedirect("escolha.jsp");
                 } else if ("est".equals(usuario.getGrupo())) {
                     resp.sendRedirect("escolha.jsp"); // ambos vão para o mesmo JSP agora
-                }
-                else if ("client".equals(usuario.getGrupo())) {
+                } else if ("client".equals(usuario.getGrupo())) {
                     resp.sendRedirect("/"); // ambos vão para o mesmo JSP agora
                 }
             } else {

@@ -1,7 +1,7 @@
 package dao;
 
-import model.Users;
 import config.ConnectionPoolConfig;
+import model.Users;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -57,8 +57,8 @@ public class UsersDao {
 
         try (
                 Connection connection = ConnectionPoolConfig.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 Users user = new Users(

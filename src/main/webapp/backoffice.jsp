@@ -141,10 +141,12 @@
                     <input type="text" name="cpf" id="cpf" placeholder="CPF" class="form-control mb-3" required>
 
                     <!-- Campo Senha -->
-                    <input type="password" name="senhaCadastro" id="senhaCadastro" placeholder="Senha" class="form-control mb-3" required>
+                    <input type="password" name="senhaCadastro" id="senhaCadastro" placeholder="Senha"
+                           class="form-control mb-3" required>
 
                     <!-- Campo Confirmar Senha -->
-                    <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirmar Senha" class="form-control mb-3" required>
+                    <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirmar Senha"
+                           class="form-control mb-3" required>
 
                     <!-- Campo Grupo (ADICIONE AQUI) -->
                     <div class="form-group mb-3">
@@ -203,7 +205,6 @@
         </div>
     </div>
 </div>
-
 
 
 <script>

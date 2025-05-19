@@ -16,6 +16,7 @@ public class Produtos {
     public Produtos() {
 
     }
+
     // Construtor atualizado (sem imagens)
     public Produtos(int id, String nomeProduto, double avaliacao, String descricao, double preco, int qtdEstoque, boolean status) {
         this.id = id;
@@ -95,6 +96,6 @@ public class Produtos {
 
     @Override
     public String toString() {
-        return "Id "+getId();
+        return "Id " + getId();
     }
 }

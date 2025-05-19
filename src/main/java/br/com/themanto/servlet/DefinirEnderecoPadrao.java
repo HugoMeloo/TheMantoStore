@@ -14,23 +14,23 @@ import java.io.IOException;
 @WebServlet("/definir-endereco-padrao")
 
 public class DefinirEnderecoPadrao extends HttpServlet {
-        private final EnderecoDao enderecoDao = new EnderecoDao();
+    private final EnderecoDao enderecoDao = new EnderecoDao();
 
-        @Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            HttpSession session = request.getSession(false);
-            Users usuario = (Users) session.getAttribute("usuario");
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        Users usuario = (Users) session.getAttribute("usuario");
 
-            if (usuario != null) {
-                int idEndereco = Integer.parseInt(request.getParameter("id"));
-                int idUsuario = usuario.getIdUser();
+        if (usuario != null) {
+            int idEndereco = Integer.parseInt(request.getParameter("id"));
+            int idUsuario = usuario.getIdUser();
 
-                enderecoDao.definirEnderecoPadrao(idEndereco, idUsuario);
+            enderecoDao.definirEnderecoPadrao(idEndereco, idUsuario);
 
-                response.sendRedirect("/minhaConta");
-            } else {
-                response.sendRedirect("/login");
-            }
+            response.sendRedirect("/minhaConta");
+        } else {
+            response.sendRedirect("/login");
         }
     }
+}
     

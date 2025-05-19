@@ -41,8 +41,6 @@ public class CarrinhoServlet extends HttpServlet {
         }
 
 
-
-
         List<CarrinhoItem> carrinho = (List<CarrinhoItem>) session.getAttribute("carrinho");
         if (carrinho == null) {
             carrinho = new ArrayList<>();

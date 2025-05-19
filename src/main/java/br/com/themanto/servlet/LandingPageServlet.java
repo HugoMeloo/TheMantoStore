@@ -1,7 +1,6 @@
 package br.com.themanto.servlet;
 
 
-
 import dao.ProdutosDao;
 import model.Imagem;
 import model.Produtos;
@@ -22,7 +21,6 @@ public class LandingPageServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         ProdutosDao pdao = new ProdutosDao();
         List<Produtos> allProdutos = pdao.findAllProdutos();
-
 
 
         req.setAttribute("produtos", allProdutos);

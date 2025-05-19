@@ -48,7 +48,6 @@ public class NovoEnderecoServlet extends HttpServlet {
         );
 
 
-
         enderecoDao.salvarEndereco(entrega);
         String idStr = String.valueOf(idUser);
         Users usuario = usersDao.findUserById(idStr);

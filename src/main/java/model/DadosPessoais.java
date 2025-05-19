@@ -9,7 +9,8 @@ public class DadosPessoais {
     private Date dataNascimento;
     private String genero;
 
-    public DadosPessoais() {}
+    public DadosPessoais() {
+    }
 
     public DadosPessoais(int idUser, Date dataNascimento, String genero) {
         this.idUser = idUser;

@@ -2,11 +2,11 @@ package model;
 
 public class Imagem {
 
-    private int idImage;
+    private final int idImage;
     private int produtoId;
-    private String nomeArquivo;
-    private String caminhoArquivo;
-    private boolean imagemPadrao;
+    private final String nomeArquivo;
+    private final String caminhoArquivo;
+    private final boolean imagemPadrao;
 
     public Imagem(int idImage, int produtoId, String nomeArquivo, String caminhoArquivo, boolean imagemPadrao) {
         this.idImage = idImage;

@@ -1,9 +1,9 @@
 package br.com.themanto.servlet;
 
 import dao.PedidosDao;
+import model.CarrinhoItem;
 import model.Pedidos;
 import model.Users;
-import model.CarrinhoItem;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

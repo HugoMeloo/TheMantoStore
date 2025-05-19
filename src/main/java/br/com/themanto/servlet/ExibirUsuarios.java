@@ -31,6 +31,7 @@ public class ExibirUsuarios extends HttpServlet {
 
         req.setAttribute("users", user);
 
-        req.getRequestDispatcher("/backoffice.jsp").forward(req, resp);    }
+        req.getRequestDispatcher("/backoffice.jsp").forward(req, resp);
+    }
 
 }

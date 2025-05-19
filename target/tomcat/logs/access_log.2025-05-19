@@ -1,0 +1,16 @@
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:04 -0300] "GET / HTTP/1.1" 200 23039 http-bio-8080-exec-1 382
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:05 -0300] "GET /css/body.css HTTP/1.1" 404 975 http-bio-8080-exec-2 1
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:08 -0300] "GET /login HTTP/1.1" 200 3007 http-bio-8080-exec-3 14
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:10 -0300] "POST /login HTTP/1.1" 302 - http-bio-8080-exec-4 4
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:10 -0300] "GET / HTTP/1.1" 200 23545 http-bio-8080-exec-5 16
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:10 -0300] "GET /css/body.css HTTP/1.1" 404 975 http-bio-8080-exec-6 1
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:12 -0300] "GET /detalha-produto?id=5 HTTP/1.1" 200 6384 http-bio-8080-exec-7 17
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:12 -0300] "GET /img/de20dc57-fe53-4638-b201-54f63ddcc7a9.jpg HTTP/1.1" 200 3761 http-bio-8080-exec-8 4
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:14 -0300] "GET /carrinho?id=5 HTTP/1.1" 200 14452 http-bio-8080-exec-9 40
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:40 -0300] "POST /carrinho HTTP/1.1" 302 - http-bio-8080-exec-10 2
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:40 -0300] "GET /pagamento.jsp HTTP/1.1" 200 9651 http-bio-8080-exec-10 10
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:48 -0300] "POST /resumo-pedido HTTP/1.1" 302 - http-bio-8080-exec-10 1
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:23:48 -0300] "GET /resumo-pedido.jsp HTTP/1.1" 200 3898 http-bio-8080-exec-10 15
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:24:01 -0300] "POST /concluir-compra HTTP/1.1" 302 - http-bio-8080-exec-10 8
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:24:01 -0300] "GET /pedido-confirmado.jsp HTTP/1.1" 200 1632 http-bio-8080-exec-10 13
+0:0:0:0:0:0:0:1 - - [19/May/2025:11:24:07 -0300] "GET /exibirPedidos HTTP/1.1" 200 51541 http-bio-8080-exec-10 64
