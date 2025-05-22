@@ -6,6 +6,7 @@ br\com\themanto\servlet\LandingPageServlet.class
 br\com\themanto\servlet\ExibirProdutosServlet.class
 dao\UsersDao.class
 dao\DadosPessoaisDao.class
+br\com\themanto\servlet\AlterarPedidoServlet.class
 br\com\themanto\servlet\SalvarEnderecoServlet.class
 br\com\themanto\servlet\RedirecionarServlet.class
 model\DadosPessoais.class

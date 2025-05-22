@@ -30,6 +30,9 @@ public class RedirecionarServlet extends HttpServlet {
             case "2":
                 response.sendRedirect("/admin/ExibirUsuarios");
                 break;
+            case "3":
+                response.sendRedirect("/exibirPedidos");
+                break;
             default:
                 response.sendRedirect("escolha.jsp");
                 break;

@@ -13245,3 +13245,9 @@ SELECT ip.id_produto, ip.quantidade, ipITENS_PEDIDO preco,
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
 	at java.base/java.lang.Thread.run(Thread.java:1575)
+2025-05-21 23:41:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "STATUS CHARACTER VARYING(20)": "'pagamento com sucesso' (21)"; SQL statement:
+UPDATE pedidos SET status = ?, data_atualizacao = CURRENT_TIMESTAMP WHERE id_pedido = ? [22001-214]
+2025-05-21 23:44:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "STATUS CHARACTER VARYING(20)": "'pagamento com sucesso' (21)"; SQL statement:
+UPDATE pedidos SET status = ?, data_atualizacao = CURRENT_TIMESTAMP WHERE id_pedido = ? [22001-214]

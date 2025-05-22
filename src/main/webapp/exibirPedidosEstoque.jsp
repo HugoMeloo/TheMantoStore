@@ -19,36 +19,31 @@
 <!-- Cabeçalho -->
 <nav class="navbar navbar-expand-lg navbar-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand">
             <i class="fas fa-tshirt me-2"></i>The Manto Store
         </a>
         <div class="d-flex align-items-center">
             <c:choose>
                 <c:when test="${not empty sessionScope.usuario}">
-                    <a href="/minhaConta" class="btn btn-outline-light me-2">
-                        <i class="fas fa-user-cog"></i>
-                        <span class="d-none d-lg-inline ms-1">Minha Conta</span>
-                    </a>
                     <a href="/logout" class="btn btn-outline-light me-2">
                         <i class="fas fa-sign-out-alt"></i>
                         <span class="d-none d-lg-inline ms-1">Sair</span>
                     </a>
                 </c:when>
             </c:choose>
-
-            <a href="/carrinho" class="btn btn-outline-light position-relative">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="d-none d-lg-inline ms-1">Carrinho</span>
-                <c:if test="${not empty sessionScope.carrinho}">
-                    <span class="cart-count">${sessionScope.carrinho.size()}</span>
-                </c:if>
-            </a>
         </div>
     </div>
 </nav>
 <div class="container py-5">
 
     <h2 class="mb-4">Meus Pedidos</h2>
+
+    <c:if test="${param.sucesso == 'true'}">
+        <div class="alert alert-success">Status do pedido atualizado com sucesso!</div>
+    </c:if>
+    <c:if test="${param.erro == 'true'}">
+        <div class="alert alert-danger">Erro ao atualizar o status do pedido.</div>
+    </c:if>
 
     <c:if test="${empty pedidos}">
         <div class="alert alert-info">Você ainda não fez nenhum pedido.</div>
@@ -61,14 +56,72 @@
                 <div>
                     <strong>Pedido #${pedido.numPedido}</strong> -
                     <fmt:formatDate value="${pedido.dataCriacaoDate}" pattern="dd/MM/yyyy HH:mm"/>
-                    <span class="text-muted">${pedido.status}</span>
+                    <span class="text-muted"> - ${pedido.status} -</span>
+                    <strong> Total:</strong>
+                    <span class="text-muted"> R$${pedido.valorTotal}</span>
+
                 </div>
-                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse"
-                        data-bs-target="#detalhes-${pedido.idPedido}">
-                    Detalhes
-                </button>
+                <div class="d-flex gap-2">
+                    <!-- Botão Alterar -->
+                    <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal"
+                            data-bs-target="#modalAlterar-${pedido.idPedido}">
+                        Alterar
+                    </button>
+
+                    <!-- Botão Detalhes -->
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse"
+                            data-bs-target="#detalhes-${pedido.idPedido}">
+                        Detalhes
+                    </button>
+                </div>
             </div>
             <c:set var="endereco" value="${enderecos[status.index]}"/>
+            <!-- Modal de Alteração -->
+            <div class="modal fade" id="modalAlterar-${pedido.idPedido}" tabindex="-1"
+                 aria-labelledby="modalLabel-${pedido.idPedido}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="post" action="alterarPedido">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel-${pedido.idPedido}">Alterar Pedido
+                                    #${pedido.idPedido}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Fechar"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="idPedido" value="${pedido.idPedido}"/>
+
+                                <!-- Exemplo: alterar status -->
+                                <div class="mb-3">
+                                    <label for="status-${pedido.idPedido}" class="form-label">Status</label>
+                                    <select class="form-select" id="status-${pedido.idPedido}" name="status">
+                                        <option ${pedido.status == 'aguardando pagamento' ? 'selected' : ''}>aguardando
+                                            pagamento
+                                        </option>
+                                        <option ${pedido.status == 'pagamento rejeitado' ? 'selected' : ''}>pagamento
+                                            rejeitado
+                                        </option>
+                                        <option ${pedido.status == 'pagamento com sucesso' ? 'selected' : ''}>pagamento
+                                            com sucesso
+                                        </option>
+                                        <option ${pedido.status == 'aguardando retirada' ? 'selected' : ''}>aguardando
+                                            retirada
+                                        </option>
+                                        <option ${pedido.status == 'em transito' ? 'selected' : ''}>em transito</option>
+                                        <option ${pedido.status == 'entregue' ? 'selected' : ''}>entregue</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-warning">Salvar Alterações</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div id="detalhes-${pedido.idPedido}" class="collapse">
                 <div class="card-body">
                     <p><strong>Forma de Pagamento:</strong> ${pedido.formaPagamento}</p>
