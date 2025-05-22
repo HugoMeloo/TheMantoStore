@@ -92,7 +92,6 @@ public class PedidosDao {
                 p.setStatus(rs.getString("status"));
                 p.setNumPedido(rs.getInt("num_pedido"));
                 p.setObservacoes(rs.getString("observacoes"));
-
                 // NOVO: converte data_criacao para Date
                 LocalDateTime dataCriacao = rs.getTimestamp("data_criacao").toLocalDateTime();
                 Date dataCriacaoDate = Date.from(dataCriacao.atZone(ZoneId.systemDefault()).toInstant());
